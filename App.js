@@ -1,30 +1,68 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 
 export default function App() {
- const URL="https://api.golemio.cz/v2/pid/departureboards?names=Perunova&minutesBefore=10&minutesAfter=20&includeMetroTrains=true&preferredTimezone=Europe_Prague&mode=departures&order=real&filter=routeOnce&skip=canceled&limit=3&total=3&offset=0";
- const API_TOKEN="***REMOVED***";
- async function getData(url = '') {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      'X-Access-Token': API_TOKEN,
-    },
-  
-  });
-  
-  return response.json(); // parses JSON response into native JavaScript objects
-}
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
-getData(URL)
-  .then((data) => {
-    console.log(data); // JSON data parsed by `data.json()` call
-  });
-  
+  const URL =
+    "https://api.golemio.cz/v2/pid/departureboards?names=Perunova&minutesBefore=10&minutesAfter=20&includeMetroTrains=true&preferredTimezone=Europe_Prague&mode=departures&order=real&filter=routeOnce&skip=canceled&limit=3&total=3&offset=0";
+  const API_TOKEN =
+    "***REMOVED***";
+
+  const getData = async () => {
+    try {
+      const response = await fetch(URL, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "X-Access-Token": API_TOKEN,
+        },
+      });
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatTime = (timeString) => {
+    const date = new Date(timeString);
+    console.log(date)
+    const output = new Intl.DateTimeFormat('cs-CZ', { timeStyle: 'short', timeZone: 'Europe/Prague' }).format(date);
+    return output
+  }
+
+
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text} >Open up App.js to start working on your app!</Text>
+      <Text style={styles.text}>
+      </Text>
+
+      {isLoading ? (
+        <Text style={styles.text}>Loading...</Text>
+      ) : (
+        <FlatList
+          data={data.departures}
+          renderItem={({item}) => (
+          <>
+            <Text style={styles.text}>
+              {item.route.short_name}
+            </Text>
+            <Text>
+              {formatTime(item.arrival_timestamp.predicted)}
+            </Text>
+          </>
+        )}
+        />
+      )}
       <StatusBar style="auto" />
     </View>
   );
@@ -33,11 +71,11 @@ getData(URL)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
-    fontSize: '3rem', // Set the font size to 24
-  }
+    fontSize: "3rem", // Set the font size to 24
+  },
 });
