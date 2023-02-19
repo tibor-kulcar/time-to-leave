@@ -10,7 +10,7 @@ export default function App() {
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "***REMOVED***";
   const query = {
-    names: 'Perunova',
+    names: ['Jana Masaryka'],
     minutesBefore: 0,
     minutesAfter: 20,
     includeMetroTrains: true,
@@ -39,6 +39,7 @@ export default function App() {
         },
       });
       const json = await response.json();
+      console.log(json)
       setData(json);
     } catch (error) {
       console.error(error);
