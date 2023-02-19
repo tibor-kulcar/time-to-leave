@@ -11,6 +11,13 @@ export default function App() {
   function handleChange(event) {
       setText(event.target.value);
     }
+  function handleKeyPress(event) {
+      if (event.key === 'Enter' || event.key === 'Return') {
+        console.log('Enter key pressed');
+        // Do something with the text value
+        getData()
+    }
+  }
 
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "***REMOVED***";
@@ -111,7 +118,7 @@ export default function App() {
       <Text style={styles.text}>
       </Text>
 
-      <input type="text" value={stopInput} onChange={handleChange} />
+      <input type="text" value={stopInput} onChange={handleChange} onKeyPress={handleKeyPress} />
       {isLoading ? (
         <Text style={styles.text}>Loading...</Text>
       ) : (
