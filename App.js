@@ -6,7 +6,7 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
-  const secondhand = 0;
+
   const URL =
     "https://api.golemio.cz/v2/pid/departureboards?names=Perunova&minutesBefore=0&minutesAfter=20&includeMetroTrains=true&preferredTimezone=Europe_Prague&mode=departures&order=real&filter=routeOnce&skip=canceled&limit=3&total=3&offset=0";
   const API_TOKEN =
@@ -54,8 +54,8 @@ export default function App() {
   const getTimeDiff = (timeString) => {
     const now = new Date();
     const given = new Date(timeString);
-    console.log('counter------', counter);
-    const diff = secondhand == 0 ? (given - now) : (given - now) - (secondhand * 1000);
+
+    const diff = given - now;
     const sec = (diff / 1000);
     const min = Math.floor(sec / 60);
     const diffSecs = Math.floor(sec - (min * 60));
@@ -68,7 +68,7 @@ export default function App() {
     getData();
     const timeout = setTimeout(() => {
       setCounter(counter => counter + 1);
-      const secondhand = counter + 1 ;
+
       //console.log('counter counter', counterRef.current);
       if (counter > 9) {
         getData();
