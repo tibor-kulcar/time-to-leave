@@ -2,12 +2,14 @@ import React, {useEffect, useState, useRef} from 'react';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 
+import StopSearch from "./components/StopSearch.jsx";
+
 export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
   const [stopInput, setText] = useState('');
-    
+
   function handleChange(event) {
       setText(event.target.value);
     }
@@ -117,7 +119,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.text}>
       </Text>
-
+      <StopSearch />
       <input type="text" value={stopInput} onChange={handleChange} onKeyPress={handleKeyPress} />
       {isLoading ? (
         <Text style={styles.text}>Loading...</Text>
