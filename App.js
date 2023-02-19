@@ -6,11 +6,16 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [stopInput, setText] = useState('');
+    
+  function handleChange(event) {
+      setText(event.target.value);
+    }
 
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hYmVsZWttQGdtYWlsLmNvbSIsImlkIjoxNjY2LCJuYW1lIjpudWxsLCJzdXJuYW1lIjpudWxsLCJpYXQiOjE2NzU0MzU2NDYsImV4cCI6MTE2NzU0MzU2NDYsImlzcyI6ImdvbGVtaW8iLCJqdGkiOiIxYmNmODFhYy04MDY5LTRjMWMtYjMzMC1iNmZmNDhmZmZjYjIifQ.xHnRNNU2OkEq4Jo6Fa9kY4_L9VbO5a6p87p4-QfyatQ";
   const query = {
-    ids: ['U354Z1P'],
+    names:[stopInput],
     minutesBefore: 0,
     minutesAfter: 20,
     includeMetroTrains: true,
@@ -106,6 +111,7 @@ export default function App() {
       <Text style={styles.text}>
       </Text>
 
+      <input type="text" value={stopInput} onChange={handleChange} />
       {isLoading ? (
         <Text style={styles.text}>Loading...</Text>
       ) : (
@@ -114,7 +120,7 @@ export default function App() {
           renderItem={({item}) => (
           <>
             <Text style={styles.textName}>
-              {item.route.short_name}
+              {item.route.short_name} {item.stop.platform_code}
             </Text>
             <Text style={styles.textTime}>
               {getTimeDiff(item.arrival_timestamp.predicted)}
