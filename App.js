@@ -10,7 +10,7 @@ export default function App() {
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hYmVsZWttQGdtYWlsLmNvbSIsImlkIjoxNjY2LCJuYW1lIjpudWxsLCJzdXJuYW1lIjpudWxsLCJpYXQiOjE2NzU0MzU2NDYsImV4cCI6MTE2NzU0MzU2NDYsImlzcyI6ImdvbGVtaW8iLCJqdGkiOiIxYmNmODFhYy04MDY5LTRjMWMtYjMzMC1iNmZmNDhmZmZjYjIifQ.xHnRNNU2OkEq4Jo6Fa9kY4_L9VbO5a6p87p4-QfyatQ";
   const query = {
-    names: 'Perunova',
+    names: ['Jana Masaryka'],
     minutesBefore: 0,
     minutesAfter: 20,
     includeMetroTrains: true,
@@ -39,6 +39,7 @@ export default function App() {
         },
       });
       const json = await response.json();
+      console.log(json)
       setData(json);
     } catch (error) {
       console.error(error);
