@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 
@@ -6,7 +6,8 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
-
+  const counterRef = useRef(0);
+  const secondhand = 0;
   const URL =
     "https://api.golemio.cz/v2/pid/departureboards?names=Perunova&minutesBefore=0&minutesAfter=20&includeMetroTrains=true&preferredTimezone=Europe_Prague&mode=departures&order=real&filter=routeOnce&skip=canceled&limit=3&total=3&offset=0";
   const API_TOKEN =
@@ -55,7 +56,7 @@ export default function App() {
     const now = new Date();
     const given = new Date(timeString);
     console.log('counter------', counter);
-    const diff = counter == 0 ? (given - now) : (given - now) - (counter * 1000);
+    const diff = secondhand == 0 ? (given - now) : (given - now) - (secondhand * 1000);
     const sec = (diff / 1000);
     const min = Math.floor(sec / 60);
     const diffSecs = Math.floor(sec - (min * 60));
@@ -68,13 +69,17 @@ export default function App() {
     getData();
     const timeout = setTimeout(() => {
       setCounter(counter => counter + 1);
-      console.log('counter counter', counter);
-      if (counter > 9) {
+      const secondhand = counter + 1 ;
+      
+      console.log('counter counter', counterRef.current);
+      if (counterRef.current > 9) {
         getData();
         setCounter(0);
       }
     }, 1000);
-
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [counter]);
 
   return (
