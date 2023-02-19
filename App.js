@@ -10,7 +10,7 @@ export default function App() {
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "***REMOVED***";
   const query = {
-    names: ['Jana Masaryka'],
+    ids: ['U354Z1P'],
     minutesBefore: 0,
     minutesAfter: 20,
     includeMetroTrains: true,
@@ -84,13 +84,15 @@ export default function App() {
   }
 
   useEffect(() => {
-    getData();
+    console.log('effect entered: ', counter)
+    if (counter == 0) getData();
+
     const timeout = setTimeout(() => {
       console.log('timeout triggered', counter);
       setCounter(counter => counter + 1);
 
       if (counter > 8) {
-        getData();
+        console.log('counter is now: ', counter)
         setCounter(0);
       }
     }, 1000);
