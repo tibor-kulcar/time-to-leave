@@ -7,15 +7,33 @@ export default function App() {
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
 
-  const URL =
-    "https://api.golemio.cz/v2/pid/departureboards?names=Perunova&minutesBefore=0&minutesAfter=20&includeMetroTrains=true&preferredTimezone=Europe_Prague&mode=departures&order=real&filter=routeOnce&skip=canceled&limit=3&total=3&offset=0";
-  const API_TOKEN =
-    "***REMOVED***";
+  const URL = "https://api.golemio.cz/v2/pid/departureboards";
+  const API_TOKEN = "***REMOVED***";
+  const query = {
+    names: 'Perunova',
+    minutesBefore: 0,
+    minutesAfter: 20,
+    includeMetroTrains: true,
+    preferredTimezone: 'Europe/Prague',
+    mode: 'departures',
+    order: 'real',
+    filter: 'routeOnce',
+    skip: 'canceled',
+    limit: 3,
+    total: 3,
+    offset: 0,
+  };
+
+  const getQueryString = (queries) => {
+    return Object.keys(queries).reduce((result, key) => {
+        return [...result, `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`]
+    }, []).join('&');
+  };
 
   const getData = async () => {
     try {
-      const response = await fetch(URL, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
+      const response = await fetch(URL + '?' + getQueryString(query), {
+        method: "GET",
         headers: {
           "X-Access-Token": API_TOKEN,
         },
@@ -67,10 +85,10 @@ export default function App() {
   useEffect(() => {
     getData();
     const timeout = setTimeout(() => {
+      console.log('timeout triggered', counter);
       setCounter(counter => counter + 1);
 
-      //console.log('counter counter', counterRef.current);
-      if (counter > 9) {
+      if (counter > 8) {
         getData();
         setCounter(0);
       }
