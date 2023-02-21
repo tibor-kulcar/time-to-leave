@@ -7,12 +7,15 @@ const twoDigits = new Intl.NumberFormat("en-US", {
 });
 
 const getTimeDiff = (timeString) => {
+  if (!timeString) return 'Waiting...';
+
   const now = new Date();
   const given = new Date(timeString);
 
   const diff = given - now;
   const sec = (diff / 1000);
   const min = Math.floor(sec / 60);
+  const hr = Math.floor(min / 60);
   const diffSecs = Math.floor(sec - (min * 60));
 
   return twoDigits.format(min) + " : " + twoDigits.format(diffSecs);
