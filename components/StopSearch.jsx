@@ -27,7 +27,6 @@ const StopSearch = ({setInput}) => {
         style={styles.input}
         onChangeText={(txt) => {
           setText(txt);
-          setInput(txt);
         }}
         flatListProps={{
           keyExtractor: (_, idx) => idx,

@@ -10,7 +10,7 @@ export default function App() {
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
   const [inputValue, setInputValue] = useState('Perunova');
-  
+
   function handleChange(event) {
       setText(event.target.value);
     }
@@ -95,21 +95,17 @@ export default function App() {
     const sec = (diff / 1000);
     const min = Math.floor(sec / 60);
     const diffSecs = Math.floor(sec - (min * 60));
-    console.log('diffSecs', diffSecs);
 
     return min + " : " + diffSecs;
   }
 
   useEffect(() => {
-    console.log('effect entered: ', counter)
     if (counter == 0) getData();
 
     const timeout = setTimeout(() => {
-      console.log('timeout triggered', counter);
       setCounter(counter => counter + 1);
 
       if (counter > 8) {
-        console.log('counter is now: ', counter)
         setCounter(0);
       }
     }, 1000);
@@ -118,19 +114,23 @@ export default function App() {
     };
   }, [counter]);
 
+  useEffect(() => {
+    if (inputValue) getData();
+  }, [inputValue])
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
       </Text>
-      
-      
+
+
       <Text style={styles.text}>Hello, I am {inputValue}!</Text>
-      <StopSearch setInput={setInputValue} /> 
-      {/* 
-      
-      setInput je v stopsearch {setInput}, a v returne sa vola setInput(txt), 
+      <StopSearch setInput={setInputValue} />
+      {/*
+
+      setInput je v stopsearch {setInput}, a v returne sa vola setInput(txt),
       setInputValue je definovane tu v App.js ako inputValue, setInputValue
-      
+
       */}
       {isLoading ? (
         <Text style={styles.text}>Loading...</Text>
