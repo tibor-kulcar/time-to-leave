@@ -2,8 +2,8 @@ import React, {useEffect, useState, useRef} from 'react';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 
+import EstimatedTimeArrival from "./components/EstimatedTimeArrival.jsx";
 import StopSearch from "./components/StopSearch.jsx";
-
 
 export default function App() {
   const [isLoading, setLoading] = useState(true);
@@ -87,17 +87,6 @@ export default function App() {
     return output
   }
 
-  const getTimeDiff = (timeString) => {
-    const now = new Date();
-    const given = new Date(timeString);
-
-    const diff = given - now;
-    const sec = (diff / 1000);
-    const min = Math.floor(sec / 60);
-    const diffSecs = Math.floor(sec - (min * 60));
-
-    return min + " : " + diffSecs;
-  }
 
   useEffect(() => {
     if (counter == 0) getData();
@@ -142,9 +131,8 @@ export default function App() {
             <Text style={styles.textName}>
               {item.route.short_name} {item.stop.platform_code}
             </Text>
-            <Text style={styles.textTime}>
-              {getTimeDiff(item.arrival_timestamp.predicted)}
-            </Text>
+
+            <EstimatedTimeArrival time={item} />
           </>
         )}
         />
