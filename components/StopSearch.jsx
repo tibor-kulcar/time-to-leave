@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput } from 'react-native';
+import { StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import pidStops from '../external_data/pid-stops.json';
 
-const StopSearch = ({onChangeInput}) => {
+const StopSearch = ({setInput}) => {
   const stops = pidStops.map(stop => stop.stop_name);
   //console.log('props', props)
   const [text, setText] = useState('');
-
+  
   const filterData = (text) => {
     if (text == '') return [''];
     const filteredStops = stops.filter(stop => stop.includes(text)); 
-     return filteredStops;
+    
+    if (text == filteredStops[0]) return[''];
+
+    return filteredStops;
   };
 
   const data = filterData(text);
@@ -24,12 +27,21 @@ const StopSearch = ({onChangeInput}) => {
         value={text}
         onChangeText={(txt) => {
           setText(txt)
+          setInput(txt)
+
         
         console.log(txt)
       }}
         flatListProps={{
           keyExtractor: (_, idx) => idx,
-          renderItem: ({ item }) => <Text>{item}</Text>,
+          renderItem: ({ item }) => (
+            <TouchableOpacity onPress={() => {
+              setInput(item)
+              setText(item)
+            }}>
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          ),
         }}
       />
       <Text></Text>

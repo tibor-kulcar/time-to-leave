@@ -4,12 +4,13 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 
 import StopSearch from "./components/StopSearch.jsx";
 
+
 export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [stopInput, setText] = useState('');
-
+  const [inputValue, setInputValue] = useState('Perunova');
+  
   function handleChange(event) {
       setText(event.target.value);
     }
@@ -24,7 +25,7 @@ export default function App() {
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
   const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hYmVsZWttQGdtYWlsLmNvbSIsImlkIjoxNjY2LCJuYW1lIjpudWxsLCJzdXJuYW1lIjpudWxsLCJpYXQiOjE2NzU0MzU2NDYsImV4cCI6MTE2NzU0MzU2NDYsImlzcyI6ImdvbGVtaW8iLCJqdGkiOiIxYmNmODFhYy04MDY5LTRjMWMtYjMzMC1iNmZmNDhmZmZjYjIifQ.xHnRNNU2OkEq4Jo6Fa9kY4_L9VbO5a6p87p4-QfyatQ";
   const query = {
-    names:[stopInput],
+    names: inputValue,
     minutesBefore: 0,
     minutesAfter: 20,
     includeMetroTrains: true,
@@ -45,6 +46,8 @@ export default function App() {
   };
 
   const getData = async () => {
+    //query.names = [stopName];
+    //console.log(stopName)
     try {
       const response = await fetch(URL + '?' + getQueryString(query), {
         method: "GET",
@@ -119,8 +122,16 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.text}>
       </Text>
-      <StopSearch />
-      <input type="text" value={stopInput} onChange={handleChange} onKeyPress={handleKeyPress} />
+      
+      
+      <Text style={styles.text}>Hello, I am {inputValue}!</Text>
+      <StopSearch setInput={setInputValue} /> 
+      {/* 
+      
+      setInput je v stopsearch {setInput}, a v returne sa vola setInput(txt), 
+      setInputValue je definovane tu v App.js ako inputValue, setInputValue
+      
+      */}
       {isLoading ? (
         <Text style={styles.text}>Loading...</Text>
       ) : (
