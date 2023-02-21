@@ -7,13 +7,18 @@ const stopNames = pidStops.map(stop => stop.stop_name);
 // remove duplicates
 const stops = [...new Set(stopNames)];
 
+const normalize = (str) => {
+  const lwrcs = str.toLowerCase();
+  return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+}
+
 const StopSearch = ({setInput}) => {
   const [text, setText] = useState('');
 
   const filterData = (text) => {
     if (text == '') return [''];
 
-    const filteredStops = stops.filter(stop => stop.toLowerCase().includes(text.toLowerCase()));
+    const filteredStops = stops.filter(stop => normalize(stop).includes(normalize(text)));
     if (text == filteredStops[0]) return[''];
     return filteredStops;
   };
