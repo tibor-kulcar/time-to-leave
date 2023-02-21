@@ -17,15 +17,15 @@ export default function App() {
   const query = {
     names: inputValue,
     minutesBefore: 0,
-    minutesAfter: 20,
+    minutesAfter: 120,
     includeMetroTrains: true,
     preferredTimezone: 'Europe/Prague',
     mode: 'departures',
     order: 'real',
     filter: 'routeOnce',
     skip: 'canceled',
-    limit: 3,
-    total: 3,
+    limit: 10,
+    total: 10,
     offset: 0,
   };
 
