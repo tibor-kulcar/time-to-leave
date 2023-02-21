@@ -11,18 +11,8 @@ export default function App() {
   const [counter, setCounter] = useState(0);
   const [inputValue, setInputValue] = useState('Perunova');
 
-  function handleChange(event) {
-      setText(event.target.value);
-    }
-  function handleKeyPress(event) {
-      if (event.key === 'Enter' || event.key === 'Return') {
-        console.log('Enter key pressed');
-        // Do something with the text value
-        getData()
-    }
-  }
-
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
+  // TDOD
   const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hYmVsZWttQGdtYWlsLmNvbSIsImlkIjoxNjY2LCJuYW1lIjpudWxsLCJzdXJuYW1lIjpudWxsLCJpYXQiOjE2NzU0MzU2NDYsImV4cCI6MTE2NzU0MzU2NDYsImlzcyI6ImdvbGVtaW8iLCJqdGkiOiIxYmNmODFhYy04MDY5LTRjMWMtYjMzMC1iNmZmNDhmZmZjYjIifQ.xHnRNNU2OkEq4Jo6Fa9kY4_L9VbO5a6p87p4-QfyatQ";
   const query = {
     names: inputValue,
@@ -46,8 +36,6 @@ export default function App() {
   };
 
   const getData = async () => {
-    //query.names = [stopName];
-    //console.log(stopName)
     try {
       const response = await fetch(URL + '?' + getQueryString(query), {
         method: "GET",
@@ -64,29 +52,6 @@ export default function App() {
       setLoading(false);
     }
   };
-
-  const formatTime = (timeString) => {
-    const options = {
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      timeZone: "Europe/Prague",
-    };
-    const now = new Date();
-    const given = new Date(timeString);
-    console.log(
-      'NOW: ', new Intl.DateTimeFormat('cs-CZ', options).format(now),
-      'EST: ', new Intl.DateTimeFormat('cs-CZ', options).format(given),
-      given - now
-
-    )
-    const timeLeft = given - now;
-
-    const output = new Intl.DateTimeFormat('cs-CZ', options).format(timeLeft);
-
-    return output
-  }
-
 
   useEffect(() => {
     if (counter == 0) getData();
