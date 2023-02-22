@@ -38,6 +38,7 @@ const StopSearch = ({setInput}) => {
       flatListProps={{
         keyExtractor: (_, idx) => idx,
         renderItem: ({ item }) => (
+          item && (
           <TouchableOpacity
             style={styles.item}
             onPress={() => {
@@ -47,6 +48,7 @@ const StopSearch = ({setInput}) => {
           >
             <Text style={styles.text}>{item}</Text>
           </TouchableOpacity>
+          )
         ),
       }}
     />
@@ -55,37 +57,41 @@ const StopSearch = ({setInput}) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 10,
   },
   inpuContainer: {
     flex: 1,
+    width: "100%",
     paddingHorizontal: 10,
-    borderColor: "#111",
-    borderBottomColor: "#777",
+    // backgroundColor: "#111",
+    borderColor: "transparent"
   },
   text: {
-    padding: "5px",
-    color: "#fff",
-    backgroundColor: "#000",
-    fontSize: "1rem", // Set the font size to 24
+    padding: 5,
+    // color: "#fff",
+    // backgroundColor: "#000",
+    fontSize: 18, // Set the font size to 24
   },
   input: {
-    height: 40,
-    width: "100%",
+    height: "100%",
+    flex: 1,
     fontSize: 24,
-    color: "#fff",
-    backgroundColor: "#000",
+    // color: "#fff",
+    // backgroundColor: "#000",
     paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   listContainer: {
     position: "relative",
-    borderColor: "#111",
-    backgroundColor: "#000",
-    zIndex: 100,
-
+    // backgroundColor: "#000",
+    // borderColor: "#111",
   },
   item: {
     paddingVertical: 10,
-    backgroundColor: "#000"
+    // backgroundColor: "#000",
+    // borderColor: "#111",
   }
 });
 
