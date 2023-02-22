@@ -89,7 +89,7 @@ export default function App() {
         <TouchableOpacity
           onPress={() => getData()}
         >
-          <Ionicons name="reload" size={24} color="white" />
+          <Ionicons name="reload" size={24} />
         </TouchableOpacity>
       </View>
 
@@ -131,10 +131,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: StatusBar.currentHeight,
-    backgroundColor: "#111",
+    // backgroundColor: "#111",
   },
   scroll: {
     width: "100%",
+    flex: 1,
+    zIndex: 1,
   },
   search: {
     display: "flex",
@@ -143,10 +145,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     width: "100%",
-    padding: 5
+    padding: 5,
+    zIndex: 10,
   },
   list: {
-    borderColor: "#111",
+    // borderColor: "#111",
     zIndex: 100,
     position: "relative",
   },
@@ -155,14 +158,14 @@ const styles = StyleSheet.create({
     gap: 5,
     justifyContent: "space-between",
     paddingHorizontal: 25,
-    borderColor: "#111"
+    // borderColor: "#111"
   },
   textName: {
-    color: "#777777",
+    // color: "#777777",
     fontSize: 48, // Set the font size to 24
   },
   textTime: {
-    color: "#fff",
+    // color: "#fff",
     fontSize: 48, // Set the font size to 24
   },
 });

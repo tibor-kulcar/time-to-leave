@@ -15,10 +15,9 @@ const getTimeDiff = (timeString) => {
   const diff = given - now;
   const sec = (diff / 1000);
   const min = Math.floor(sec / 60);
-  const hr = Math.floor(min / 60);
   const diffSecs = Math.floor(sec - (min * 60));
 
-  return twoDigits.format(min) + " : " + twoDigits.format(diffSecs);
+  return twoDigits.format(min) + ":" + twoDigits.format(diffSecs);
 }
 
 const EstimatedTimeArrival = ({time}) => {
@@ -33,8 +32,8 @@ const EstimatedTimeArrival = ({time}) => {
 
 const styles = StyleSheet.create({
   textTime: {
-    color: "#fff",
-    fontSize: "3rem", // Set the font size to 24
+    // color: "#fff",
+    fontSize: 48, // Set the font size to 24
   }
 });
 
