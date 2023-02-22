@@ -99,6 +99,7 @@ export default function App() {
         <Text style={styles.textTime}>Loading...</Text>
       ) : (
         <FlatList
+          style={styles.list}
           data={data.departures}
           renderItem={({item}) => (
             <>
@@ -144,18 +145,24 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 5
   },
-  textName: {
-    color: "#777777",
-    fontSize: "3rem", // Set the font size to 24
-  },
-  textTime: {
-    color: "#fff",
-    fontSize: "3rem", // Set the font size to 24
+  list: {
+    borderColor: "#111",
+    zIndex: 100,
+    position: "relative",
   },
   item: {
     flexDirection: "row",
     gap: 5,
     justifyContent: "space-between",
-    paddingHorizontal: 25
-  }
+    paddingHorizontal: 25,
+    borderColor: "#111"
+  },
+  textName: {
+    color: "#777777",
+    fontSize: 48, // Set the font size to 24
+  },
+  textTime: {
+    color: "#fff",
+    fontSize: 48, // Set the font size to 24
+  },
 });
