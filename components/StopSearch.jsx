@@ -30,6 +30,7 @@ const StopSearch = ({setInput}) => {
       value={text}
       containerStyle={styles.container}
       inputContainerStyle={styles.inpuContainer}
+      listContainerStyle={styles.listContainer}
       style={styles.input}
       onChangeText={(txt) => {
         setText(txt);
@@ -38,6 +39,7 @@ const StopSearch = ({setInput}) => {
         keyExtractor: (_, idx) => idx,
         renderItem: ({ item }) => (
           <TouchableOpacity
+            style={styles.item}
             onPress={() => {
               setText(item);
               setInput(item);
@@ -55,6 +57,8 @@ const styles = StyleSheet.create({
   container: {
   },
   inpuContainer: {
+    flex: 1,
+    paddingHorizontal: 10,
     borderColor: "#111",
     borderBottomColor: "#777",
   },
@@ -67,10 +71,22 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: "100%",
+    fontSize: 24,
     color: "#fff",
-    backgroundColor: "#111",
+    backgroundColor: "#000",
     paddingHorizontal: 10,
   },
+  listContainer: {
+    position: "relative",
+    borderColor: "#111",
+    backgroundColor: "#000",
+    zIndex: 100,
+
+  },
+  item: {
+    paddingVertical: 10,
+    backgroundColor: "#000"
+  }
 });
 
 export default StopSearch;
