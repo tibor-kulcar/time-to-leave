@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     paddingHorizontal: 10,
+    // borderColor: "#ff0000"
   },
   inpuContainer: {
     flex: 1,
@@ -87,11 +88,14 @@ const styles = StyleSheet.create({
     position: "relative",
     // backgroundColor: "#000",
     // borderColor: "#111",
+    borderColor: "transparent"
+
   },
   item: {
-    paddingVertical: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
     // backgroundColor: "#000",
-    // borderColor: "#111",
+    borderColor: "#ff0000",
   }
 });
 

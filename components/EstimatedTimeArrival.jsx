@@ -7,7 +7,7 @@ const twoDigits = new Intl.NumberFormat("en-US", {
 });
 
 const getTimeDiff = (timeString) => {
-  if (!timeString) return 'Waiting...';
+  if (!timeString) return '??:??';
 
   const now = new Date();
   const given = new Date(timeString);

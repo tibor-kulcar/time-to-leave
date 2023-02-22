@@ -1,9 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
-  Button,
   FlatList,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -94,9 +92,11 @@ export default function App() {
       </View>
 
 
-      <ScrollView style={styles.scroll}>
+      <View style={styles.scroll}>
       {isLoading ? (
-        <Text style={styles.textTime}>Loading...</Text>
+        <View style={styles.item}>
+          <Text style={styles.textTime}>Loading...</Text>
+        </View>
       ) : (
         <FlatList
           style={styles.list}
@@ -119,7 +119,7 @@ export default function App() {
           )}
         />
       )}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -127,15 +127,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 20,
     alignItems: "center",
     justifyContent: "center",
     marginTop: StatusBar.currentHeight,
     // backgroundColor: "#111",
   },
   scroll: {
-    width: "100%",
     flex: 1,
+    width: "100%",
+    marginTop: 20,
     zIndex: 1,
   },
   search: {
