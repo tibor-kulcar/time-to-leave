@@ -12,45 +12,52 @@ const normalize = (str) => {
   return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 }
 
+const filterData = (text) => {
+  if (text == '') return [''];
+
+  const filteredStops = stops.filter(stop => normalize(stop).includes(normalize(text)));
+  if (text == filteredStops[0]) return[''];
+  return filteredStops;
+};
+
 const StopSearch = ({setInput}) => {
   const [text, setText] = useState('');
-
-  const filterData = (text) => {
-    if (text == '') return [''];
-
-    const filteredStops = stops.filter(stop => normalize(stop).includes(normalize(text)));
-    if (text == filteredStops[0]) return[''];
-    return filteredStops;
-  };
-
   const data = filterData(text);
+
   return (
-    <>
-      <Autocomplete
-        data={data}
-        value={text}
-        style={styles.input}
-        onChangeText={(txt) => {
-          setText(txt);
-        }}
-        flatListProps={{
-          keyExtractor: (_, idx) => idx,
-          renderItem: ({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                setText(item);
-                setInput(item);
-              }}
-            >
-              <Text style={styles.text}>{item}</Text>
-            </TouchableOpacity>
-          ),
-        }}
-      />
-    </>
+    <Autocomplete
+      data={data}
+      value={text}
+      containerStyle={styles.container}
+      inputContainerStyle={styles.inpuContainer}
+      style={styles.input}
+      onChangeText={(txt) => {
+        setText(txt);
+      }}
+      flatListProps={{
+        keyExtractor: (_, idx) => idx,
+        renderItem: ({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              setText(item);
+              setInput(item);
+            }}
+          >
+            <Text style={styles.text}>{item}</Text>
+          </TouchableOpacity>
+        ),
+      }}
+    />
   )
 };
+
 const styles = StyleSheet.create({
+  container: {
+  },
+  inpuContainer: {
+    borderColor: "#111",
+    borderBottomColor: "#777",
+  },
   text: {
     padding: "5px",
     color: "#fff",
@@ -59,11 +66,11 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    color: "#000",
-    borderWidth: 0,
-    padding: 10,
+    width: "100%",
+    color: "#fff",
+    backgroundColor: "#111",
+    paddingHorizontal: 10,
   },
 });
-
 
 export default StopSearch;

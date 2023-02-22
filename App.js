@@ -1,6 +1,16 @@
 import React, {useEffect, useState, useRef} from 'react';
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  Button,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import EstimatedTimeArrival from "./components/EstimatedTimeArrival.jsx";
 import StopSearch from "./components/StopSearch.jsx";
@@ -73,46 +83,66 @@ export default function App() {
   }, [inputValue])
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-      </Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.search}>
+        <StopSearch setInput={setInputValue} />
+        <TouchableOpacity
+          onPress={() => getData()}
+        >
+          <Ionicons name="reload" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
 
 
-      <Text style={styles.text}>Hello, I am {inputValue}!</Text>
-      <StopSearch setInput={setInputValue} />
-      {/*
-
-      setInput je v stopsearch {setInput}, a v returne sa vola setInput(txt),
-      setInputValue je definovane tu v App.js ako inputValue, setInputValue
-
-      */}
+      <ScrollView style={styles.scroll}>
       {isLoading ? (
-        <Text style={styles.text}>Loading...</Text>
+        <Text style={styles.textTime}>Loading...</Text>
       ) : (
         <FlatList
           data={data.departures}
           renderItem={({item}) => (
-          <>
-            <Text style={styles.textName}>
-              {item.route.short_name} {item.stop.platform_code}
-            </Text>
-
-            <EstimatedTimeArrival time={item} />
-          </>
-        )}
+            <>
+              {data && data.departures.length > 0 ? (
+                <View style={styles.item}>
+                  <Text style={styles.textName}>
+                    {item.route.short_name} {item.stop.platform_code}
+                  </Text>
+                  <EstimatedTimeArrival time={item} />
+                </View>
+              ) : (
+                <View>
+                  <Text style={styles.textName}>¯\_(ツ)_/¯</Text>
+                </View>
+              )}
+            </>
+          )}
         />
       )}
-      <StatusBar style="auto" />
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#111",
+    gap: 20,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: "#111",
+  },
+  scroll: {
+    width: "100%",
+  },
+  search: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    width: "100%",
+    padding: 5
   },
   textName: {
     color: "#777777",
@@ -121,5 +151,11 @@ const styles = StyleSheet.create({
   textTime: {
     color: "#fff",
     fontSize: "3rem", // Set the font size to 24
+  },
+  item: {
+    flexDirection: "row",
+    gap: 5,
+    justifyContent: "space-between",
+    paddingHorizontal: 25
   }
 });
