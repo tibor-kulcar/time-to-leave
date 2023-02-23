@@ -33,7 +33,7 @@ const EstimatedTimeArrival = ({time}) => {
 const styles = StyleSheet.create({
   textTime: {
     // color: "#fff",
-    fontSize: 48, // Set the font size to 24
+    fontSize: 48,
   }
 });
 
