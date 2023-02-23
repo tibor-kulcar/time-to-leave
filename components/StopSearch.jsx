@@ -38,17 +38,19 @@ const StopSearch = ({setInput}) => {
       flatListProps={{
         keyExtractor: (_, idx) => idx,
         renderItem: ({ item }) => (
-          item && (
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {
-              setText(item);
-              setInput(item);
-            }}
-          >
-            <Text style={styles.text}>{item}</Text>
-          </TouchableOpacity>
-          )
+          <>
+            {item && (
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => {
+                setText(item);
+                setInput(item);
+              }}
+            >
+              <Text style={styles.text}>{item}</Text>
+            </TouchableOpacity>
+            )}
+          </>
         ),
       }}
     />
