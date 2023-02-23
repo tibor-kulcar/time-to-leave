@@ -52,7 +52,7 @@ export default function App() {
         },
       });
       const json = await response.json();
-      console.log(json)
+      // console.log(json)
       setData(json);
     } catch (error) {
       console.error(error);
@@ -101,22 +101,25 @@ export default function App() {
         <FlatList
           style={styles.list}
           data={data.departures}
-          renderItem={({item}) => (
-            <>
-              {data && data.departures.length > 0 ? (
-                <View style={styles.item}>
-                  <Text style={styles.textName}>
-                    {item.route.short_name} {item.stop.platform_code}
-                  </Text>
-                  <EstimatedTimeArrival time={item} />
-                </View>
-              ) : (
-                <View>
-                  <Text style={styles.textName}>¯\_(ツ)_/¯</Text>
-                </View>
-              )}
-            </>
-          )}
+          renderItem={({item}) => {
+            const now = new Date();
+            const prediction = new Date(item.arrival_timestamp.predicted);
+            const diff = prediction - now;
+
+            return (
+              <>
+                {data && data.departures.length > 0 && diff > 3000*60 && (
+                  <View style={styles.item}>
+                    <Text style={styles.textName}>
+                      {item.route.short_name} {item.stop.platform_code}
+                    </Text>
+                    <EstimatedTimeArrival diff={diff} />
+                  </View>
+                )}
+              </>
+            )
+          }
+          }
         />
       )}
       </View>
