@@ -20,8 +20,8 @@ const filterData = (text) => {
   return filteredStops;
 };
 
-const StopSearch = ({setInput}) => {
-  const [text, setText] = useState('');
+const StopSearch = ({inputValue, setInput}) => {
+  const [text, setText] = useState(inputValue);
   const data = filterData(text);
 
   return (
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     padding: 5,
     // color: "#fff",
     // backgroundColor: "#000",
-    fontSize: 18, // Set the font size to 24
+    fontSize: 18,
   },
   input: {
     height: "100%",

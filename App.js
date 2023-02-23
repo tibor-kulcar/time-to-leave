@@ -25,7 +25,7 @@ export default function App() {
   const query = {
     names: inputValue,
     minutesBefore: 0,
-    minutesAfter: 120,
+    minutesAfter: 60,
     includeMetroTrains: true,
     preferredTimezone: 'Europe/Prague',
     mode: 'departures',
@@ -83,7 +83,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.search}>
-        <StopSearch setInput={setInputValue} />
+        <StopSearch inputValue={inputValue} setInput={setInputValue} />
         <TouchableOpacity
           onPress={() => getData()}
         >
@@ -162,10 +162,10 @@ const styles = StyleSheet.create({
   },
   textName: {
     // color: "#777777",
-    fontSize: 48, // Set the font size to 24
+    fontSize: 48,
   },
   textTime: {
     // color: "#fff",
-    fontSize: 48, // Set the font size to 24
+    fontSize: 48,
   },
 });
