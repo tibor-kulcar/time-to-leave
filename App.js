@@ -108,8 +108,13 @@ export default function App() {
 
             return (
               <>
-                {data && data.departures.length > 0 && diff > 3000*60 && (
-                  <View style={styles.item}>
+                {data && data.departures.length > 0 && diff > 0 && (
+                  <View style={[
+                    styles.item,
+                    diff < 3000*60 ?
+                      styles.textNameFaded:
+                      null
+                  ]}>
                     <Text style={styles.textName}>
                       {item.route.short_name} {item.stop.platform_code}
                     </Text>
@@ -166,6 +171,9 @@ const styles = StyleSheet.create({
   textName: {
     // color: "#777777",
     fontSize: 48,
+  },
+  textNameFaded: {
+    opacity: 0.3
   },
   textTime: {
     // color: "#fff",
