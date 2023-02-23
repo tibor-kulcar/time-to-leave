@@ -6,13 +6,7 @@ const twoDigits = new Intl.NumberFormat("en-US", {
   minimumIntegerDigits: 2,
 });
 
-const getTimeDiff = (timeString) => {
-  if (!timeString) return '??:??';
-
-  const now = new Date();
-  const given = new Date(timeString);
-
-  const diff = given - now;
+const getTimeDiff = (diff) => {
   const sec = (diff / 1000);
   const min = Math.floor(sec / 60);
   const diffSecs = Math.floor(sec - (min * 60));
@@ -20,11 +14,11 @@ const getTimeDiff = (timeString) => {
   return twoDigits.format(min) + ":" + twoDigits.format(diffSecs);
 }
 
-const EstimatedTimeArrival = ({time}) => {
+const EstimatedTimeArrival = ({diff}) => {
   return (
     <Text style={styles.textTime}>
-      {time && (
-        getTimeDiff(time?.arrival_timestamp.predicted)
+      {diff && (
+        getTimeDiff(diff)
       )}
     </Text>
   );
