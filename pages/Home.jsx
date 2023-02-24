@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import {
-  FlatList,
-  SafeAreaView,
-  StatusBar,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+
+import {
+  Container,
+  SearchBar,
+  Scroll,
+  StopsList,
+  Item,
+  ItemText,
+  Icon,
+} from '../style';
 
 import EstimatedTimeArrival from "../components/EstimatedTimeArrival.jsx";
 import StopSearch from "../components/StopSearch.jsx";
@@ -82,25 +87,23 @@ const Home = () => {
   }, [inputValue]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.search}>
+    <Container>
+      <SearchBar>
         <StopSearch inputValue={inputValue} setInput={setInputValue} />
         <TouchableOpacity
           onPress={() => getData()}
         >
-          <Ionicons name="reload" size={24} />
+          <Icon name="reload" size={24} />
         </TouchableOpacity>
-      </View>
+      </SearchBar>
 
-
-      <View style={styles.scroll}>
+      <Scroll>
       {isLoading ? (
-        <View style={styles.item}>
-          <Text style={styles.textTime}>Loading...</Text>
-        </View>
+        <Item>
+          <ItemText>Loading...</ItemText>
+        </Item>
       ) : (
-        <FlatList
-          style={styles.list}
+        <StopsList
           data={data.departures}
           renderItem={({item}) => {
             const now = new Date();
@@ -116,9 +119,9 @@ const Home = () => {
                       styles.textNameFaded :
                       null
                   ]}>
-                    <Text style={styles.textName}>
+                    <ItemText>
                       {item.route.short_name} {item.stop.platform_code}
-                    </Text>
+                    </ItemText>
 
                     <EstimatedTimeArrival diff={diff} />
                   </View>
@@ -128,57 +131,20 @@ const Home = () => {
           }}
         />
       )}
-      </View>
-    </SafeAreaView>
+      </Scroll>
+    </Container>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: StatusBar.currentHeight,
-    // backgroundColor: "#111",
-  },
-  scroll: {
-    flex: 1,
-    width: "100%",
-    marginTop: 20,
-    zIndex: 1,
-  },
-  search: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
-    width: "100%",
-    padding: 5,
-    zIndex: 10,
-  },
-  list: {
-    // borderColor: "#111",
-    zIndex: 100,
-    position: "relative",
-  },
   item: {
     flexDirection: "row",
     gap: 5,
     justifyContent: "space-between",
-    paddingHorizontal: 25,
-    // borderColor: "#111"
-  },
-  textName: {
-    // color: "#777777",
-    fontSize: 48,
+    paddingHorizontal: 15,
   },
   textNameFaded: {
     opacity: 0.3
-  },
-  textTime: {
-    // color: "#fff",
-    fontSize: 48,
   },
 });
 
