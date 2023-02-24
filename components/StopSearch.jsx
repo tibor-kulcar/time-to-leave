@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
+
 import pidStops from '../external_data/pid-stops.json';
+import { darkTheme, lightTheme } from '../theme';
+import {
+  Container,
+  SearchBar,
+  Scroll,
+  StopsList,
+  SearchItem,
+  SearchItemText,
+} from '../style';
+
+
+
 
 const stopNames = pidStops.map(stop => stop.stop_name);
 // remove duplicates
@@ -24,14 +37,28 @@ const StopSearch = ({inputValue, setInput}) => {
   const [text, setText] = useState(inputValue);
   const data = filterData(text);
 
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme
+
   return (
     <Autocomplete
       data={data}
       value={text}
-      containerStyle={styles.container}
-      inputContainerStyle={styles.inpuContainer}
-      listContainerStyle={styles.listContainer}
-      style={styles.input}
+      containerStyle={[styles.container, {
+        borderColor: theme['BACKGROUND_COLOR']
+      }]}
+      inputContainerStyle={[styles.inpuContainer, {
+        backgroundColor: theme['BACKGROUND_COLOR'],
+        borderColor: theme['BACKGROUND_COLOR']
+      }]}
+      listContainerStyle={[styles.listContainer, {
+        backgroundColor: theme['BACKGROUND_COLOR'],
+      }]}
+      style={[styles.input, {
+        color: theme['TEXT_COLOR'],
+        backgroundColor: theme['BACKGROUND_COLOR'],
+        borderColor: theme['BACKGROUND_COLOR']
+      }]}
       onChangeText={(txt) => {
         setText(txt);
       }}
@@ -40,15 +67,14 @@ const StopSearch = ({inputValue, setInput}) => {
         renderItem: ({ item }) => (
           <>
             {item && (
-            <TouchableOpacity
-              style={styles.item}
-              onPress={() => {
-                setText(item);
-                setInput(item);
-              }}
-            >
-              <Text style={styles.text}>{item}</Text>
-            </TouchableOpacity>
+              <SearchItem
+                onPress={() => {
+                  setText(item);
+                  setInput(item);
+                }}
+              >
+                <SearchItemText>{item}</SearchItemText>
+              </SearchItem>
             )}
           </>
         ),
@@ -61,44 +87,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 40,
+    width: "100%",
     paddingHorizontal: 10,
-    // borderColor: "#ff0000"
   },
   inpuContainer: {
     flex: 1,
     width: "100%",
-    paddingHorizontal: 10,
-    // backgroundColor: "#111",
-    borderColor: "transparent"
-  },
-  text: {
-    padding: 5,
-    // color: "#fff",
-    // backgroundColor: "#000",
-    fontSize: 18,
   },
   input: {
     height: "100%",
     flex: 1,
     fontSize: 24,
-    // color: "#fff",
-    // backgroundColor: "#000",
-    paddingHorizontal: 10,
     paddingVertical: 5,
   },
   listContainer: {
     position: "relative",
-    // backgroundColor: "#000",
-    // borderColor: "#111",
-    borderColor: "transparent"
-
   },
-  item: {
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    // backgroundColor: "#000",
-    borderColor: "#ff0000",
-  }
 });
+
 
 export default StopSearch;

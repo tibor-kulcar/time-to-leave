@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+
+import { ItemText } from '../style';
 
 const twoDigits = new Intl.NumberFormat("en-US", {
   style: "decimal",
@@ -16,19 +17,12 @@ const getTimeDiff = (diff) => {
 
 const EstimatedTimeArrival = ({diff}) => {
   return (
-    <Text style={styles.textTime}>
+    <ItemText>
       {diff && (
         getTimeDiff(diff)
       )}
-    </Text>
+    </ItemText>
   );
 };
-
-const styles = StyleSheet.create({
-  textTime: {
-    // color: "#fff",
-    fontSize: 48,
-  }
-});
 
 export default EstimatedTimeArrival;
