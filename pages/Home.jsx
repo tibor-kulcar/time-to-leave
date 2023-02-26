@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { REACT_APP_API_KEY } from "@env"
 import {
   Container,
   SearchBar,
@@ -26,8 +26,7 @@ const Home = () => {
   const [inputValue, setInputValue] = useState('Perunova');
 
   const URL = "https://api.golemio.cz/v2/pid/departureboards";
-  // TDOD
-  const API_TOKEN = "***REMOVED***";
+
   const query = {
     names: inputValue,
     minutesBefore: 0,
@@ -54,7 +53,7 @@ const Home = () => {
       const response = await fetch(URL + '?' + getQueryString(query), {
         method: "GET",
         headers: {
-          "X-Access-Token": API_TOKEN,
+          "X-Access-Token": REACT_APP_API_KEY,
         },
       });
       const json = await response.json();
