@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, useColorScheme, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
-import { withTheme, ThemeProps, DefaultTheme } from 'styled-components/native';
-import { SearchItem, SearchItemText, ItemText } from './Styled';
+import { withTheme, DefaultTheme } from 'styled-components/native';
+import { SearchItem, SearchItemText } from './Styled';
+import { useDeparturesStore } from '../store';
 
 import pidStops from '../external_data/pid-stops.json';
 
@@ -31,11 +32,11 @@ const filterData = ({ text }:{ text:string }) => {
 
 interface StopSearchProps {
   theme: DefaultTheme;
-  setInput: (newVal: string) => void;
 }
 
-const StopSearch = ({ theme, setInput }: StopSearchProps) => {
-  const [text, setText] = useState('Perunova');
+const StopSearch = ({ theme }: StopSearchProps) => {
+  const { searchString } = useDeparturesStore();
+  const [text, setText] = useState(searchString);
   const data = filterData({text: text});
 
   return (
@@ -53,7 +54,7 @@ const StopSearch = ({ theme, setInput }: StopSearchProps) => {
               <SearchItem
                 onPress={() => {
                   setText(item);
-                  setInput(item);
+                  useDeparturesStore.setState({ searchString: item });
                 }}
               >
                 <SearchItemText>{item}</SearchItemText>
