@@ -35,7 +35,7 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => ({
   isLoading: false,
   searchString: 'Jana Masaryka',
 
-  setSearchString: () => set((state) => ({ searchString: state.searchString })),
+  setSearchString: (searchStringValue: string) => set(() => ({ searchString: searchStringValue })),
 
   fetchDepartures: async () => {
     const query = {

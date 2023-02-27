@@ -35,7 +35,7 @@ interface StopSearchProps {
 }
 
 const StopSearch = ({ theme }: StopSearchProps) => {
-  const { searchString } = useDeparturesStore();
+  const { searchString, setSearchString } = useDeparturesStore();
   const [text, setText] = useState(searchString);
   const data = filterData({text: text});
 
@@ -54,7 +54,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
               <SearchItem
                 onPress={() => {
                   setText(item);
-                  useDeparturesStore.setState({ searchString: item });
+                  setSearchString(item);
                 }}
               >
                 <SearchItemText>{item}</SearchItemText>
