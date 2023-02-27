@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-import { REACT_APP_API_KEY } from "@env"
-
-const URL = "https://api.golemio.cz/v2/pid/departureboards";
+import { REACT_APP_API_KEY, REACT_APP_API_URL } from "@env"
 
 const getQueryString = (queries: {[key: string]: any}): string => {
   return Object.keys(queries).reduce((result: string[], key: string) => {
@@ -56,7 +54,7 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => ({
     };
 
     try {
-      const response = await fetch(URL + '?' + getQueryString(query), {
+      const response = await fetch(REACT_APP_API_URL + '?' + getQueryString(query), {
         method: "GET",
         headers: {
           "X-Access-Token": REACT_APP_API_KEY,
