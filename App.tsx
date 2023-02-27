@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components/native";
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import { darkTheme } from './theme/DarkTheme';
+import { darkTheme } from './theme/darkTheme';
 import { lightTheme } from './theme/lightTheme';
 
 export default function App() {
