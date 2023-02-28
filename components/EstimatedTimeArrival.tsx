@@ -28,4 +28,4 @@ const EstimatedTimeArrival = ({ diff }: EstimatedTimeArrivalProps) => {
   );
 };
 
-export default EstimatedTimeArrival;
+export default (EstimatedTimeArrival);

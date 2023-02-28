@@ -7,5 +7,6 @@ export const darkTheme: DefaultTheme = {
     title: '#fffff',
     background: '#121212',
     text: '#ffffff',
+    borderColor: '#777',
   }
 }

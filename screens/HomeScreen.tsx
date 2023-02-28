@@ -11,19 +11,23 @@ import {
   ItemText,
 } from '../components/Styled';
 import { RootStackScreenProps } from '../types';
-import StopSearch from '../components/StopSearch'
-import EstimatedTimeArrival from '../components/EstimatedTimeArrival'
+import {
+  EstimatedTimeArrival,
+  StopSearch
+} from '../components'
+
 import { useDeparturesStore } from '../store';
 
 export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>) {
   const [counter, setCounter] = useState(0);
-
   const {
     departures,
     isLoading,
     searchString,
+    walkingTime,
     fetchDepartures,
   } = useDeparturesStore();
+  const walkingTimeInMilisecs = parseInt(walkingTime)*1000*60;
 
   useEffect(() => {
     if (counter == 0) fetchDepartures();
@@ -51,7 +55,7 @@ export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>)
         <TouchableOpacity
           onPress={() => fetchDepartures()}
         >
-          <Icon name="reload" size={24} />
+          <Icon name="reload" size={23} />
         </TouchableOpacity>
       </SearchBar>
 
@@ -71,7 +75,7 @@ export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>)
             return (
               <>
                 {departures && departures.length > 0 && diff > 0 && (
-                  <Item faded={diff < 3000*60}>
+                  <Item faded={diff < walkingTimeInMilisecs}>
                     <ItemText>
                       {item.route.short_name} {item.stop.platform_code}
                     </ItemText>

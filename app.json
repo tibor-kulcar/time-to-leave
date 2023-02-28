@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "departures",
-    "slug": "departures",
+    "name": "Time to Leave",
+    "slug": "time-to-leave",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
