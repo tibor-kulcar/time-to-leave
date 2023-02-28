@@ -7,5 +7,6 @@ export const lightTheme: DefaultTheme = {
     title: '#000',
     background: '#fafafa',
     text: '#000',
+    borderColor: '#adadad',
   }
 }

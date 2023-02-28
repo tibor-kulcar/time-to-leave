@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextInput renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#ffffff",
+          "fontSize": 12,
+          "marginBottom": 5,
+          "textTransform": "uppercase",
+        },
+      ]
+    }
+  />
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#121212",
+          "borderColor": "#777",
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "color": "#ffffff",
+          "fontSize": 20,
+          "paddingBottom": 5,
+          "paddingLeft": 10,
+          "paddingRight": 10,
+          "paddingTop": 5,
+        },
+      ]
+    }
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#ffffff",
+          "fontSize": 12,
+          "marginTop": 5,
+        },
+      ]
+    }
+  />
+</View>
+`;

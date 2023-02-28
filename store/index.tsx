@@ -28,8 +28,10 @@ interface DeparturesStore {
   departures: Departure[];
   isLoading: boolean;
   searchString: string;
+  walkingTime: string;
   fetchDepartures: () => Promise<void>;
   setSearchString: (newVal: string) => void;
+  setWalkingTime: (newVal: string) => void;
 }
 
 export const useDeparturesStore = create<DeparturesStore>((set, get) => {
@@ -39,14 +41,26 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => {
     }
   });
 
+  AsyncStorage.getItem('walkingTime').then((walkingTime) => {
+    if (walkingTime !== null) {
+      set(() => ({ walkingTime }));
+    }
+  });
+
   return {
     departures: [],
     isLoading: false,
     searchString: '',
+    walkingTime: '3',
 
     setSearchString: async (searchStringValue: string) => {
       await AsyncStorage.setItem('searchString', searchStringValue);
       set(() => ({ searchString: searchStringValue }));
+    },
+
+    setWalkingTime: async (walkingTimeValue: string) => {
+      await AsyncStorage.setItem('walkingTime', walkingTimeValue);
+      set(() => ({ walkingTime: walkingTimeValue }));
     },
 
     fetchDepartures: async () => {

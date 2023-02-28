@@ -8,6 +8,7 @@ import 'styled-components';
       title: string;
       background: string;
       text: string;
+      borderColor: string;
     };
   }
 }

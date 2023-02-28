@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
-import { SearchItem, SearchItemText } from './Styled';
-import { useDeparturesStore } from '../store';
 
-import pidStops from '../external_data/pid-stops.json';
+import { SearchItem, SearchItemText } from './styles';
+import { useDeparturesStore } from '../../store';
+import pidStops from '../../external_data/pid-stops.json';
 
 interface Stop {
   stop_name: string;
