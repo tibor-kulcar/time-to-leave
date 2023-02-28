@@ -38,11 +38,13 @@ exports[`TextInput renders correctly 1`] = `
       ]
     }
   />
-  <View
+  <Text
     style={
       Array [
         Object {
-          "backgroundColor": "#121212",
+          "color": "#ffffff",
+          "fontSize": 12,
+          "marginTop": 5,
         },
       ]
     }

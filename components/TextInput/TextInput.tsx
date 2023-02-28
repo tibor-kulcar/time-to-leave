@@ -1,13 +1,11 @@
 import React from 'react';
-import { TextInputProps } from 'react-native'
+import { TextInputProps, Text } from 'react-native'
 import {
   InputContainer,
   Input,
   InputLabel,
   InputMessage
 } from './styles';
-
-import { View } from '../Styled'
 
 interface StyledTextInputProps extends TextInputProps {
   label?: string;
@@ -19,9 +17,7 @@ const TextInput = ({ label, error, ...rest }: StyledTextInputProps) => {
     <InputContainer>
       <InputLabel>{ label }</InputLabel>
       <Input {...rest} />
-      <View>
-        {error && <InputMessage>{ error }</InputMessage>}
-      </View>
+      <InputMessage>{ error }</InputMessage>
     </InputContainer>
   );
 };
