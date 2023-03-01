@@ -1,28 +1,24 @@
 import { useState, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
 
 import {
   Container,
-  Icon,
   Item,
-  SearchBar,
+  ItemText,
   Scroll,
   StopsList,
-  ItemText,
 } from '../components/Styled';
-import { RootStackScreenProps } from '../types';
 import {
   EstimatedTimeArrival,
-  StopSearch
+  SearchBar,
 } from '../components'
 
+import { RootStackScreenProps } from '../types';
 import { useDeparturesStore } from '../store';
 
 export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>) {
   const [counter, setCounter] = useState(0);
   const {
     departures,
-    isLoading,
     searchString,
     walkingTime,
     fetchDepartures,
@@ -50,21 +46,9 @@ export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>)
 
   return (
     <Container>
-      <SearchBar>
-        <StopSearch />
-        <TouchableOpacity
-          onPress={() => fetchDepartures()}
-        >
-          <Icon name="reload" size={23} />
-        </TouchableOpacity>
-      </SearchBar>
+      <SearchBar />
 
       <Scroll>
-      {isLoading ? (
-        <Item>
-          <ItemText>Loading...</ItemText>
-        </Item>
-      ) : (
         <StopsList
           data={departures}
           renderItem={({ item }: { item: any }) => {
@@ -87,7 +71,6 @@ export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>)
             )
           }}
         />
-      )}
       </Scroll>
     </Container >
   );

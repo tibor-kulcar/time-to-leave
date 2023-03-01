@@ -80,6 +80,7 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => {
       };
 
       try {
+        set({ isLoading: true })
         const response = await fetch(REACT_APP_API_URL + '?' + getQueryString(query), {
           method: "GET",
           headers: {

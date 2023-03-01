@@ -18,17 +18,6 @@ export const Container = styled.SafeAreaView`
   padding-top: ${Constants.statusBarHeight + 10 + 'px'};
 `;
 
-export const SearchBar = styled.View`
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 16px 5px 5px;
-  z-index: 10;
-  gap: 16px;
-`;
-
 export const Scroll = styled.View`
   flex: 1;
   width: 100%;
@@ -58,6 +47,5 @@ export const ItemText = styled.Text`
 `
 
 export const Icon = styled(Ionicons)`
-  margin-right: 5px;
   color: ${(props) => props.theme.colors.text};
 `
