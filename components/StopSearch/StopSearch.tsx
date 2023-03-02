@@ -4,51 +4,27 @@ import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
 import { SearchItem, SearchItemText } from './styles';
-import { useDeparturesStore } from '../../store';
+import { usePersistantStore } from '../../store';
 import { useDebounce } from '../../hooks/useDebounce';
-import pidStops from '../../external_data/pid-stops.json';
-
-interface Stop {
-  stop_name: string;
-}
-
-const pidStopsArray: Stop[] = pidStops as Stop[]; // Type assertion to cast JSON to Stop[]
-
-const stopNames = pidStopsArray
-  ? pidStopsArray.map(stop => stop.stop_name)
-  : [];
-// remove duplicates
-const stops = [...new Set(stopNames)];
+import stops from '../../external_data/pid-stops.json';
 
 const normalize = ({ str }:{ str:string }) => {
   const lwrcs = str ? str.toLowerCase() : '';
   return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 }
 
-// const filterData = ({ text }:{ text:string }) => {
-//   // console.log('filterData filterData filterData filterData',text)
-//   if (text == '') return [''];
-
-//   const filteredStops = stops
-//     .filter(stop => normalize({ str: stop })
-//     .includes(normalize({ str: text })));
-
-//   if (text == filteredStops[0]) return[''];
-//   return filteredStops;
-// };
-
-
 interface StopSearchProps {
   theme: DefaultTheme;
 }
 
 const StopSearch = ({ theme }: StopSearchProps) => {
-  const { searchString, setSearchString } = useDeparturesStore();
+  console.log("Stopsearch")
+  const { searchString, setSearchString } = usePersistantStore();
   const [text, setText] = useState(searchString);
   const debouncedValue = useDebounce(text, 300);
 
   const getData = useCallback(({ text }:{ text:string }) => {
-    if (text == '') return [''];
+    if (text == '') return[''];
 
     const filteredStops = stops
       .filter(stop => normalize({ str: stop })
@@ -61,14 +37,13 @@ const StopSearch = ({ theme }: StopSearchProps) => {
   const data = getData({text: debouncedValue});
 
   const renderItem = function (item:string) {
-    console.log('item item item item', item)
     return (
       <>
         {item && (
           <SearchItem
             onPress={() => {
               setText(item);
-              setSearchString(item);
+              setSearchString(item)
             }}
           >
             <SearchItemText>{item}</SearchItemText>
@@ -139,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(withTheme(StopSearch));
+export default withTheme(StopSearch);

@@ -5,7 +5,7 @@ import {
   Scroll,
 } from '../Styled';
 import EstimatedTimeArrival from '../EstimatedTimeArrival'
-import { useDeparturesStore } from '../../store';
+import { useDeparturesStore, usePersistantStore } from '../../store';
 import { useClock } from '../../hooks/useClock';
 import { StopsList } from './styles';
 
@@ -15,9 +15,11 @@ const DepartureBoard = () => {
     fetchDepartures,
     fetchTime,
     isLoading,
+  } = useDeparturesStore();
+  const {
     searchString,
     walkingTime
-  } = useDeparturesStore();
+  } = usePersistantStore();
   const walkingTimeInMilisecs = parseInt(walkingTime)*1000*60;
 
   const lastFetch = fetchTime.getTime();
