@@ -1,11 +1,10 @@
-import React, { useState, memo, useCallback, useMemo } from 'react';
+import React, { useState, memo, useCallback, useMemo, useEffect } from 'react';
 import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
 import { SearchItem, SearchItemText } from './styles';
 import { usePersistantStore } from '../../store';
-import { useDebounce } from '../../hooks/useDebounce';
 import stops from '../../external_data/pid-stops.json';
 
 const normalize = ({ str }:{ str:string }) => {
@@ -21,7 +20,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
   console.log("Stopsearch")
   const { searchString, setSearchString } = usePersistantStore();
   const [text, setText] = useState(searchString);
-  const debouncedValue = useDebounce(text, 300);
+  const [data, setData] = useState(['']);
 
 
   const getData = ({ text }:{ text:string }, { maxResults }:{ maxResults:number }) => {
@@ -35,7 +34,16 @@ const StopSearch = ({ theme }: StopSearchProps) => {
     return filteredStops;
   };
 
-  const data = getData({text: debouncedValue},{maxResults: 20});
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const debouncedData = getData({text: text},{maxResults: 20})
+      setData(debouncedData);
+    }, 250)
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [text]);
 
   const renderItem = function (item:string) {
     console.log('item')

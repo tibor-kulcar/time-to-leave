@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { REACT_APP_API_KEY, REACT_APP_API_URL } from "@env"
-import { usePersistantStore } from './';
+import usePersistantStore from './PersistantStore';
 
 const getQueryString = (queries: {[key: string]: any}): string => {
   return Object.keys(queries).reduce((result: string[], key: string) => {
