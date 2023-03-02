@@ -1,43 +1,57 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, memo, useCallback } from 'react';
+import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
 import { SearchItem, SearchItemText } from './styles';
-import { useDeparturesStore } from '../../store';
-import pidStops from '../../external_data/pid-stops.json';
-
-interface Stop {
-  stop_name: string;
-}
-
-const pidStopsArray: Stop[] = pidStops as Stop[]; // Type assertion to cast JSON to Stop[]
-
-const stopNames = pidStopsArray ? pidStopsArray.map(stop => stop.stop_name) : [];
-// remove duplicates
-const stops = [...new Set(stopNames)];
+import { usePersistantStore } from '../../store';
+import { useDebounce } from '../../hooks/useDebounce';
+import stops from '../../external_data/pid-stops.json';
 
 const normalize = ({ str }:{ str:string }) => {
   const lwrcs = str ? str.toLowerCase() : '';
   return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 }
 
-const filterData = ({ text }:{ text:string }) => {
-  if (text == '') return [''];
-
-  const filteredStops = stops.filter(stop => normalize({ str: stop }).includes(normalize({ str: text })));
-  if (text == filteredStops[0]) return[''];
-  return filteredStops;
-};
-
 interface StopSearchProps {
   theme: DefaultTheme;
 }
 
 const StopSearch = ({ theme }: StopSearchProps) => {
-  const { searchString, setSearchString } = useDeparturesStore();
+  console.log("Stopsearch")
+  const { searchString, setSearchString } = usePersistantStore();
   const [text, setText] = useState(searchString);
-  const data = filterData({text: text});
+  const debouncedValue = useDebounce(text, 300);
+
+  const getData = useCallback(({ text }:{ text:string }) => {
+    if (text == '') return[''];
+
+    const filteredStops = stops
+      .filter(stop => normalize({ str: stop })
+      .includes(normalize({ str: text })));
+
+    if (text == filteredStops[0]) return[''];
+    return filteredStops;
+  }, []);
+
+  const data = getData({text: debouncedValue});
+
+  const renderItem = function (item:string) {
+    return (
+      <>
+        {item && (
+          <SearchItem
+            onPress={() => {
+              setText(item);
+              setSearchString(item)
+            }}
+          >
+            <SearchItemText>{item}</SearchItemText>
+          </SearchItem>
+        )}
+      </>
+    )
+  };
 
   return (
     <Autocomplete
@@ -47,23 +61,8 @@ const StopSearch = ({ theme }: StopSearchProps) => {
         setText(txt);
       }}
       flatListProps={{
+        renderItem: ({item}) => renderItem(item),
         keyExtractor: (_) => _,
-        renderItem: ({ item }) => {
-          // console.log(item)
-          return (
-          <>
-            {item && (
-              <SearchItem
-                onPress={() => {
-                  setText(item);
-                  setSearchString(item);
-                }}
-              >
-                <SearchItemText>{item}</SearchItemText>
-              </SearchItem>
-            )}
-          </>
-        )},
       }}
       containerStyle={[
         styles.container,

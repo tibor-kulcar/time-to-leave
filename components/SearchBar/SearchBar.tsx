@@ -1,38 +1,21 @@
 
 import React from 'react';
 import { withTheme, DefaultTheme } from 'styled-components/native';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import { SearchView } from './styles';
-import { Icon} from '../Styled';
-import { StopSearch } from '../StopSearch/'
-
-import { useDeparturesStore } from '../../store';
+import { StopSearch } from '../StopSearch'
+import { LoadingIndicator } from '../LoadingIndicator';
 
 interface SearchBarProps {
   theme: DefaultTheme;
 }
 
 const SearchBar = ({ theme }: SearchBarProps) => {
-  const {
-    isLoading,
-    fetchDepartures,
-   } = useDeparturesStore();
-
+  console.log('SearchBar component entry')
   return (
     <SearchView>
       <StopSearch />
-
-      {isLoading
-        ? <ActivityIndicator color={theme.colors.text} />
-        : (
-          <TouchableOpacity
-            onPress={() => fetchDepartures()}
-          >
-            <Icon name="reload" size={20} />
-          </TouchableOpacity>
-        )
-      }
+      <LoadingIndicator />
     </SearchView>
   )
 };

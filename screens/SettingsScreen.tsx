@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDeparturesStore } from '../store';
+import { usePersistantStore } from '../store';
 
 import {
   Container,
@@ -16,7 +16,7 @@ export default function SettingsScreen({}: RootStackScreenProps<'Settings'>) {
   const {
     walkingTime,
     setWalkingTime,
-  } = useDeparturesStore();
+  } = usePersistantStore();
   const [error, setError] = useState('');
   const [inputValue, setInputValue] = useState(walkingTime);
 
