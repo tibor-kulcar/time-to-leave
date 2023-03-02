@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
@@ -25,17 +25,18 @@ const normalize = ({ str }:{ str:string }) => {
   return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 }
 
-const filterData = ({ text }:{ text:string }) => {
-  console.log('filterData filterData filterData filterData',text)
-  if (text == '') return [''];
+// const filterData = ({ text }:{ text:string }) => {
+//   // console.log('filterData filterData filterData filterData',text)
+//   if (text == '') return [''];
 
-  const filteredStops = stops
-    .filter(stop => normalize({ str: stop })
-    .includes(normalize({ str: text })));
+//   const filteredStops = stops
+//     .filter(stop => normalize({ str: stop })
+//     .includes(normalize({ str: text })));
 
-  if (text == filteredStops[0]) return[''];
-  return filteredStops;
-};
+//   if (text == filteredStops[0]) return[''];
+//   return filteredStops;
+// };
+
 
 interface StopSearchProps {
   theme: DefaultTheme;
@@ -44,8 +45,20 @@ interface StopSearchProps {
 const StopSearch = ({ theme }: StopSearchProps) => {
   const { searchString, setSearchString } = useDeparturesStore();
   const [text, setText] = useState(searchString);
-  const debouncedValue = useDebounce(text, 300)
-  const data = filterData({text: debouncedValue});
+  const debouncedValue = useDebounce(text, 300);
+
+  const getData = useCallback(({ text }:{ text:string }) => {
+    if (text == '') return [''];
+
+    const filteredStops = stops
+      .filter(stop => normalize({ str: stop })
+      .includes(normalize({ str: text })));
+
+    if (text == filteredStops[0]) return[''];
+    return filteredStops;
+  }, []);
+
+  const data = getData({text: debouncedValue});
 
   const renderItem = function (item:string) {
     console.log('item item item item', item)
@@ -75,7 +88,6 @@ const StopSearch = ({ theme }: StopSearchProps) => {
       flatListProps={{
         renderItem: ({item}) => renderItem(item),
         keyExtractor: (_) => _,
-        windowSize: 2
       }}
       containerStyle={[
         styles.container,

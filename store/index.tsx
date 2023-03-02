@@ -9,23 +9,8 @@ const getQueryString = (queries: {[key: string]: any}): string => {
   }, []).join('&');
 };
 
-interface Departure {
-  names: string,
-  minutesBefore: number,
-  minutesAfter: number,
-  includeMetroTrains: boolean,
-  preferredTimezone: string,
-  mode: string,
-  order: string,
-  filter: string,
-  skip: string,
-  limit: number,
-  total: number,
-  offset: number,
-}
-
 interface DeparturesStore {
-  departures: Departure[];
+  departures: [];
   fetchDepartures: () => Promise<void>;
   fetchTime: Date;
   isLoading: boolean;
@@ -91,6 +76,7 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => {
           },
         });
         const json = await response.json();
+        console.log(json);
         set({ departures: json.departures })
       } catch (error) {
         console.error(error);

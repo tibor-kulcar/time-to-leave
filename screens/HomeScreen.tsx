@@ -1,21 +1,11 @@
-import { useEffect } from 'react';
-
+import React, { memo } from 'react';
 import { Container } from '../components/Styled';
 import { SearchBar, DepartureBoard } from '../components'
 
 import { RootStackScreenProps } from '../types';
-import { useDeparturesStore } from '../store';
 
-export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>) {
-  const {
-    isLoading,
-    searchString,
-    fetchDepartures,
-  } = useDeparturesStore();
-
-  useEffect(() => {
-    if (searchString && !isLoading) fetchDepartures();
-  }, [searchString]);
+function HomeScreen({ navigation }: RootStackScreenProps<'Root'>) {
+  console.log('HomeScreen rendered')
 
   return (
     <Container>
@@ -24,3 +14,5 @@ export default function HomeScreen({ navigation }: RootStackScreenProps<'Root'>)
     </Container >
   );
 }
+
+export default memo(HomeScreen);

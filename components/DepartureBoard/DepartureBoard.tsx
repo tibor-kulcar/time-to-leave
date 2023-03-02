@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   Item,
   ItemText,
@@ -14,6 +14,8 @@ const DepartureBoard = () => {
     departures,
     fetchDepartures,
     fetchTime,
+    isLoading,
+    searchString,
     walkingTime
   } = useDeparturesStore();
   const walkingTimeInMilisecs = parseInt(walkingTime)*1000*60;
@@ -27,28 +29,38 @@ const DepartureBoard = () => {
     }
   }, [now]);
 
+  useEffect(() => {
+    if (searchString && !isLoading) {
+      fetchDepartures()
+    }
+  }, [searchString]);
+
+
+  const renderItem = function ({ item }: { item: any }) {
+    // console.log(item)
+    const prediction = new Date(item.arrival_timestamp.predicted).getTime();
+    const diff = prediction - now;
+
+    return (
+      <>
+        {departures && departures.length > 0 && diff > 0 && (
+          <Item faded={diff < walkingTimeInMilisecs}>
+            <ItemText>
+              {item.route.short_name} {item.stop.platform_code}
+            </ItemText>
+
+            <EstimatedTimeArrival diff={diff} />
+          </Item>
+        )}
+      </>
+    )
+  };
+
   return (
     <Scroll>
       <StopsList
         data={departures}
-        renderItem={({ item }: { item: any }) => {
-          const prediction = new Date(item.arrival_timestamp.predicted).getTime();
-          const diff = prediction - now;
-
-          return (
-            <>
-              {departures && departures.length > 0 && diff > 0 && (
-                <Item faded={diff < walkingTimeInMilisecs}>
-                  <ItemText>
-                    {item.route.short_name} {item.stop.platform_code}
-                  </ItemText>
-
-                  <EstimatedTimeArrival diff={diff} />
-                </Item>
-              )}
-            </>
-          )
-        }}
+        renderItem={renderItem}
       />
     </Scroll>
   );
