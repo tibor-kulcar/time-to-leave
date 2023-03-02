@@ -48,7 +48,9 @@ const StopSearch = ({ theme }: StopSearchProps) => {
       }}
       flatListProps={{
         keyExtractor: (_) => _,
-        renderItem: ({ item }) => (
+        renderItem: ({ item }) => {
+          // console.log(item)
+          return (
           <>
             {item && (
               <SearchItem
@@ -61,7 +63,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
               </SearchItem>
             )}
           </>
-        ),
+        )},
       }}
       containerStyle={[
         styles.container,

@@ -26,11 +26,13 @@ interface Departure {
 
 interface DeparturesStore {
   departures: Departure[];
+  fetchDepartures: () => Promise<void>;
+  fetchTime: Date;
   isLoading: boolean;
   searchString: string;
-  walkingTime: string;
-  fetchDepartures: () => Promise<void>;
+  setFetchtime: (newVal: Date) => void;
   setSearchString: (newVal: string) => void;
+  walkingTime: string;
   setWalkingTime: (newVal: string) => void;
 }
 
@@ -52,6 +54,7 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => {
     isLoading: false,
     searchString: '',
     walkingTime: '3',
+    fetchTime: new Date(),
 
     setSearchString: async (searchStringValue: string) => {
       await AsyncStorage.setItem('searchString', searchStringValue);
@@ -93,7 +96,12 @@ export const useDeparturesStore = create<DeparturesStore>((set, get) => {
         console.error(error);
       } finally {
         set({ isLoading: false })
+        set({ fetchTime: new Date() })
       }
+    },
+
+    setFetchtime: (fetchTimeValue: Date) => {
+      set(() => ({ fetchTime: fetchTimeValue }));
     },
   }
 });

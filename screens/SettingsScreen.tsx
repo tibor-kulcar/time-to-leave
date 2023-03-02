@@ -45,8 +45,6 @@ export default function SettingsScreen({}: RootStackScreenProps<'Settings'>) {
             onChangeText={handleTextInputChange}
             error={error}
           />
-          <View>
-          </View>
         </View>
       </Scroll>
     </Container >

@@ -26,11 +26,6 @@ export const Scroll = styled.View`
   z-index: 1;
 `;
 
-export const StopsList = styled.FlatList`
-  position: relative;
-  z-index: 100;
-`;
-
 interface ItemProps {
   faded?: boolean;
 }
