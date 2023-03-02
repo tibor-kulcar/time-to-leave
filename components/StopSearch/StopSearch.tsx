@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, memo } from 'react';
+import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
 import { SearchItem, SearchItemText } from './styles';
 import { useDeparturesStore } from '../../store';
+import { useDebounce } from '../../hooks/useDebounce';
 import pidStops from '../../external_data/pid-stops.json';
 
 interface Stop {
@@ -13,7 +14,9 @@ interface Stop {
 
 const pidStopsArray: Stop[] = pidStops as Stop[]; // Type assertion to cast JSON to Stop[]
 
-const stopNames = pidStopsArray ? pidStopsArray.map(stop => stop.stop_name) : [];
+const stopNames = pidStopsArray
+  ? pidStopsArray.map(stop => stop.stop_name)
+  : [];
 // remove duplicates
 const stops = [...new Set(stopNames)];
 
@@ -23,9 +26,13 @@ const normalize = ({ str }:{ str:string }) => {
 }
 
 const filterData = ({ text }:{ text:string }) => {
+  console.log('filterData filterData filterData filterData',text)
   if (text == '') return [''];
 
-  const filteredStops = stops.filter(stop => normalize({ str: stop }).includes(normalize({ str: text })));
+  const filteredStops = stops
+    .filter(stop => normalize({ str: stop })
+    .includes(normalize({ str: text })));
+
   if (text == filteredStops[0]) return[''];
   return filteredStops;
 };
@@ -37,7 +44,26 @@ interface StopSearchProps {
 const StopSearch = ({ theme }: StopSearchProps) => {
   const { searchString, setSearchString } = useDeparturesStore();
   const [text, setText] = useState(searchString);
-  const data = filterData({text: text});
+  const debouncedValue = useDebounce(text, 300)
+  const data = filterData({text: debouncedValue});
+
+  const renderItem = function (item:string) {
+    console.log('item item item item', item)
+    return (
+      <>
+        {item && (
+          <SearchItem
+            onPress={() => {
+              setText(item);
+              setSearchString(item);
+            }}
+          >
+            <SearchItemText>{item}</SearchItemText>
+          </SearchItem>
+        )}
+      </>
+    )
+  };
 
   return (
     <Autocomplete
@@ -47,23 +73,9 @@ const StopSearch = ({ theme }: StopSearchProps) => {
         setText(txt);
       }}
       flatListProps={{
+        renderItem: ({item}) => renderItem(item),
         keyExtractor: (_) => _,
-        renderItem: ({ item }) => {
-          // console.log(item)
-          return (
-          <>
-            {item && (
-              <SearchItem
-                onPress={() => {
-                  setText(item);
-                  setSearchString(item);
-                }}
-              >
-                <SearchItemText>{item}</SearchItemText>
-              </SearchItem>
-            )}
-          </>
-        )},
+        windowSize: 2
       }}
       containerStyle={[
         styles.container,
@@ -115,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(StopSearch);
+export default memo(withTheme(StopSearch));
