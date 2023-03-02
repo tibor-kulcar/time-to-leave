@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback } from 'react';
+import React, { useState, memo, useCallback, useMemo } from 'react';
 import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
 import Autocomplete from 'react-native-autocomplete-input';
 import { withTheme, DefaultTheme } from 'styled-components/native';
@@ -23,20 +23,22 @@ const StopSearch = ({ theme }: StopSearchProps) => {
   const [text, setText] = useState(searchString);
   const debouncedValue = useDebounce(text, 300);
 
-  const getData = useCallback(({ text }:{ text:string }) => {
-    if (text == '') return[''];
+
+  const getData = ({ text }:{ text:string }, { maxResults }:{ maxResults:number }) => {
+    if (text == '') return [''];
 
     const filteredStops = stops
       .filter(stop => normalize({ str: stop })
-      .includes(normalize({ str: text })));
-
+      .includes(normalize({ str: text })))
+      .slice(0, maxResults);
     if (text == filteredStops[0]) return[''];
     return filteredStops;
-  }, []);
+  };
 
-  const data = getData({text: debouncedValue});
+  const data = getData({text: debouncedValue},{maxResults: 20});
 
   const renderItem = function (item:string) {
+    console.log('item')
     return (
       <>
         {item && (
@@ -57,6 +59,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
     <Autocomplete
       data={data}
       value={text}
+      placeholder={searchString}
       onChangeText={(txt) => {
         setText(txt);
       }}
