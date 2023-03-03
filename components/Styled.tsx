@@ -15,13 +15,13 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   // align-items: center;
   // justify-content: center;
-  padding-top: ${Constants.statusBarHeight + 10 + 'px'};
+  padding-top: ${Constants.statusBarHeight + 8 + 'px'};
 `;
 
 export const Scroll = styled.View`
   flex: 1;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 16px;
   padding-top: ${Constants.statusBarHeight/2 + 'px'};
   z-index: 1;
 `;
@@ -42,5 +42,5 @@ export const ItemText = styled.Text`
 `
 
 export const Icon = styled(Ionicons)`
-  color: ${(props) => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};c
 `

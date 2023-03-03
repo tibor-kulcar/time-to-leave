@@ -13,10 +13,7 @@ interface PersistantStore {
 const usePersistantStore = create(persist<PersistantStore>(
   (set) => ({
     searchString: {id:'', title:''},
-    setSearchString: (newVal:TAutocompleteDropdownItem) => {
-      console.log(newVal)
-      set({ searchString: newVal });
-    },
+    setSearchString: (newVal:TAutocompleteDropdownItem) => set({ searchString: newVal }),
     walkingTime: '3',
     setWalkingTime: (walkingTimeValue:string) => set({ walkingTime: walkingTimeValue }),
   }),
