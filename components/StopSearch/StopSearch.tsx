@@ -1,13 +1,15 @@
-import React, { useState, memo, useCallback, useMemo, useEffect } from 'react';
-import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
-import Autocomplete from 'react-native-autocomplete-input';
+import React, { useState } from 'react';
+import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
-import { SearchItem, SearchItemText } from './styles';
+import { Icon } from '../Styled'
+import { ItemSeparator } from './styles'
+
 import { usePersistantStore } from '../../store';
 import stops from '../../external_data/pid-stops.json';
 
-const normalize = ({ str }:{ str:string }) => {
+
+const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
   return lwrcs.normalize("NFD").replace(/\p{Diacritic}/gu, "")
 }
@@ -17,112 +19,67 @@ interface StopSearchProps {
 }
 
 const StopSearch = ({ theme }: StopSearchProps) => {
-  console.log("Stopsearch")
   const { searchString, setSearchString } = usePersistantStore();
-  const [text, setText] = useState(searchString);
-  const [data, setData] = useState(['']);
+  const [suggestionsList, setSuggestionsList] = useState(stops);
 
+  const handleOnSelect = (item:TAutocompleteDropdownItem) => {
+    if (item) setSearchString(item)
+  }
 
-  const getData = ({ text }:{ text:string }, { maxResults }:{ maxResults:number }) => {
-    if (text == '') return [''];
-
+  const getSuggestions = async( q:string ) => {
     const filteredStops = stops
-      .filter(stop => normalize({ str: stop })
-      .includes(normalize({ str: text })))
-      .slice(0, maxResults);
-    if (text == filteredStops[0]) return[''];
-    return filteredStops;
-  };
+      .filter(item => normalize(item.title).includes(normalize(q)))
+        .map(item => ({
+          id: item.id,
+          title: item.title,
+        }))
+        .slice(0, 30);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const debouncedData = getData({text: text},{maxResults: 20})
-      setData(debouncedData);
-    }, 250)
-
-    return () => {
-      clearTimeout(timer);
-    }
-  }, [text]);
-
-  const renderItem = function (item:string) {
-    console.log('item')
-    return (
-      <>
-        {item && (
-          <SearchItem
-            onPress={() => {
-              setText(item);
-              setSearchString(item)
-            }}
-          >
-            <SearchItemText>{item}</SearchItemText>
-          </SearchItem>
-        )}
-      </>
-    )
+    setSuggestionsList(filteredStops);
   };
 
   return (
-    <Autocomplete
-      data={data}
-      value={text}
-      placeholder={searchString}
-      onChangeText={(txt) => {
-        setText(txt);
-      }}
-      flatListProps={{
-        renderItem: ({item}) => renderItem(item),
-        keyExtractor: (_) => _,
-      }}
-      containerStyle={[
-        styles.container,
-        { borderColor: theme.colors.background }
-      ]}
-      inputContainerStyle={[
-        styles.inpuContainer,
-        {
-          backgroundColor: theme.colors.background,
-          borderColor: theme.colors.background,
-        }
-      ]}
-      listContainerStyle={[
-        styles.listContainer,
-        { backgroundColor: theme.colors.background }
-      ]
-      }
-      style={[
-        styles.input,
-        {
+    <AutocompleteDropdown
+      dataSet={suggestionsList}
+      initialValue={searchString}
+      onSelectItem={handleOnSelect}
+      clearOnFocus={true}
+      closeOnBlur={false}
+      closeOnSubmit={false}
+      useFilter={false}
+      onChangeText={getSuggestions}
+      debounce={250}
+      showChevron={false}
+      textInputProps={{
+        placeholder: searchString.title || undefined,
+        placeholderTextColor: theme.colors.secondary,
+        autoCorrect: false,
+        autoCapitalize: 'none',
+        style: {
+          borderRadius: 2,
           backgroundColor: theme.colors.background,
           color: theme.colors.text,
-          borderColor: theme.colors.background,
-        }
-      ]}
+          paddingLeft: 8,
+          borderBottomWidth: 1,
+          borderBottomColor: theme.colors.borderColor,
+          fontSize: 28
+        },
+      }}
+      inputContainerStyle={{ backgroundColor: 'transparent' }}
+      ClearIconComponent={<Icon name="close" size={24} />}
+      containerStyle={{
+        flex: 1,
+        width: "100%",
+      }}
+      suggestionsListContainerStyle={{
+        backgroundColor: theme.colors.backgroundSecondary,
+        borderColor: theme.colors.borderColor,
+      }}
+      suggestionsListTextStyle={{ color: theme.colors.text }}
+      suggestionsListMaxHeight={600}
+      ItemSeparatorComponent={<ItemSeparator />}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 40,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  inpuContainer: {
-    flex: 1,
-    width: "100%",
-  },
-  input: {
-    height: "100%",
-    flex: 1,
-    fontSize: 24,
-    paddingVertical: 5,
-  },
-  listContainer: {
-    position: "relative",
-  },
-});
 
 export default withTheme(StopSearch);

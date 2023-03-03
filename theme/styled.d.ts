@@ -7,6 +7,7 @@ import 'styled-components';
       secondary: string;
       title: string;
       background: string;
+      backgroundSecondary: string,
       text: string;
       borderColor: string;
     };

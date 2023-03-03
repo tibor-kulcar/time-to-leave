@@ -14,7 +14,7 @@ exports[`TextInput renders correctly 1`] = `
         Object {
           "color": "#ffffff",
           "fontSize": 12,
-          "marginBottom": 5,
+          "marginBottom": 8,
           "textTransform": "uppercase",
         },
       ]
@@ -25,15 +25,15 @@ exports[`TextInput renders correctly 1`] = `
       Array [
         Object {
           "backgroundColor": "#121212",
-          "borderColor": "#777",
+          "borderColor": "#555",
           "borderStyle": "solid",
           "borderWidth": 1,
           "color": "#ffffff",
           "fontSize": 20,
-          "paddingBottom": 5,
-          "paddingLeft": 10,
-          "paddingRight": 10,
-          "paddingTop": 5,
+          "paddingBottom": 8,
+          "paddingLeft": 16,
+          "paddingRight": 16,
+          "paddingTop": 8,
         },
       ]
     }
@@ -44,7 +44,7 @@ exports[`TextInput renders correctly 1`] = `
         Object {
           "color": "#ffffff",
           "fontSize": 12,
-          "marginTop": 5,
+          "marginTop": 8,
         },
       ]
     }

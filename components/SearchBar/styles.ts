@@ -6,7 +6,8 @@ export const SearchView = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 5px 16px 5px 5px;
+  padding: 8px 16px 0 8px;
+  margin-top: 8px;
   z-index: 10;
   gap: 16px;
 `;
