@@ -22,8 +22,11 @@ const useDeparturesStore = create<DeparturesStore>((set) => {
     isLoading: false,
     fetchTime: new Date(),
     fetchDepartures: async () => {
+      const searchText = usePersistantStore.getState().searchString.title
+      if (searchText === '' ) return;
+
       const query = {
-        names: usePersistantStore.getState().searchString.title,
+        names: searchText,
         minutesBefore: 0,
         minutesAfter: 60,
         includeMetroTrains: true,
