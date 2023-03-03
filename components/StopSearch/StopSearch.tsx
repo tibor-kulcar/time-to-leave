@@ -1,11 +1,12 @@
 import React, { useState, memo, useCallback, useMemo, useEffect } from 'react';
 import { StyleSheet, ListRenderItemInfo, ListRenderItem } from 'react-native';
-import Autocomplete from 'react-native-autocomplete-input';
+
+import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
 import { SearchItem, SearchItemText } from './styles';
 import { usePersistantStore } from '../../store';
-import stops from '../../external_data/pid-stops.json';
+import stops from '../../external_data/pid-stops-index.json';
 
 const normalize = ({ str }:{ str:string }) => {
   const lwrcs = str ? str.toLowerCase() : '';
@@ -19,87 +20,53 @@ interface StopSearchProps {
 const StopSearch = ({ theme }: StopSearchProps) => {
   console.log("Stopsearch")
   const { searchString, setSearchString } = usePersistantStore();
+  // const [text, setText] = useState(searchString);
   const [text, setText] = useState(searchString);
-  const [data, setData] = useState(['']);
+  const [data, setData] = useState([{id:'', title:''}]);
+  const [selectedItem, setSelectedItem] = useState();
+  const [suggestionsList, setSuggestionsList] = useState();
 
 
-  const getData = ({ text }:{ text:string }, { maxResults }:{ maxResults:number }) => {
+  const handleOnSelect = (item:TAutocompleteDropdownItem) => {
+    console.log(item);
+    if (item) {
+      setSearchString(item)
+    }
+  }
+
+  const getData = ({ text }:{ text:string }) => {
     if (text == '') return [''];
 
     const filteredStops = stops
-      .filter(stop => normalize({ str: stop })
-      .includes(normalize({ str: text })))
-      .slice(0, maxResults);
-    if (text == filteredStops[0]) return[''];
-    return filteredStops;
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const debouncedData = getData({text: text},{maxResults: 20})
-      setData(debouncedData);
-    }, 250)
-
-    return () => {
-      clearTimeout(timer);
-    }
-  }, [text]);
-
-  const renderItem = function (item:string) {
-    console.log('item')
-    return (
-      <>
-        {item && (
-          <SearchItem
-            onPress={() => {
-              setText(item);
-              setSearchString(item)
-            }}
-          >
-            <SearchItemText>{item}</SearchItemText>
-          </SearchItem>
-        )}
-      </>
-    )
+      .filter(stop => normalize({ str: stop.title })
+      .includes(normalize({ str: text })));
+    // if (text == filteredStops[0]) return[''];
+    setData(filteredStops);
+    console.log(data);
   };
 
   return (
-    <Autocomplete
-      data={data}
-      value={text}
-      placeholder={searchString}
-      onChangeText={(txt) => {
-        setText(txt);
-      }}
-      flatListProps={{
-        renderItem: ({item}) => renderItem(item),
-        keyExtractor: (_) => _,
-      }}
-      containerStyle={[
-        styles.container,
-        { borderColor: theme.colors.background }
-      ]}
-      inputContainerStyle={[
-        styles.inpuContainer,
-        {
-          backgroundColor: theme.colors.background,
-          borderColor: theme.colors.background,
-        }
-      ]}
-      listContainerStyle={[
-        styles.listContainer,
-        { backgroundColor: theme.colors.background }
-      ]
-      }
-      style={[
-        styles.input,
-        {
-          backgroundColor: theme.colors.background,
-          color: theme.colors.text,
-          borderColor: theme.colors.background,
-        }
-      ]}
+    <>
+    <SearchItemText>
+      {JSON.stringify(selectedItem)}
+    </SearchItemText>
+    <AutocompleteDropdown
+      clearOnFocus={false}
+      closeOnBlur={false}
+      closeOnSubmit={false}
+      // controller={controller => {
+      //   console.log(controller)
+      //   dropdownController.current = controller
+      // }}
+      onChangeText={(txt: string) => getData({text: txt})}
+      onSubmit={(evt) => setSearchString(evt)}
+      // debounce={250}
+      // initialValue={searchString} // or just '2'
+      onSelectItem={handleOnSelect}
+      dataSet={data}
+      containerStyle={styles.container}
     />
+    </>
   );
 };
 

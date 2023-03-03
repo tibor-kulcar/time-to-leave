@@ -23,7 +23,7 @@ const useDeparturesStore = create<DeparturesStore>((set) => {
     fetchTime: new Date(),
     fetchDepartures: async () => {
       const query = {
-        names: usePersistantStore.getState().searchString,
+        names: usePersistantStore.getState().searchString.title,
         minutesBefore: 0,
         minutesAfter: 60,
         includeMetroTrains: true,
@@ -46,7 +46,7 @@ const useDeparturesStore = create<DeparturesStore>((set) => {
           },
         });
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         set({ departures: json.departures })
       } catch (error) {
         console.error(error);
