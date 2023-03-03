@@ -12,4 +12,4 @@ export function useClock() {
   }, []);
 
   return clock;
-};
+}

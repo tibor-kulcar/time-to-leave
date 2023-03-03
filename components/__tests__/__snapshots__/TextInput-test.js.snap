@@ -24,7 +24,7 @@ exports[`TextInput renders correctly 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "#121212",
+          "backgroundcolor": "#121212",
           "borderColor": "#555",
           "borderStyle": "solid",
           "borderWidth": 1,

@@ -1,11 +1,16 @@
 import { create } from 'zustand';
-import { REACT_APP_API_KEY, REACT_APP_API_URL } from "@env"
+import { REACT_APP_API_KEY, REACT_APP_API_URL } from '@env';
 import usePersistantStore from './PersistantStore';
 
-const getQueryString = (queries: {[key: string]: any}): string => {
-  return Object.keys(queries).reduce((result: string[], key: string) => {
-    return [...result, `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`]
-  }, []).join('&');
+const getQueryString = (queries: { [key: string]: any }): string => {
+  return Object.keys(queries)
+    .reduce((result: string[], key: string) => {
+      return [
+        ...result,
+        `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`,
+      ];
+    }, [])
+    .join('&');
 };
 
 interface DeparturesStore {
@@ -41,28 +46,31 @@ const useDeparturesStore = create<DeparturesStore>((set) => {
       };
 
       try {
-        set({ isLoading: true })
-        const response = await fetch(REACT_APP_API_URL + '?' + getQueryString(query), {
-          method: "GET",
-          headers: {
-            "X-Access-Token": REACT_APP_API_KEY,
-          },
-        });
+        set({ isLoading: true });
+        const response = await fetch(
+          REACT_APP_API_URL + '?' + getQueryString(query),
+          {
+            method: 'GET',
+            headers: {
+              'X-Access-Token': REACT_APP_API_KEY,
+            },
+          }
+        );
         const json = await response.json();
         // console.log(json);
-        set({ departures: json.departures })
+        set({ departures: json.departures });
       } catch (error) {
         console.error(error);
       } finally {
-        set({ isLoading: false })
-        set({ fetchTime: new Date() })
+        set({ isLoading: false });
+        set({ fetchTime: new Date() });
       }
     },
 
     setFetchtime: (fetchTimeValue: Date) => {
       set(() => ({ fetchTime: fetchTimeValue }));
     },
-  }
+  };
 });
 
 export default useDeparturesStore;

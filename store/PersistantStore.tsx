@@ -10,17 +10,21 @@ interface PersistantStore {
   setWalkingTime: (newVal: string) => void;
 }
 
-const usePersistantStore = create(persist<PersistantStore>(
-  (set) => ({
-    searchString: {id:'', title:''},
-    setSearchString: (newVal:TAutocompleteDropdownItem) => set({ searchString: newVal }),
-    walkingTime: '3',
-    setWalkingTime: (walkingTimeValue:string) => set({ walkingTime: walkingTimeValue }),
-  }),
-  {
-    name: "ttl-storage",
-    storage: createJSONStorage(() => AsyncStorage),
-  }
-));
+const usePersistantStore = create(
+  persist<PersistantStore>(
+    (set) => ({
+      searchString: { id: '', title: '' },
+      setSearchString: (newVal: TAutocompleteDropdownItem) =>
+        set({ searchString: newVal }),
+      walkingTime: '3',
+      setWalkingTime: (walkingTimeValue: string) =>
+        set({ walkingTime: walkingTimeValue }),
+    }),
+    {
+      name: 'ttl-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);
 
 export default usePersistantStore;
