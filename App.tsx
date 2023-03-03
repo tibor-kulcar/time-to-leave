@@ -1,5 +1,9 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from "styled-components/native";
+// Android Fix 
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+// Android Fix 
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
