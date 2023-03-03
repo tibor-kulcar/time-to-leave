@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Platform } from 'react-native';
 import { AutocompleteDropdown, TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
@@ -44,7 +45,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
       initialValue={searchString}
       onSelectItem={handleOnSelect}
       clearOnFocus={true}
-      closeOnBlur={false}
+      closeOnBlur={Platform.OS == 'web'}
       closeOnSubmit={false}
       useFilter={false}
       onChangeText={getSuggestions}
