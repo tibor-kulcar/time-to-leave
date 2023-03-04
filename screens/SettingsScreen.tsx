@@ -5,9 +5,7 @@ import { Container, View, Scroll } from '../components/Styled';
 
 import { TextInput } from '../components';
 
-import { RootStackScreenProps } from '../types';
-
-export default function SettingsScreen({}: RootStackScreenProps<'Settings'>) {
+export default function SettingsScreen() {
   const { walkingTime, setWalkingTime } = usePersistantStore();
   const [error, setError] = useState('');
   const [inputValue, setInputValue] = useState(walkingTime);

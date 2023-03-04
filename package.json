@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "eslint --ext .ts,.tsx --ignore-path .gitignore",
+    "lint": "eslint . --ext .ts,.tsx --ignore-path .gitignore",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts|tsx|json)\""
   },
   "jest": {

@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { REACT_APP_API_KEY, REACT_APP_API_URL } from '@env';
 import usePersistantStore from './PersistantStore';
+import { ItemProps, QueryProps } from '../types';
 
-const getQueryString = (queries: { [key: string]: any }): string => {
+const getQueryString = (queries: QueryProps): string => {
   return Object.keys(queries)
     .reduce((result: string[], key: string) => {
       return [
@@ -14,7 +15,7 @@ const getQueryString = (queries: { [key: string]: any }): string => {
 };
 
 interface DeparturesStore {
-  departures: [];
+  departures: ItemProps[];
   fetchDepartures: () => Promise<void>;
   fetchTime: Date;
   isLoading: boolean;
@@ -27,8 +28,8 @@ const useDeparturesStore = create<DeparturesStore>((set) => {
     isLoading: false,
     fetchTime: new Date(),
     fetchDepartures: async () => {
-      const searchText = usePersistantStore.getState().searchString.title
-      if (searchText === '' ) return;
+      const searchText = usePersistantStore.getState().searchString.title;
+      if (searchText === '') return;
 
       const query = {
         names: searchText,

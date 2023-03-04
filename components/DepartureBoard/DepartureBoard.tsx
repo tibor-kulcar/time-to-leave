@@ -1,8 +1,11 @@
-import React, { useEffect, useCallback } from 'react';
-import { Item, ItemText, Scroll } from '../Styled';
-import EstimatedTimeArrival from '../EstimatedTimeArrival';
+import React, { useEffect } from 'react';
+import { ListRenderItem } from 'react-native';
+
 import { useDeparturesStore, usePersistantStore } from '../../store';
 import { useClock } from '../../hooks/useClock';
+import { ItemProps } from '../../types';
+import { Item, ItemText, Scroll } from '../Styled';
+import EstimatedTimeArrival from '../EstimatedTimeArrival';
 import { StopsList } from './styles';
 
 const DepartureBoard = () => {
@@ -26,8 +29,7 @@ const DepartureBoard = () => {
     }
   }, [searchString]);
 
-  const renderItem = function ({ item }: { item: any }) {
-    // console.log(item)
+  const renderItem: ListRenderItem<ItemProps> = ({ item }) => {
     const prediction = new Date(item.arrival_timestamp.predicted).getTime();
     const diff = prediction - now;
 
