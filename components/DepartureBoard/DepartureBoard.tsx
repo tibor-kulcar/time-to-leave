@@ -25,7 +25,6 @@ const DepartureBoard = () => {
   const now = useClock().getTime();
 
   useEffect(() => {
-    console.log('searchString watch');
     if (searchString && !isLoading) {
       refetch();
     }
