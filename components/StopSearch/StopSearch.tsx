@@ -5,11 +5,9 @@ import {
 } from 'react-native-autocomplete-dropdown';
 import { withTheme, DefaultTheme } from 'styled-components/native';
 
-import { Icon } from '../Styled';
-import { ItemSeparator } from './styles';
-
 import { usePersistantStore } from '../../store';
 import stops from '../../external_data/pid-stops.json';
+import { ItemSeparator } from './styles';
 
 const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
@@ -54,6 +52,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
         onChangeText={getSuggestions}
         debounce={250}
         showChevron={false}
+        showClear={false}
         textInputProps={{
           placeholder: searchString.title || undefined,
           placeholderTextColor: theme.colors.secondary,
@@ -70,7 +69,6 @@ const StopSearch = ({ theme }: StopSearchProps) => {
           },
         }}
         inputContainerStyle={{ backgroundColor: 'transparent' }}
-        ClearIconComponent={<Icon name="close" size={24} />}
         containerStyle={{
           flex: 1,
           width: '100%',

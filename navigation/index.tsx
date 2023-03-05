@@ -20,6 +20,7 @@ import HomeScreen from '../screens/HomeScreen';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { Icon } from '../components/Styled';
+import { LoadingIndicator } from '../components';
 import { darkTheme } from '../theme/darkTheme';
 import { lightTheme } from '../theme/lightTheme';
 
@@ -53,6 +54,7 @@ function RootNavigator() {
         component={HomeScreen}
         options={({ navigation }) => ({
           title: 'Time to leave',
+          headerLeft: () => <LoadingIndicator />,
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
               <Icon name="cog-sharp" size={24} />
