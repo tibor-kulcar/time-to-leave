@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import Constants from 'expo-constants';
 
@@ -22,25 +22,25 @@ export const Scroll = styled.View`
   flex: 1;
   width: 100%;
   padding: 0 16px;
-  padding-top: ${Constants.statusBarHeight/2 + 'px'};
+  padding-top: ${Constants.statusBarHeight / 2 + 'px'};
   z-index: 1;
 `;
 
-interface ItemProps {
+type ItemProps = {
   faded?: boolean;
-}
+};
 export const Item = styled.View<ItemProps>`
   flex-direction: row;
-  justify-Content: space-between;
+  justify-content: space-between;
   gap: 5px;
-  opacity: ${({ faded }) => (faded ? .3 : 1)};
+  opacity: ${({ faded }) => (faded ? 0.3 : 1)};
 `;
 
 export const ItemText = styled.Text`
   font-size: 40px;
   color: ${(props) => props.theme.colors.text};
-`
+`;
 
 export const Icon = styled(Ionicons)`
   color: ${(props) => props.theme.colors.text};c
-`
+`;

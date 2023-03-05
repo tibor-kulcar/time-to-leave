@@ -1,4 +1,4 @@
-import { DefaultTheme } from "styled-components/native";
+import { DefaultTheme } from 'styled-components/native';
 
 export const lightTheme: DefaultTheme = {
   colors: {
@@ -9,5 +9,5 @@ export const lightTheme: DefaultTheme = {
     backgroundSecondary: '#fcfcfc',
     text: '#000',
     borderColor: '#adadad',
-  }
-}
+  },
+};

@@ -4,34 +4,61 @@
  */
 
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
-}
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Home: undefined;
   Settings: undefined;
-  Modal: undefined;
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
+
+export type ItemProps = {
+  arrival_timestamp: {
+    predicted: string;
+    scheduled: string;
+  };
+  delay: {
+    is_available: boolean;
+    minutes: number;
+    seconds: number;
+  };
+  departure_timestamp: {
+    predicted: string;
+    scheduled: string;
+    minutes: string;
+  };
+  last_stop: {
+    id: string;
+    name: string;
+  };
+  route: {
+    short_name: string;
+    type: number;
+    is_night: boolean;
+    is_regional: boolean;
+    is_substitute_transport: boolean;
+  };
+  stop: {
+    id: string;
+    platform_code: string;
+  };
+};
