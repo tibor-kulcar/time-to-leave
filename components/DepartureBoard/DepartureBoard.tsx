@@ -1,31 +1,32 @@
 import React, { useEffect } from 'react';
 import { ListRenderItem } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
 
-import { useDeparturesStore, usePersistantStore } from '../../store';
-import { useClock } from '../../hooks/useClock';
 import { ItemProps } from '../../types';
+import { usePersistantStore } from '../../store';
+import { useClock } from '../../hooks/useClock';
+import { fetchDepartures } from '../../fetchers/pid';
 import { Item, ItemText, Scroll } from '../Styled';
 import EstimatedTimeArrival from '../EstimatedTimeArrival';
 import { StopsList } from './styles';
 
 const DepartureBoard = () => {
-  const { departures, fetchDepartures, fetchTime, isLoading } =
-    useDeparturesStore();
   const { searchString, walkingTime } = usePersistantStore();
+  const { isLoading, data, refetch } = useQuery(
+    ['departures'],
+    fetchDepartures,
+    {
+      refetchInterval: 10000,
+      refetchOnWindowFocus: true,
+    }
+  );
+  const { departures } = data?.data || [];
   const walkingTimeInMilisecs = parseInt(walkingTime) * 1000 * 60;
-
-  const lastFetch = fetchTime.getTime();
   const now = useClock().getTime();
 
   useEffect(() => {
-    if (now - lastFetch > 10000) {
-      fetchDepartures();
-    }
-  }, [now]);
-
-  useEffect(() => {
     if (searchString && !isLoading) {
-      fetchDepartures();
+      refetch();
     }
   }, [searchString]);
 
