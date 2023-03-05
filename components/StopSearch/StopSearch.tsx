@@ -16,9 +16,9 @@ const normalize = (str: string) => {
   return lwrcs.normalize('NFD').replace(/\p{Diacritic}/gu, '');
 };
 
-interface StopSearchProps {
+type StopSearchProps = {
   theme: DefaultTheme;
-}
+};
 
 const StopSearch = ({ theme }: StopSearchProps) => {
   const { searchString, setSearchString } = usePersistantStore();

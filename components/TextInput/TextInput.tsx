@@ -2,10 +2,10 @@ import React from 'react';
 import { TextInputProps } from 'react-native';
 import { InputContainer, Input, InputLabel, InputMessage } from './styles';
 
-interface StyledTextInputProps extends TextInputProps {
+type StyledTextInputProps = TextInputProps & {
   label?: string;
   error?: string;
-}
+};
 
 const TextInput = ({ label, error, ...rest }: StyledTextInputProps) => {
   return (

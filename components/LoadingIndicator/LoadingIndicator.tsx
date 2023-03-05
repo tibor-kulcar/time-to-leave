@@ -6,9 +6,9 @@ import { Icon } from '../Styled';
 
 import { useDeparturesStore } from '../../store';
 
-interface LoadingIndicatorProps {
+type LoadingIndicatorProps = {
   theme: DefaultTheme;
-}
+};
 
 function LoadingIndicator({ theme }: LoadingIndicatorProps) {
   const { isLoading, fetchDepartures } = useDeparturesStore();

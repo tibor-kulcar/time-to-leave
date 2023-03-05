@@ -1,9 +1,9 @@
 import React from 'react';
 import { ItemText } from './Styled';
 
-interface EstimatedTimeArrivalProps {
+type EstimatedTimeArrivalProps = {
   diff: number;
-}
+};
 
 const twoDigits = new Intl.NumberFormat('en-US', {
   style: 'decimal',

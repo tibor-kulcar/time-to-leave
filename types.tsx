@@ -62,18 +62,3 @@ export type ItemProps = {
     platform_code: string;
   };
 };
-
-export type QueryProps = {
-  names: string | null;
-  minutesBefore: number;
-  minutesAfter: number;
-  includeMetroTrains: boolean;
-  preferredTimezone: string;
-  mode: string;
-  order: string;
-  filter: string;
-  skip: string;
-  limit: number;
-  total: number;
-  offset: number;
-};

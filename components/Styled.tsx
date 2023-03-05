@@ -26,9 +26,9 @@ export const Scroll = styled.View`
   z-index: 1;
 `;
 
-interface ItemProps {
+type ItemProps = {
   faded?: boolean;
-}
+};
 export const Item = styled.View<ItemProps>`
   flex-direction: row;
   justify-content: space-between;

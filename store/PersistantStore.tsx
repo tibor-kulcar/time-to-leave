@@ -3,12 +3,12 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { TAutocompleteDropdownItem } from 'react-native-autocomplete-dropdown';
 
-interface PersistantStore {
+type PersistantStore = {
   searchString: TAutocompleteDropdownItem;
   setSearchString: (newVal: TAutocompleteDropdownItem) => void;
   walkingTime: string;
   setWalkingTime: (newVal: string) => void;
-}
+};
 
 const usePersistantStore = create(
   persist<PersistantStore>(
