@@ -31,7 +31,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
-export type ItemProps = {
+export type DepartureProps = {
   arrival_timestamp: {
     predicted: string;
     scheduled: string;
@@ -60,5 +60,15 @@ export type ItemProps = {
   stop: {
     id: string;
     platform_code: string;
+  };
+  trip: {
+    direction: null;
+    headsign: string;
+    id: string;
+    is_at_stop: boolean;
+    is_canceled: boolean;
+    is_wheelchair_accessible: boolean;
+    is_air_conditioned: null;
+    short_name: null;
   };
 };

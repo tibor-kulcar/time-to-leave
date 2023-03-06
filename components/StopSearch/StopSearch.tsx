@@ -65,7 +65,7 @@ const StopSearch = ({ theme }: StopSearchProps) => {
             paddingLeft: 8,
             borderBottomWidth: 1,
             borderBottomColor: theme.colors.borderColor,
-            fontSize: 28,
+            fontSize: 20,
           },
         }}
         inputContainerStyle={{ backgroundColor: 'transparent' }}

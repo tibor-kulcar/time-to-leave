@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { ListRenderItem } from 'react-native';
+import { ListRenderItem, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 
-import { ItemProps } from '../../types';
+import { DepartureProps } from '../../types';
 import { usePersistantStore } from '../../store';
 import { useClock } from '../../hooks/useClock';
 import { fetchDepartures } from '../../fetchers/pid';
 import { Item, ItemText, Scroll } from '../Styled';
 import EstimatedTimeArrival from '../EstimatedTimeArrival';
-import { StopsList } from './styles';
+import { StopsList, StopsListHeader, StopsListHeaderText } from './styles';
 
 const DepartureBoard = () => {
   const { searchString, walkingTime } = usePersistantStore();
@@ -21,6 +21,41 @@ const DepartureBoard = () => {
     }
   );
   const { departures } = data?.data || [];
+
+  // console.log(departures);
+
+  // const groupedData = departures?.reduce((result: any, current: any) => {
+  //   const platformCode = current.stop.platform_code;
+  //   if (!result[platformCode]) {
+  //     result[platformCode] = [];
+  //   }
+  //   result[platformCode].push(current);
+  //   return result;
+  // }, {});
+
+  type GroupedDeparture = {
+    platformCode: string;
+    departures: DepartureProps[];
+  };
+
+  const groupedData = departures?.reduce(
+    (result: GroupedDeparture[], current: DepartureProps) => {
+      const platformCode = current.stop.platform_code;
+      const platformIndex = result.findIndex(
+        (platform) => platform.platformCode === platformCode
+      );
+
+      if (platformIndex === -1) {
+        result.push({ platformCode, departures: [current] });
+      } else {
+        result[platformIndex].departures.push(current);
+      }
+
+      return result;
+    },
+    []
+  );
+
   const walkingTimeInMilisecs = parseInt(walkingTime) * 1000 * 60;
   const now = useClock().getTime();
 
@@ -30,28 +65,47 @@ const DepartureBoard = () => {
     }
   }, [searchString]);
 
-  const renderItem: ListRenderItem<ItemProps> = ({ item }) => {
-    const prediction = new Date(item.arrival_timestamp.predicted).getTime();
-    const diff = prediction - now;
+  const renderItem: ListRenderItem<GroupedDeparture> = ({ item }) => {
+    const { departures } = item;
+    const departuresLength = departures.length - 2;
 
     return (
       <>
-        {departures && departures.length > 0 && diff > 0 && (
-          <Item faded={diff < walkingTimeInMilisecs}>
-            <ItemText>
-              {item.route.short_name} {item.stop.platform_code}
-            </ItemText>
+        <StopsListHeader>
+          <StopsListHeaderText>
+            {departures.map((departure, idx) => {
+              const result =
+                departure.trip.headsign + (departuresLength < idx ? '' : ' / ');
+              return result;
+            })}
+          </StopsListHeaderText>
+        </StopsListHeader>
 
-            <EstimatedTimeArrival diff={diff} />
-          </Item>
-        )}
+        {departures &&
+          departures.length > 0 &&
+          departures.map((departure) => {
+            const prediction = new Date(
+              departure.arrival_timestamp.predicted
+            ).getTime();
+            const diff = prediction - now;
+            return (
+              <Item
+                faded={diff < walkingTimeInMilisecs}
+                key={departure.trip.id}
+              >
+                <ItemText>{departure.route.short_name}</ItemText>
+
+                <EstimatedTimeArrival diff={diff} />
+              </Item>
+            );
+          })}
       </>
     );
   };
 
   return (
     <Scroll>
-      <StopsList data={departures} renderItem={renderItem} />
+      {groupedData && <StopsList data={groupedData} renderItem={renderItem} />}
     </Scroll>
   );
 };
