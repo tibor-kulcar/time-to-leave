@@ -27,7 +27,7 @@ export const fetchDepartures = async () => {
     total: 10,
     offset: 0,
   };
-  const response = await pid.get('departureboards', {
+  const response = await pid.get('pid/departureboards', {
     params: query,
   });
   const departures = response;
