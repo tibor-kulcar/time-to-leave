@@ -1,23 +1,21 @@
-# Progressive Web App Example
+# # Time to leave
 
-This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to create a progressive web app (PWA) powered by [Workbox](https://developers.google.com/web/tools/workbox/).
+Some of us struggle to catch public transportation on time :)
 
-## Deploy your own
+This react-native application is simple help to see how much time you have to chatch your bus/tram.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+Now it works only with Prague-based data.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/progressive-web-app&project-name=progressive-web-app&repository-name=progressive-web-app)
+To run it on your computer, you need to:
 
-## How to use
+- generate you own authorization token at [api.golemio.cz/api-key](https://api.golemio.cz/api-keys)
+- create `.env` file from `.env.template` and put yout auth token there as `REACT_APP_API_KEY` value
+- install all dependencies by running `npm ci`
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+Now you should be able to run the app locally using
 
-```bash
-npx create-next-app --example progressive-web-app progressive-web-app
-# or
-yarn create next-app --example progressive-web-app progressive-web-app
-# or
-pnpm create next-app --example progressive-web-app progressive-web-app
-```
+`npm run dev`
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+To see app in producition build run
+
+`npm run build && npm start`
