@@ -1,11 +1,12 @@
-import Select, { ActionMeta, SingleValue } from 'react-select';
 import clsx from 'clsx';
+import Select, { ActionMeta, SingleValue } from 'react-select';
+import useSWR from 'swr';
 
+import fetcher from '@/lib/fetcher';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useHasMounted from '@/hooks/useHasMounted';
 
-// TODO async
-import stops from '@/public/data/pid-stops.json';
+const stopsDataUrl = '/data/pid-stops.json';
 
 const controlStyles = {
   base: 'border-b bg-gray-900 hover:cursor-pointer',
@@ -43,6 +44,8 @@ type StopItem = {
 };
 
 const StopSearch = () => {
+  const { data } = useSWR(stopsDataUrl, fetcher);
+  console.log('StopSearch');
   const hasMounted = useHasMounted();
   const [searchString, setSearchString] = useLocalStorage<StopItem>(
     'searchString',
@@ -68,7 +71,7 @@ const StopSearch = () => {
         z-10
       "
     >
-      {hasMounted && (
+      {hasMounted && data && (
         <Select
           unstyled
           isSearchable={true}
@@ -103,7 +106,7 @@ const StopSearch = () => {
           defaultValue={searchString}
           value={searchString}
           onChange={handleChange}
-          options={stops}
+          options={data}
         />
       )}
     </div>
