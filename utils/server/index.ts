@@ -1,15 +1,15 @@
-// import { getQueryString } from '@/utils';
+import { getQueryString } from '@/utils';
 
-const getQueryString = (queries: { [key: string]: any }): string => {
-  return Object.keys(queries)
-    .reduce((result: string[], key: string) => {
-      return [
-        ...result,
-        `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`,
-      ];
-    }, [])
-    .join('&');
-};
+// const getQueryString = (queries: { [key: string]: any }): string => {
+//   return Object.keys(queries)
+//     .reduce((result: string[], key: string) => {
+//       return [
+//         ...result,
+//         `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`,
+//       ];
+//     }, [])
+//     .join('&');
+// };
 
 export const FetchDepartures = async (
   searchString: string | string[] | undefined

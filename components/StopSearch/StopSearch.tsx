@@ -1,8 +1,8 @@
+import { useMemo } from 'react';
 import clsx from 'clsx';
-import Select, { ActionMeta, SingleValue } from 'react-select';
-import useSWR from 'swr';
+import { ActionMeta, SingleValue, createFilter } from 'react-select';
+import { AsyncPaginate } from 'react-select-async-paginate';
 
-import fetcher from '@/lib/fetcher';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useHasMounted from '@/hooks/useHasMounted';
 import { StopItem } from '@/types';
@@ -24,10 +24,11 @@ import {
   optionStyles,
   noOptionsMessageStyles,
 } from './StopSearch.styles';
-const stopsDataUrl = '/data/pid-stops.json';
+
+import { loadOptions } from './loadOptions';
 
 const StopSearch = () => {
-  const { data } = useSWR(stopsDataUrl, fetcher);
+  console.time('stopSearch');
   console.log('StopSearch');
   const hasMounted = useHasMounted();
   const [searchString, setSearchString] = useLocalStorage<StopItem>(
@@ -47,9 +48,10 @@ const StopSearch = () => {
 
   return (
     <div className="z-50 flex flex-row items-center justify-center w-full gap-4 p-3 mt-4 ">
-      {hasMounted && data ? (
-        <Select
+      {hasMounted ? (
+        <AsyncPaginate
           unstyled
+          loadOptions={loadOptions}
           isSearchable={true}
           className="w-full"
           classNames={{
@@ -82,9 +84,13 @@ const StopSearch = () => {
           defaultValue={searchString}
           value={searchString}
           onChange={handleChange}
-          options={data}
+          filterOption={createFilter({})}
         />
       ) : null}
+      <>
+        {console.log('stopSearchstopSearchstopSearchstopSearch')}
+        {console.timeEnd('stopSearch')}
+      </>
     </div>
   );
 };

@@ -16,7 +16,8 @@ const DepartureBoard = () => {
   });
   const { data, mutate, error, isLoading } = useSWR(
     '/api/pid?name=' + searchString.value,
-    (url) => fetcher(url)
+    (url) => fetcher(url),
+    { refreshInterval: 10000 }
   );
 
   const { departures } = data?.data || [];
@@ -26,20 +27,26 @@ const DepartureBoard = () => {
   }, [searchString]);
   return (
     <div className="z-10 flex flex-col items-center justify-center w-full gap-4 p-3 mt-4 overflow-y-auto ">
-      {data?.departures.map((departure: DepartureProps, idx: number) => {
-        const prediction = new Date(
-          departure.departure_timestamp.predicted ||
-            departure.departure_timestamp.scheduled
-        ).getTime();
-        const diff = prediction - now;
+      {isLoading ? (
+        <h2 className="text-3xl">Loading...</h2>
+      ) : (
+        <>
+          {data?.departures.map((departure: DepartureProps, idx: number) => {
+            const prediction = new Date(
+              departure.departure_timestamp.predicted ||
+                departure.departure_timestamp.scheduled
+            ).getTime();
+            const diff = prediction - now;
 
-        return (
-          <div className="flex justify-between w-full text-2xl" key={idx}>
-            <span>{departure.route.short_name}</span>
-            <EstimatedTimeArrival diff={diff} />
-          </div>
-        );
-      })}
+            return (
+              <div className="flex justify-between w-full text-2xl" key={idx}>
+                <span>{departure.route.short_name}</span>
+                <EstimatedTimeArrival diff={diff} />
+              </div>
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };
