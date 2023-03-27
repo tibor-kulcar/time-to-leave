@@ -51,6 +51,5 @@ export type StopItem = {
 };
 
 export type LocalStorage = {
-  searchString: StopItem;
-  // theme: "light" | "dark";
+  search: StopItem;
 };

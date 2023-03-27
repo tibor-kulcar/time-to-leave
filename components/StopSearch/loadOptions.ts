@@ -1,12 +1,13 @@
 import type { GroupBase, OptionsOrGroups } from 'react-select';
 import dataset from '@/public/data/pid-stops.json';
+import { StopItem } from '@/types';
 
-export type OptionType = {
-  value: string;
-  label: string;
+const options: StopItem[] = dataset;
+
+const normalize = (str: string) => {
+  const lwrcs = str ? str.toLowerCase() : '';
+  return lwrcs.normalize('NFD').replace(/\p{Diacritic}/gu, '');
 };
-
-const options: OptionType[] = dataset;
 
 const sleep = (ms: number) =>
   new Promise((resolve) => {
@@ -17,18 +18,18 @@ const sleep = (ms: number) =>
 
 export const loadOptions = async (
   search: string,
-  prevOptions: OptionsOrGroups<OptionType, GroupBase<OptionType>>
+  prevOptions: OptionsOrGroups<StopItem, GroupBase<StopItem>>
 ) => {
-  await sleep(1000);
+  await sleep(300);
 
-  let filteredOptions: OptionType[];
+  let filteredOptions: StopItem[];
   if (!search) {
     filteredOptions = options;
   } else {
-    const searchLower = search.toLowerCase();
+    const searchLower = normalize(search);
 
     filteredOptions = options.filter(({ label }) =>
-      label.toLowerCase().includes(searchLower)
+      normalize(label).includes(searchLower)
     );
   }
 

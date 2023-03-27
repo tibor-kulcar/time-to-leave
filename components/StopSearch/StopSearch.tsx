@@ -28,12 +28,8 @@ import {
 import { loadOptions } from './loadOptions';
 
 const StopSearch = () => {
-  console.time('stopSearch');
-  console.log('StopSearch');
   const hasMounted = useHasMounted();
   const [searchString, setSearchString] = useSearch();
-
-  console.log('||||||||||||||||||||||||||||||||||||||||||', searchString);
 
   const handleChange = (
     newValue: SingleValue<StopItem>,
