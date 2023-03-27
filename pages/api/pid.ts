@@ -4,7 +4,7 @@ import { FetchDepartures } from '@/utils/server';
 
 const departures = async (req: NextApiRequest, res: NextApiResponse) => {
   const { name } = req.query;
-  const departures = await FetchDepartures(name);
+  const departures = name ? await FetchDepartures(name) : null;
   res.status(200).json(departures);
 };
 

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { ActionMeta, SingleValue, createFilter } from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useSearch } from '@/hooks/useSearch';
 import useHasMounted from '@/hooks/useHasMounted';
 import { StopItem } from '@/types';
 import {
@@ -31,13 +31,9 @@ const StopSearch = () => {
   console.time('stopSearch');
   console.log('StopSearch');
   const hasMounted = useHasMounted();
-  const [searchString, setSearchString] = useLocalStorage<StopItem>(
-    'searchString',
-    {
-      label: '',
-      value: '',
-    }
-  );
+  const [searchString, setSearchString] = useSearch();
+
+  console.log('||||||||||||||||||||||||||||||||||||||||||', searchString);
 
   const handleChange = (
     newValue: SingleValue<StopItem>,
@@ -47,7 +43,7 @@ const StopSearch = () => {
   };
 
   return (
-    <div className="z-50 flex flex-row items-center justify-center w-full gap-4 p-3 mt-4 ">
+    <div className="flex flex-row items-center justify-center w-full gap-4 py-3 mt-4 ">
       {hasMounted ? (
         <AsyncPaginate
           unstyled
@@ -84,13 +80,8 @@ const StopSearch = () => {
           defaultValue={searchString}
           value={searchString}
           onChange={handleChange}
-          filterOption={createFilter({})}
         />
       ) : null}
-      <>
-        {console.log('stopSearchstopSearchstopSearchstopSearch')}
-        {console.timeEnd('stopSearch')}
-      </>
     </div>
   );
 };

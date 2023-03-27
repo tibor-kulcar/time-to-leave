@@ -2,31 +2,39 @@ import { useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 
 import { DepartureProps, StopItem } from '@/types';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useSearch } from '@/hooks/useSearch';
+// import { useLocalStorage } from 'usehooks-ts';
+
 import { useClock } from '@/hooks/useClock';
 import fetcher from '@/lib/fetcher';
 import { EstimatedTimeArrival } from '@/components/EstimatedTimeArrival';
 
 const DepartureBoard = () => {
   const walkingTimeInMilisecs = 3000;
+
+  const [searchString] = useSearch();
   const now = useClock().getTime();
-  const [searchString] = useLocalStorage<StopItem>('searchString', {
-    label: '',
-    value: '',
-  });
   const { data, mutate, error, isLoading } = useSWR(
-    '/api/pid?name=' + searchString.value,
+    '/api/pid?name=' + searchString?.value,
     (url) => fetcher(url),
     { refreshInterval: 10000 }
   );
 
-  const { departures } = data?.data || [];
   useEffect(() => {
-    console.log('searchString: ', searchString);
+    console.log('searchString changed: ', searchString);
     mutate();
-  }, [searchString]);
+  }, [searchString.value]);
+  console.log('searchString: ', searchString);
+
   return (
-    <div className="z-10 flex flex-col items-center justify-center w-full gap-4 p-3 mt-4 overflow-y-auto ">
+    <div
+      className="
+        flex flex-col items-center justify-center gap-4
+        w-full
+        p-3 mt-4
+        overflow-y-auto
+      "
+    >
       {isLoading ? (
         <h2 className="text-3xl">Loading...</h2>
       ) : (
@@ -40,7 +48,9 @@ const DepartureBoard = () => {
 
             return (
               <div className="flex justify-between w-full text-2xl" key={idx}>
-                <span>{departure.route.short_name}</span>
+                <button onClick={() => mutate()}>
+                  {departure.route.short_name}
+                </button>
                 <EstimatedTimeArrival diff={diff} />
               </div>
             );

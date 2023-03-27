@@ -18,7 +18,7 @@ export const clearIndicatorStyles =
 export const indicatorSeparatorStyles = 'hidden bg-gray-300';
 export const dropdownIndicatorStyles =
   'w-0 h-0 p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black';
-export const menuStyles = 'p-1 mt-2 bg-black';
+export const menuStyles = 'absolute z-50 py-1 mt-2 bg-black';
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-sm';
 export const optionStyles = {
   base: 'hover:cursor-pointer px-3 py-2 rounded',
