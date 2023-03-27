@@ -20,12 +20,12 @@
     "value": "Náměstí Míru"
   },
   {
-    "label": "Muzeum - A",
-    "value": "Muzeum - A"
+    "label": "Muzeum",
+    "value": "Muzeum"
   },
   {
-    "label": "Můstek - A",
-    "value": "Můstek - A"
+    "label": "Můstek",
+    "value": "Můstek"
   },
   {
     "label": "Staroměstská",
@@ -112,16 +112,8 @@
     "value": "Národní třída"
   },
   {
-    "label": "Můstek - B",
-    "value": "Můstek - B"
-  },
-  {
     "label": "Náměstí Republiky",
     "value": "Náměstí Republiky"
-  },
-  {
-    "label": "Florenc - B",
-    "value": "Florenc - B"
   },
   {
     "label": "Křižíkova",
@@ -200,16 +192,8 @@
     "value": "I. P. Pavlova"
   },
   {
-    "label": "Muzeum - C",
-    "value": "Muzeum - C"
-  },
-  {
     "label": "Hlavní nádraží",
     "value": "Hlavní nádraží"
-  },
-  {
-    "label": "Florenc - C",
-    "value": "Florenc - C"
   },
   {
     "label": "Vltavská",
@@ -806,10 +790,6 @@
   {
     "label": "Italská",
     "value": "Italská"
-  },
-  {
-    "label": "Muzeum",
-    "value": "Muzeum"
   },
   {
     "label": "Bruselská",

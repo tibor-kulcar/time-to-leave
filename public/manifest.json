@@ -2,7 +2,7 @@
   "name": "Time to Leave",
   "short_name": "Time to Leave",
   "theme_color": "#ffffff",
-  "background_color": "#004740",
+  "background_color": "#000000",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",

@@ -8,7 +8,7 @@ const SearchBar = () => {
       className="
         flex flex-row justify-center items-center gap-4
         w-full
-        p-3 mt-4
+        p-3
         z-10
       "
     >

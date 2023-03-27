@@ -39,7 +39,7 @@ const StopSearch = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-full gap-4 py-3 mt-4 ">
+    <div className="flex flex-row items-center justify-center w-full gap-4 py-3">
       {hasMounted ? (
         <AsyncPaginate
           unstyled

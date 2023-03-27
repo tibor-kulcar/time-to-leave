@@ -9,7 +9,7 @@ Now it works only with Prague-based data.
 To run it on your computer, you need to:
 
 - generate you own authorization token at [api.golemio.cz/api-key](https://api.golemio.cz/api-keys)
-- create `.env` file from `.env.template` and put yout auth token there as `REACT_APP_API_KEY` value
+- create `.env.local` file from `.env.template` and put yout auth token there as `API_KEY` value
 - install all dependencies by running `npm ci`
 
 Now you should be able to run the app locally using

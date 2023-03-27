@@ -28,9 +28,9 @@ const DepartureBoard = () => {
   return (
     <div
       className="
-        flex flex-col items-center justify-center gap-4
+        flex flex-col gap-4
         w-full
-        px-5 py-3
+        p-3
         overflow-y-auto
       "
     >

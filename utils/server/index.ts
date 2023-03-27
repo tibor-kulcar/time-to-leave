@@ -1,16 +1,5 @@
 import { getQueryString } from '@/utils';
 
-// const getQueryString = (queries: { [key: string]: any }): string => {
-//   return Object.keys(queries)
-//     .reduce((result: string[], key: string) => {
-//       return [
-//         ...result,
-//         `${encodeURIComponent(key)}=${encodeURIComponent(queries[key])}`,
-//       ];
-//     }, [])
-//     .join('&');
-// };
-
 export const FetchDepartures = async (
   searchString: string | string[] | undefined
 ) => {
@@ -26,10 +15,10 @@ export const FetchDepartures = async (
     preferredTimezone: 'Europe/Prague',
     mode: 'departures',
     order: 'real',
-    filter: 'routeOnce',
+    filter: 'routeHeadingOnce',
     skip: 'canceled',
-    limit: 10,
-    total: 10,
+    limit: 20,
+    total: 20,
     offset: 0,
   });
 
