@@ -5,7 +5,8 @@
 @layer base {
   html,
   body {
-    @apply text-black dark:text-white
+    @apply h-full
+      text-black dark:text-white
       bg-gray-100 dark:bg-gray-900;
   }
 }
