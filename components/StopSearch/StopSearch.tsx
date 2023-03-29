@@ -24,7 +24,7 @@ import {
   menuStyles,
   groupHeadingStyles,
   optionStyles,
-  noOptionsMessageStyles,
+  messageStyles,
 } from './StopSearch.styles';
 
 import { loadOptions } from './loadOptions';
@@ -49,6 +49,19 @@ const StopSearch = () => {
           isSearchable={true}
           className="w-full"
           placeholder="Search"
+          // menuIsOpen={true}
+          // isLoading
+          styles={{
+            menuList: (provided, state) => ({
+              ...provided,
+              // 100 viewport height minus input height
+              minHeight: 'calc(100vh - 72px)',
+            }),
+            loadingMessage: (provided, state) => ({
+              ...provided,
+              textAligtn: 'center',
+            }),
+          }}
           classNames={{
             control: ({ isFocused }) =>
               clsx(
@@ -74,7 +87,8 @@ const StopSearch = () => {
                 isSelected && optionStyles.selected,
                 optionStyles.base
               ),
-            noOptionsMessage: () => noOptionsMessageStyles,
+            noOptionsMessage: () => messageStyles,
+            loadingMessage: () => messageStyles,
           }}
           defaultValue={searchString}
           value={searchString}
