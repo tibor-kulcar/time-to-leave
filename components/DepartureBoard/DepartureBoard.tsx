@@ -35,7 +35,7 @@ const DepartureBoard = () => {
       "
     >
       {isLoading ? (
-        <h2 className="text-3xl">Loading...</h2>
+        <h2 className="text-2xl text-center">Loading...</h2>
       ) : (
         <DeparturesList departures={groupedData} />
       )}

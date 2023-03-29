@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 import clsx from 'clsx';
-import { ActionMeta, SingleValue, createFilter } from 'react-select';
+import { ActionMeta, SingleValue } from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
+import { mdiMagnify } from '@mdi/js';
 
 import { useSearch } from '@/hooks/useSearch';
 import useHasMounted from '@/hooks/useHasMounted';
 import { StopItem } from '@/types';
+import { Icon } from '@/components/Icon';
 import {
   controlStyles,
   placeholderStyles,
@@ -46,6 +48,7 @@ const StopSearch = () => {
           loadOptions={loadOptions}
           isSearchable={true}
           className="w-full"
+          placeholder="Search"
           classNames={{
             control: ({ isFocused }) =>
               clsx(
@@ -78,6 +81,7 @@ const StopSearch = () => {
           onChange={handleChange}
         />
       ) : null}
+      <Icon icon={mdiMagnify} className="absolute right-3 w-8 h-8 z-0" />
     </div>
   );
 };
