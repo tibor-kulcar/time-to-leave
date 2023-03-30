@@ -17,7 +17,7 @@ const DepartureItem = ({ departure }: DepartureItemProps) => {
       departure.departure_timestamp.scheduled
   ).getTime();
   const diff = prediction - now;
-  if (diff < 0) return;
+  if (diff < 0) return <></>;
   return (
     <div
       className={clsx(
