@@ -55,7 +55,7 @@ const StopSearch = () => {
             menuList: (provided, state) => ({
               ...provided,
               // 100 viewport height minus input height
-              minHeight: 'calc(100vh - 72px)',
+              minHeight: 'calc(100vh - 86px)',
             }),
             loadingMessage: (provided, state) => ({
               ...provided,
@@ -90,8 +90,8 @@ const StopSearch = () => {
             noOptionsMessage: () => messageStyles,
             loadingMessage: () => messageStyles,
           }}
-          defaultValue={searchString}
-          value={searchString}
+          defaultValue={searchString.value ? searchString : undefined}
+          value={searchString.value ? searchString : undefined}
           onChange={handleChange}
         />
       ) : null}

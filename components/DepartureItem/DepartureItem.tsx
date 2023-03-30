@@ -1,4 +1,3 @@
-import { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 
 import { DepartureProps } from '@/types';

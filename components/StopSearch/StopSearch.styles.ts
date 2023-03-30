@@ -3,7 +3,7 @@ export const controlStyles = {
   focus: '',
   nonFocus: '',
 };
-export const placeholderStyles = 'text-gray-500 text-3xl leading-loose';
+export const placeholderStyles = 'text-gray-500 text-3xl';
 export const selectInputStyles = 'text-3xl';
 export const valueContainerStyles = 'text-3xl gap-1 ';
 export const singleValueStyles = 'text-3xl';

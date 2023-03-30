@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 import { useGroupDepartures } from '@/hooks/useGroupDepartures';
@@ -22,7 +22,7 @@ const DepartureBoard = () => {
 
   useEffect(() => {
     mutate();
-  }, [searchString]);
+  }, [searchString.value]);
 
   return (
     <div
