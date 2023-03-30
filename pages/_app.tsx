@@ -27,8 +27,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
         />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
-        <link rel="apple-touch-startup-image" href="/ios-startup.png"></link>
-        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+        <link
+          rel="apple-touch-startup-image"
+          href="/splashscreens/ios-startup.png"
+        ></link>
+        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png"></link>
         <meta name="theme-color" content="#000000" />
         <link
           href="/splashscreens/iphone5_splash.png"
