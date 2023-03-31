@@ -20,7 +20,7 @@ export const loadOptions = async (
   search: string,
   prevOptions: OptionsOrGroups<StopItem, GroupBase<StopItem>>
 ) => {
-  await sleep(300);
+  await sleep(500);
 
   let filteredOptions: StopItem[];
   if (!search) {

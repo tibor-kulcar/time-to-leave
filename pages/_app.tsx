@@ -1,5 +1,10 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { Space_Grotesk } from 'next/font/google';
+
+const spaceGrotesk = Space_Grotesk({
+  variable: '--font-space-grotesk',
+});
 
 import '@/styles/globals.css';
 
@@ -84,7 +89,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           rel="apple-touch-startup-image"
         />
       </Head>
-      <Component {...pageProps} />
+      <main className={`${spaceGrotesk.variable} font-sans`}>
+        <Component {...pageProps} className={spaceGrotesk.variable} />
+      </main>
     </>
   );
 }

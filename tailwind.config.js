@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -14,17 +15,14 @@ module.exports = {
       xl: '1536px',
     },
     fontFamily: {
-      sans: ['Arial', 'sans-serif'],
-      serif: ['Garamond', 'serif'],
+      sans: 'var(--font-space-grotesk)',
     },
     extend: {
       colors: {
-        blue: {
-          500: '#1a73e8',
+        gray: {
+          500: '#CCCCCC',
+          700: '#545454',
         },
-      },
-      spacing: {
-        128: '32rem',
       },
     },
   },

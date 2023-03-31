@@ -41,7 +41,7 @@ const StopSearch = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-full gap-4 py-3">
+    <label className="flex flex-row items-center justify-center w-full gap-4 py-3">
       {hasMounted ? (
         <AsyncPaginate
           unstyled
@@ -96,7 +96,7 @@ const StopSearch = () => {
         />
       ) : null}
       <Icon icon={mdiMagnify} className="absolute right-3 w-8 h-8 z-0" />
-    </div>
+    </label>
   );
 };
 
