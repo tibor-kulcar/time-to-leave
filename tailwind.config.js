@@ -15,7 +15,8 @@ module.exports = {
       xl: '1536px',
     },
     fontFamily: {
-      sans: 'var(--font-space-grotesk)',
+      sans: 'Helvetica, sans-serif',
+      // mono: 'Helvetica, sans-serif',
     },
     extend: {
       colors: {

@@ -49,13 +49,14 @@ const StopSearch = () => {
           isSearchable={true}
           className="w-full"
           placeholder="Search"
+          closeMenuOnSelect={true}
           // menuIsOpen={true}
           // isLoading
           styles={{
             menuList: (provided, state) => ({
               ...provided,
               // 100 viewport height minus input height
-              minHeight: 'calc(100vh - 86px)',
+              minHeight: 'calc(100vh - 82px)',
             }),
             loadingMessage: (provided, state) => ({
               ...provided,
@@ -81,12 +82,8 @@ const StopSearch = () => {
             dropdownIndicator: () => dropdownIndicatorStyles,
             menu: () => menuStyles,
             groupHeading: () => groupHeadingStyles,
-            option: ({ isFocused, isSelected }) =>
-              clsx(
-                isFocused && optionStyles.focus,
-                isSelected && optionStyles.selected,
-                optionStyles.base
-              ),
+            option: ({ isFocused }) =>
+              clsx(optionStyles.base, isFocused && optionStyles.focus),
             noOptionsMessage: () => messageStyles,
             loadingMessage: () => messageStyles,
           }}

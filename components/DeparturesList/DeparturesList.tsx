@@ -23,7 +23,7 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
             <div key={idx} className="w-full">
               <div className="text-left">
                 {departures[0].stop.platform_code && (
-                  <span className="px-2 py-0.5 rounded-md bg-gray-500 text-gray-900 font-bold text-xs">
+                  <span className="px-2 py-0.5 rounded-md border border-gray-700 font-semibold text-xs">
                     {`${departures[0].stop.platform_code} `}
                   </span>
                 )}

@@ -22,13 +22,13 @@ const DepartureItem = ({ departure }: DepartureItemProps) => {
     <div
       className={clsx(
         diff < walkingTimeInMilisecs && 'opacity-50',
-        'flex justify-between w-full text-2xl'
+        'flex space-x-4 w-full text-2xl'
       )}
     >
-      <div className="flex space-x-4">
-        <span className="font-semibold">{departure.route.short_name}</span>
-        <span className="font-normal">{departure.trip.headsign}</span>
-      </div>
+      <span className="font-semibold">{departure.route.short_name}</span>
+      <span className="block flex-1 font-normal truncate overflow-hidden">
+        {departure.trip.headsign}
+      </span>
       <EstimatedTimeArrival diff={diff} />
     </div>
   );

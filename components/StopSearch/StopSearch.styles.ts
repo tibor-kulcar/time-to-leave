@@ -1,5 +1,5 @@
 export const controlStyles = {
-  base: 'pl-3 pr-10 z-10 hover:cursor-pointer',
+  base: 'pl-6 pr-10 z-10 hover:cursor-pointer',
   focus: '',
   nonFocus: '',
 };
@@ -19,11 +19,10 @@ export const indicatorSeparatorStyles = 'hidden bg-gray-300';
 export const dropdownIndicatorStyles =
   'w-0 h-0 p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black';
 export const menuStyles =
-  'z-50 pl-3 py-1 mt-3 text-3xl font-light bg-gray-100/75 dark:bg-black/75 backdrop-blur-sm';
+  'z-50 pl-6 py-1 mt-3 text-3xl font-normal bg-gray-100/75 dark:bg-black/75 backdrop-blur-sm';
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-3xl';
 export const optionStyles = {
-  base: 'py-2 text-3xl text-black[.8] dark:text-white/80 leading-relaxed hover:cursor-pointer',
-  focus: 'text-black dark:text-white',
-  selected: 'text-black[.8] dark:text-white/80',
+  base: 'py-2 text-3xl text-black dark:text-white leading-relaxed hover:cursor-pointer opacity-50',
+  focus: 'opacity-100',
 };
 export const messageStyles = 'block w-full pt-10 text-2xl text-white/70';

@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { Space_Grotesk } from 'next/font/google';
+// import { Space_Grotesk, Space_Mono } from 'next/font/google';
 import { useDarkMode } from 'usehooks-ts';
 
 import manifest from '@/public/manifest.json';
 import '@/styles/globals.css';
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
-});
+// const spaceGrotesk = Space_Grotesk({
+//   variable: '--font-space-grotesk',
+// });
+// const spaceMono = Space_Mono({
+//   weight: ['400'],
+//   variable: '--font-space-mono',
+// });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { isDarkMode } = useDarkMode();
@@ -110,8 +114,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           rel="apple-touch-startup-image"
         />
       </Head>
-      <main className={`${spaceGrotesk.variable} font-sans`}>
-        <Component {...pageProps} className={spaceGrotesk.variable} />
+      <main
+      // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
+      >
+        <Component {...pageProps} />
       </main>
     </>
   );
