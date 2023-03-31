@@ -10,9 +10,11 @@ const Icon = ({ icon, ...svgProps }: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="none"
       {...svgProps}
     >
-      <path d={icon} fill="#fff" />
+      <path d={icon} />
     </svg>
   );
 };

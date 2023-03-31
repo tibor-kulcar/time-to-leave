@@ -12,7 +12,7 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
   return (
     <div className="flex flex-col gap-2 p-3 border-2 border-gray-700 rounded-xl">
       {departuresLength < 1 ? (
-        <div className=" text-white/75 text-center">
+        <div className="text-black dark:text-white/75 text-center">
           No departures available
         </div>
       ) : (

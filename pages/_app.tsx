@@ -1,14 +1,34 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { Space_Grotesk } from 'next/font/google';
+import { useDarkMode } from 'usehooks-ts';
+
+import manifest from '@/public/manifest.json';
+import '@/styles/globals.css';
 
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
 });
 
-import '@/styles/globals.css';
-
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const { isDarkMode } = useDarkMode();
+  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+
+  useEffect(() => {
+    const manifestElement = document?.getElementById('manifest');
+    const manifestString = JSON.stringify({
+      ...manifest,
+      theme_color: bgColorBasedOnColorMode,
+      background_color: bgColorBasedOnColorMode,
+    });
+    manifestElement?.setAttribute(
+      'href',
+      'data:application/json;charset=utf-8,' +
+        encodeURIComponent(manifestString)
+    );
+  }, [isDarkMode]);
+
   return (
     <>
       <Head>
@@ -18,7 +38,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
         <title>Time to Leave</title>
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" id="manifest" />
         <link
           href="/icons/favicon-16x16.png"
           rel="icon"
@@ -32,12 +52,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
         />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <meta name="theme-color" content={bgColorBasedOnColorMode} />
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
         ></link>
         <link rel="apple-touch-icon" href="/icons/apple-icon-180.png"></link>
-        <meta name="theme-color" content="#000000" />
+
         <link
           href="/splashscreens/iphone5_splash.png"
           media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"

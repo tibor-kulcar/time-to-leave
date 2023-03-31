@@ -26,8 +26,8 @@ const DepartureItem = ({ departure }: DepartureItemProps) => {
       )}
     >
       <div className="flex space-x-4">
-        <span className="font-bold">{departure.route.short_name}</span>
-        <span className="font-thin">{departure.trip.headsign}</span>
+        <span className="font-semibold">{departure.route.short_name}</span>
+        <span className="font-normal">{departure.trip.headsign}</span>
       </div>
       <EstimatedTimeArrival diff={diff} />
     </div>
