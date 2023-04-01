@@ -2,7 +2,7 @@
 
 Some of us struggle to catch public transportation on time :)
 
-This react-native application is simple help to see how much time you have to chatch your bus/tram.
+This application is simple help to see how much time you have to chatch your bus/tram.
 
 Now it works only with Prague-based data.
 
