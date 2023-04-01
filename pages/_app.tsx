@@ -16,22 +16,22 @@ import '@/styles/globals.css';
 // });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const { isDarkMode } = useDarkMode();
-  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+  //   const { isDarkMode } = useDarkMode();
+  //   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
 
-  useEffect(() => {
-    const manifestElement = document?.getElementById('manifest');
-    const manifestString = JSON.stringify({
-      ...manifest,
-      theme_color: bgColorBasedOnColorMode,
-      background_color: bgColorBasedOnColorMode,
-    });
-    manifestElement?.setAttribute(
-      'href',
-      'data:application/json;charset=utf-8,' +
-        encodeURIComponent(manifestString)
-    );
-  }, [isDarkMode]);
+  //   useEffect(() => {
+  //     const manifestElement = document?.getElementById('manifest');
+  //     const manifestString = JSON.stringify({
+  //       ...manifest,
+  //       theme_color: bgColorBasedOnColorMode,
+  //       background_color: bgColorBasedOnColorMode,
+  //     });
+  //     manifestElement?.setAttribute(
+  //       'href',
+  //       'data:application/json;charset=utf-8,' +
+  //         encodeURIComponent(manifestString)
+  //     );
+  //   }, [isDarkMode]);
 
   return (
     <>
@@ -39,10 +39,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="description" content="Description" />
-        <meta name="keywords" content="Keywords" />
+        <meta name="description" content="Make it to the stop on time" />
+        <meta
+          name="keywords"
+          content="public transportation, arrival, departure, countdown, bus, tram, metro, tube, subway, train, boat"
+        />
         <title>Time to Leave</title>
-        <link rel="manifest" id="manifest" />
+        <link rel="manifest" id="manifest" href="/manifest.json" />
         <link
           href="/icons/favicon-16x16.png"
           rel="icon"
@@ -61,8 +64,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
+        />
+
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/apple-icon-180.png"
         ></link>
-        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png"></link>
+        <link
+          rel="apple-touch-icon"
+          sizes="181x181"
+          href="/icons/icon-192x192.png"
+        ></link>
 
         <link
           href="/splashscreens/iphone5_splash.png"
