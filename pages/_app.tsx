@@ -16,22 +16,22 @@ import '@/styles/globals.css';
 // });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  //   const { isDarkMode } = useDarkMode();
-  //   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+  const { isDarkMode } = useDarkMode();
+  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
 
-  //   useEffect(() => {
-  //     const manifestElement = document?.getElementById('manifest');
-  //     const manifestString = JSON.stringify({
-  //       ...manifest,
-  //       theme_color: bgColorBasedOnColorMode,
-  //       background_color: bgColorBasedOnColorMode,
-  //     });
-  //     manifestElement?.setAttribute(
-  //       'href',
-  //       'data:application/json;charset=utf-8,' +
-  //         encodeURIComponent(manifestString)
-  //     );
-  //   }, [isDarkMode]);
+  // useEffect(() => {
+  //   const manifestElement = document?.getElementById('manifest');
+  //   const manifestString = JSON.stringify({
+  //     ...manifest,
+  //     theme_color: bgColorBasedOnColorMode,
+  //     background_color: bgColorBasedOnColorMode,
+  //   });
+  //   manifestElement?.setAttribute(
+  //     'href',
+  //     'data:application/json;charset=utf-8,' +
+  //       encodeURIComponent(manifestString)
+  //   );
+  // }, [isDarkMode]);
 
   return (
     <>
@@ -59,23 +59,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
         />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
-        <meta name="theme-color" content="#E9E9E9" />
+        <meta name="theme-color" content={bgColorBasedOnColorMode} />
         <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
         />
 
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/icons/apple-icon-180.png"
-        ></link>
-        <link
-          rel="apple-touch-icon"
-          sizes="181x181"
-          href="/icons/icon-192x192.png"
-        ></link>
+        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
 
         <link
           href="/splashscreens/iphone5_splash.png"
