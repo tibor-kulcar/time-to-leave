@@ -1,28 +1,31 @@
 import clsx from 'clsx';
 
 import { DepartureProps } from '@/types';
-import { useClock } from '@/hooks/useClock';
 import { EstimatedTimeArrival } from '@/components/EstimatedTimeArrival';
 
 const walkingTimeInMilisecs = 3 * 60 * 1000;
 
 type DepartureItemProps = {
   departure: DepartureProps;
+  time: number;
 };
 
-const DepartureItem = ({ departure }: DepartureItemProps) => {
-  const now = useClock().getTime();
+const DepartureItem = ({ departure, time }: DepartureItemProps) => {
+  // console.count('DepartureItem');
+
   const prediction = new Date(
     departure.departure_timestamp.predicted ||
       departure.departure_timestamp.scheduled
   ).getTime();
-  const diff = prediction - now;
+  const diff = prediction - time;
+
   if (diff < 0) return <></>;
+
   return (
     <div
       className={clsx(
-        diff < walkingTimeInMilisecs && 'opacity-50',
-        'flex space-x-4 w-full text-2xl'
+        'flex space-x-4 w-full text-2xl',
+        diff < walkingTimeInMilisecs ? 'opacity-50' : ''
       )}
     >
       <span className="font-semibold">{departure.route.short_name}</span>

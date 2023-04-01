@@ -7,9 +7,8 @@ import { useSearch } from '@/hooks/useSearch';
 import fetcher from '@/lib/fetcher';
 import { DeparturesList } from '@/components/DeparturesList';
 
-const walkingTimeInMilisecs = 3000;
-
 const DepartureBoard = () => {
+  // console.count('DepartureBoard');
   const [searchString] = useSearch();
   const { data, mutate, error, isLoading } = useSWR(
     '/api/pid?name=' + searchString?.value,
