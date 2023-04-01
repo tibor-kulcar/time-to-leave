@@ -16,22 +16,22 @@ import '@/styles/globals.css';
 // });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  //   const { isDarkMode } = useDarkMode();
-  //   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+  const { isDarkMode } = useDarkMode();
+  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
 
-  //   useEffect(() => {
-  //     const manifestElement = document?.getElementById('manifest');
-  //     const manifestString = JSON.stringify({
-  //       ...manifest,
-  //       theme_color: bgColorBasedOnColorMode,
-  //       background_color: bgColorBasedOnColorMode,
-  //     });
-  //     manifestElement?.setAttribute(
-  //       'href',
-  //       'data:application/json;charset=utf-8,' +
-  //         encodeURIComponent(manifestString)
-  //     );
-  //   }, [isDarkMode]);
+  // useEffect(() => {
+  //   const manifestElement = document?.getElementById('manifest');
+  //   const manifestString = JSON.stringify({
+  //     ...manifest,
+  //     theme_color: bgColorBasedOnColorMode,
+  //     background_color: bgColorBasedOnColorMode,
+  //   });
+  //   manifestElement?.setAttribute(
+  //     'href',
+  //     'data:application/json;charset=utf-8,' +
+  //       encodeURIComponent(manifestString)
+  //   );
+  // }, [isDarkMode]);
 
   return (
     <>
