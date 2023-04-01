@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-// import { Space_Grotesk, Space_Mono } from 'next/font/google';
 import { useDarkMode } from 'usehooks-ts';
 
 import manifest from '@/public/manifest.json';
 import '@/styles/globals.css';
+
+//  Google fonts setup
+// import { Space_Grotesk, Space_Mono } from 'next/font/google';
 
 // const spaceGrotesk = Space_Grotesk({
 //   variable: '--font-space-grotesk',
@@ -120,6 +122,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <main
+      //  Google fonts setup
       // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
       >
         <Component {...pageProps} />

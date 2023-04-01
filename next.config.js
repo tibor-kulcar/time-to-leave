@@ -3,9 +3,9 @@ const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: false,
-  // swSrc: '/public/sw.js',
 });
 
+//  Google fonts setup
 // module.exports = withPWA({
 //   reactStrictMode: true,
 //   experimental: {
