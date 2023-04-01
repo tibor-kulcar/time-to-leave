@@ -23,6 +23,6 @@ export const menuStyles =
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-3xl';
 export const optionStyles = {
   base: 'py-2 text-3xl text-black dark:text-white leading-relaxed hover:cursor-pointer opacity-50',
-  focus: 'opacity-100',
+  focus: 'opacity-[1]',
 };
 export const messageStyles = 'block w-full pt-10 text-2xl text-white/70';
