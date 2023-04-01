@@ -16,22 +16,22 @@ import '@/styles/globals.css';
 // });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const { isDarkMode } = useDarkMode();
-  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+  //   const { isDarkMode } = useDarkMode();
+  //   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
 
-  useEffect(() => {
-    const manifestElement = document?.getElementById('manifest');
-    const manifestString = JSON.stringify({
-      ...manifest,
-      theme_color: bgColorBasedOnColorMode,
-      background_color: bgColorBasedOnColorMode,
-    });
-    manifestElement?.setAttribute(
-      'href',
-      'data:application/json;charset=utf-8,' +
-        encodeURIComponent(manifestString)
-    );
-  }, [isDarkMode]);
+  //   useEffect(() => {
+  //     const manifestElement = document?.getElementById('manifest');
+  //     const manifestString = JSON.stringify({
+  //       ...manifest,
+  //       theme_color: bgColorBasedOnColorMode,
+  //       background_color: bgColorBasedOnColorMode,
+  //     });
+  //     manifestElement?.setAttribute(
+  //       'href',
+  //       'data:application/json;charset=utf-8,' +
+  //         encodeURIComponent(manifestString)
+  //     );
+  //   }, [isDarkMode]);
 
   return (
     <>
@@ -59,7 +59,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
         />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
-        <meta name="theme-color" content={bgColorBasedOnColorMode} />
+        <meta name="theme-color" content="#E9E9E9" />
         <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
         <link
           rel="apple-touch-startup-image"
