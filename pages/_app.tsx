@@ -57,6 +57,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <meta name="theme-color" content={bgColorBasedOnColorMode} />
+        <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
