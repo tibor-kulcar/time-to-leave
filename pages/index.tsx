@@ -1,7 +1,7 @@
 import { DepartureBoard } from '@/components/DepartureBoard';
 import { SearchBar } from '@/components/SearchBar';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="h-full">
       <main className="flex flex-col items-center justify-center max-h-screen">
@@ -10,4 +10,6 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export default Home;

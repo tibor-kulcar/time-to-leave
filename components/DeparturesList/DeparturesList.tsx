@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { GroupedDepartureProps } from '@/types';
 import { DepartureItem } from '@/components/DepartureItem';
+import { PlatformCode } from '@/components/PlatformCode';
+import { useClock } from '@/hooks/useClock';
 
 type DeparturesListProps = {
   departures: GroupedDepartureProps[];
@@ -9,8 +9,9 @@ type DeparturesListProps = {
 
 const DeparturesList = ({ departures }: DeparturesListProps) => {
   const departuresLength = departures?.length || 0;
+  const now = useClock().getTime();
   return (
-    <div className="flex flex-col gap-2 p-3 border-2 border-gray-700 rounded-xl">
+    <div className="flex flex-col gap-2 p-3 border-2 border-gray-500 dark:border-gray-700 rounded-xl">
       {departuresLength < 1 ? (
         <div className="text-black dark:text-white/75 text-center">
           No departures available
@@ -21,16 +22,10 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
 
           return (
             <div key={idx} className="w-full">
-              <div className="text-left">
-                {departures[0].stop.platform_code && (
-                  <span className="px-2 py-0.5 rounded-md border border-gray-700 font-semibold text-xs">
-                    {`${departures[0].stop.platform_code} `}
-                  </span>
-                )}
-              </div>
+              <PlatformCode code={departures[0].stop.platform_code} />
 
               {departures.map((departure, idx) => (
-                <DepartureItem departure={departure} key={idx} />
+                <DepartureItem departure={departure} time={now} key={idx} />
               ))}
             </div>
           );
