@@ -16,6 +16,7 @@ import '@/styles/globals.css';
 //   weight: ['400'],
 //   variable: '--font-space-mono',
 // });
+//  END Google fonts setup
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { isDarkMode } = useDarkMode();
@@ -60,16 +61,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           type="image/png"
           sizes="32x32"
         />
-        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <meta name="theme-color" content={bgColorBasedOnColorMode} />
+
+        {/* Apple icons setup */}
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
+        {/* END Apple icons setup */}
+
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
         />
-
-        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
-
         <link
           href="/splashscreens/iphone5_splash.png"
           media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
@@ -121,12 +124,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           rel="apple-touch-startup-image"
         />
       </Head>
+      {/* //  Google fonts setup
       <main
-      //  Google fonts setup
       // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
+      //  END Google fonts setup
       >
         <Component {...pageProps} />
       </main>
+      //  Google fonts setup */}
+      <Component {...pageProps} />
     </>
   );
 }

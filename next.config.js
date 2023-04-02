@@ -15,6 +15,7 @@ const withPWA = require('next-pwa')({
 //     // ],
 //   },
 // });
+//  END Google fonts setup
 
 module.exports = withPWA({
   reactStrictMode: true,
