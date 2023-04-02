@@ -5,12 +5,18 @@ const withPWA = require('next-pwa')({
   skipWaiting: false,
 });
 
+//  Google fonts setup
+// module.exports = withPWA({
+//   reactStrictMode: true,
+//   experimental: {
+//     appDir: true,
+//     // fontLoaders: [
+//     //   { loader: 'next/font/google', options: { subsets: ['latin'] } },
+//     // ],
+//   },
+// });
+//  END Google fonts setup
+
 module.exports = withPWA({
   reactStrictMode: true,
-  experimental: {
-    appDir: true,
-    fontLoaders: [
-      { loader: 'next/font/google', options: { subsets: ['latin'] } },
-    ],
-  },
 });

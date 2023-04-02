@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-// import { Space_Grotesk, Space_Mono } from 'next/font/google';
 import { useDarkMode } from 'usehooks-ts';
 
 import manifest from '@/public/manifest.json';
 import '@/styles/globals.css';
+
+//  Google fonts setup
+// import { Space_Grotesk, Space_Mono } from 'next/font/google';
 
 // const spaceGrotesk = Space_Grotesk({
 //   variable: '--font-space-grotesk',
@@ -14,24 +16,25 @@ import '@/styles/globals.css';
 //   weight: ['400'],
 //   variable: '--font-space-mono',
 // });
+//  END Google fonts setup
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { isDarkMode } = useDarkMode();
   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
 
-  useEffect(() => {
-    const manifestElement = document?.getElementById('manifest');
-    const manifestString = JSON.stringify({
-      ...manifest,
-      theme_color: bgColorBasedOnColorMode,
-      background_color: bgColorBasedOnColorMode,
-    });
-    manifestElement?.setAttribute(
-      'href',
-      'data:application/json;charset=utf-8,' +
-        encodeURIComponent(manifestString)
-    );
-  }, [isDarkMode]);
+  // useEffect(() => {
+  //   const manifestElement = document?.getElementById('manifest');
+  //   const manifestString = JSON.stringify({
+  //     ...manifest,
+  //     theme_color: bgColorBasedOnColorMode,
+  //     background_color: bgColorBasedOnColorMode,
+  //   });
+  //   manifestElement?.setAttribute(
+  //     'href',
+  //     'data:application/json;charset=utf-8,' +
+  //       encodeURIComponent(manifestString)
+  //   );
+  // }, [isDarkMode]);
 
   return (
     <>
@@ -39,10 +42,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="description" content="Description" />
-        <meta name="keywords" content="Keywords" />
+        <meta name="description" content="Make it to the stop on time" />
+        <meta
+          name="keywords"
+          content="public transportation, arrival, departure, countdown, bus, tram, metro, tube, subway, train, boat"
+        />
         <title>Time to Leave</title>
-        <link rel="manifest" id="manifest" />
+        <link rel="manifest" id="manifest" href="/manifest.json" />
         <link
           href="/icons/favicon-16x16.png"
           rel="icon"
@@ -55,14 +61,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           type="image/png"
           sizes="32x32"
         />
-        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <meta name="theme-color" content={bgColorBasedOnColorMode} />
+
+        {/* Apple icons setup */}
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
+        {/* END Apple icons setup */}
+
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
-        ></link>
-        <link rel="apple-touch-icon" href="/icons/apple-icon-180.png"></link>
-
+        />
         <link
           href="/splashscreens/iphone5_splash.png"
           media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
@@ -114,11 +124,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           rel="apple-touch-startup-image"
         />
       </Head>
+      {/* //  Google fonts setup
       <main
       // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
+      //  END Google fonts setup
       >
         <Component {...pageProps} />
       </main>
+      //  Google fonts setup */}
+      <Component {...pageProps} />
     </>
   );
 }
