@@ -56,7 +56,7 @@ const StopSearch = () => {
             menuList: (provided, state) => ({
               ...provided,
               // 100 viewport height minus input height
-              minHeight: 'calc(100vh - 82px)',
+              minHeight: 'calc(100vh - 86px)',
             }),
             loadingMessage: (provided, state) => ({
               ...provided,
@@ -67,7 +67,10 @@ const StopSearch = () => {
             control: ({ isFocused }) =>
               clsx(
                 isFocused ? controlStyles.focus : controlStyles.nonFocus,
-                controlStyles.base
+                controlStyles.base,
+                searchString.value
+                  ? 'border-white dark:border-black'
+                  : 'border-black dark:border-white'
               ),
             placeholder: () => placeholderStyles,
             input: () => selectInputStyles,
@@ -92,7 +95,7 @@ const StopSearch = () => {
           onChange={handleChange}
         />
       ) : null}
-      <Icon icon={mdiMagnify} className="absolute right-3 w-8 h-8 z-0" />
+      <Icon icon={mdiMagnify} className="absolute right-6 w-8 h-8 z-0" />
     </label>
   );
 };
