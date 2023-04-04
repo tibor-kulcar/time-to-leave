@@ -11,7 +11,7 @@ const PlatformCode = ({ code }: PlatformCodeProps) => {
           className="
           px-2 py-0.5
           rounded-md border border-gray-700
-          text-gray-700 font-semibold text-xs
+          text-gray-700 dark:text-gray-500 font-semibold text-xs
         "
         >
           {`${code} `}
