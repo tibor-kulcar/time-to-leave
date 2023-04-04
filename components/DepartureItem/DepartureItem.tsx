@@ -24,12 +24,13 @@ const DepartureItem = ({ departure, time }: DepartureItemProps) => {
   return (
     <div
       className={clsx(
-        'flex space-x-4 w-full text-2xl',
+        'grid grid-flow-col gap-2 auto-cols-[_2.8rem_2fr_auto] w-full text-2xl',
         diff < walkingTimeInMilisecs ? 'opacity-50' : ''
       )}
+      // style={{ gridTemplateColumns: '1fr 4fr 1fr' }}
     >
       <span className="font-semibold">{departure.route.short_name}</span>
-      <span className="block flex-1 font-normal truncate overflow-hidden">
+      <span className="w-full font-normal truncate overflow-hidden">
         {departure.trip.headsign}
       </span>
       <EstimatedTimeArrival diff={diff} />
