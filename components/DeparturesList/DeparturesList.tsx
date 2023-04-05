@@ -39,7 +39,7 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
           <img
             src="/icons/icon.svg"
             alt="Search your stop"
-            className="max-w-xs"
+            className="max-w-[200px] md:max-w-xs"
           />
           <span className="text-xl italic">
             Find your stop, catch your ride, and never be left behind!

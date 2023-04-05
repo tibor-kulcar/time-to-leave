@@ -3,11 +3,14 @@ import clsx from 'clsx';
 import { ActionMeta, SingleValue } from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import { mdiMagnify } from '@mdi/js';
+import useSWR from 'swr';
 
 import { useSearch } from '@/hooks/useSearch';
 import useHasMounted from '@/hooks/useHasMounted';
 import { StopItem } from '@/types';
+import fetcher from '@/lib/fetcher';
 import { Icon } from '@/components/Icon';
+import { Spinner } from '@/components/Spinner';
 import {
   controlStyles,
   placeholderStyles,
@@ -17,9 +20,7 @@ import {
   multiValueStyles,
   multiValueLabelStyles,
   multiValueRemoveStyles,
-  indicatorsContainerStyles,
   clearIndicatorStyles,
-  indicatorSeparatorStyles,
   dropdownIndicatorStyles,
   menuStyles,
   groupHeadingStyles,
@@ -32,6 +33,10 @@ import { loadOptions } from './loadOptions';
 const StopSearch = () => {
   const hasMounted = useHasMounted();
   const [searchString, setSearchString] = useSearch();
+  const { isLoading, isValidating } = useSWR(
+    '/api/pid?name=' + searchString?.value,
+    (url) => fetcher(url)
+  );
 
   const handleChange = (
     newValue: SingleValue<StopItem>,
@@ -56,7 +61,7 @@ const StopSearch = () => {
             menuList: (provided, state) => ({
               ...provided,
               // 100 viewport height minus input height
-              minHeight: 'calc(100vh - 86px)',
+              minHeight: 'calc(100vh - 82px)',
             }),
             loadingMessage: (provided, state) => ({
               ...provided,
@@ -79,9 +84,7 @@ const StopSearch = () => {
             multiValue: () => multiValueStyles,
             multiValueLabel: () => multiValueLabelStyles,
             multiValueRemove: () => multiValueRemoveStyles,
-            indicatorsContainer: () => indicatorsContainerStyles,
             clearIndicator: () => clearIndicatorStyles,
-            indicatorSeparator: () => indicatorSeparatorStyles,
             dropdownIndicator: () => dropdownIndicatorStyles,
             menu: () => menuStyles,
             groupHeading: () => groupHeadingStyles,
@@ -93,9 +96,21 @@ const StopSearch = () => {
           defaultValue={searchString.value ? searchString : undefined}
           value={searchString.value ? searchString : undefined}
           onChange={handleChange}
+          components={{
+            LoadingIndicator: () => <></>,
+            IndicatorSeparator: () => <></>,
+            DropdownIndicator: () => (
+              <>
+                {isLoading || isValidating ? (
+                  <Spinner />
+                ) : (
+                  <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
+                )}
+              </>
+            ),
+          }}
         />
       ) : null}
-      <Icon icon={mdiMagnify} className="absolute right-6 w-8 h-8 z-0" />
     </label>
   );
 };
