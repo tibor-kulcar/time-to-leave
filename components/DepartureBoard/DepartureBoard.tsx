@@ -34,7 +34,7 @@ const DepartureBoard = () => {
         overflow-y-auto
       "
     >
-      {isLoading && searchString ? (
+      {isLoading && searchString.value ? (
         <>
           <DeparturesListSkeleton />
         </>
