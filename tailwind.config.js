@@ -14,13 +14,15 @@ module.exports = {
       lg: '1200px',
       xl: '1536px',
     },
+
     fontFamily: {
       sans: 'Helvetica, sans-serif',
       // mono: 'Helvetica, sans-serif',
     },
     extend: {
+      borderRadius: { xl: '1.21rem' },
       colors: {
-        bone: '#FDF9ED',
+        bone: { 200: '#FDF9ED', 400: '#FBF1D6' },
         gray: {
           100: '#E9E9E9',
           500: '#CCCCCC',

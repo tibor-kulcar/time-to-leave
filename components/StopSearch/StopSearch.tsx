@@ -101,7 +101,7 @@ const StopSearch = () => {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
+                <Icon icon={mdiMagnify} className="w-8 h-8 z-0 text-white" />
               )}
             </>
           ),
