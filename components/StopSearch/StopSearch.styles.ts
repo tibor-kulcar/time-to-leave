@@ -1,5 +1,5 @@
 export const controlStyles = {
-  base: 'pl-3 z-10 hover:cursor-pointer py-3 mx-3 border rounded-xl',
+  base: 'p-3 z-10 gap-2 hover:cursor-pointer mx-3 border rounded-xl',
   focus: '',
   nonFocus: '',
 };

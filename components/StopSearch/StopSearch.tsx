@@ -98,7 +98,7 @@ const StopSearch = () => {
           IndicatorSeparator: () => <></>,
           DropdownIndicator: () => (
             <>
-              {isLoading || isValidating ? (
+              {isLoading ? (
                 <Spinner />
               ) : (
                 <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
