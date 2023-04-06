@@ -1,5 +1,5 @@
 export const controlStyles = {
-  base: 'pl-3 pr-10 z-10 hover:cursor-pointer py-3 mx-3 border rounded-xl',
+  base: 'p-3 z-10 gap-2 hover:cursor-pointer mx-3 border rounded-xl',
   focus: '',
   nonFocus: '',
 };
@@ -14,10 +14,8 @@ export const multiValueRemoveStyles =
   'border border-gray-200 bg-white hover:bg-red-50 hover:text-red-800 text-gray-500 hover:border-red-300 rounded-md';
 export const clearIndicatorStyles =
   'text-gray-500 p-1 rounded-md hover:bg-red-50 hover:text-red-800';
-export const indicatorsContainerStyles = 'hidden w-0 h-0 overflow-hidden';
-export const indicatorSeparatorStyles = 'hidden bg-gray-300';
 export const dropdownIndicatorStyles =
-  'w-0 h-0 p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black';
+  'p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black';
 export const menuStyles =
   'z-50 pl-6 py-1 text-3xl font-normal bg-gray-100/75 dark:bg-black/75 backdrop-blur-sm';
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-3xl';

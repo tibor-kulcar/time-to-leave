@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 
 import { useGroupDepartures } from '@/hooks/useGroupDepartures';
 import { useSearch } from '@/hooks/useSearch';
-
 import fetcher from '@/lib/fetcher';
-import { DeparturesList } from '@/components/DeparturesList';
+import {
+  DeparturesList,
+  DeparturesListSkeleton,
+} from '@/components/DeparturesList';
 
 const DepartureBoard = () => {
   // console.count('DepartureBoard');
   const [searchString] = useSearch();
-  const { data, mutate, error, isLoading } = useSWR(
+  const { data, mutate, error, isLoading, isValidating } = useSWR(
     '/api/pid?name=' + searchString?.value,
     (url) => fetcher(url),
     { refreshInterval: 10000 }
@@ -32,8 +35,8 @@ const DepartureBoard = () => {
         overflow-y-auto
       "
     >
-      {isLoading ? (
-        <h2 className="text-2xl text-center">Loading...</h2>
+      {isLoading && searchString?.value ? (
+        <DeparturesListSkeleton />
       ) : (
         <DeparturesList departures={groupedData} />
       )}
@@ -41,4 +44,4 @@ const DepartureBoard = () => {
   );
 };
 
-export default DepartureBoard;
+export default dynamic(() => Promise.resolve(DepartureBoard), { ssr: false });

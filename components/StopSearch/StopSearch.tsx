@@ -1,13 +1,15 @@
-import { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import clsx from 'clsx';
 import { ActionMeta, SingleValue } from 'react-select';
 import { AsyncPaginate } from 'react-select-async-paginate';
 import { mdiMagnify } from '@mdi/js';
+import useSWR from 'swr';
 
 import { useSearch } from '@/hooks/useSearch';
-import useHasMounted from '@/hooks/useHasMounted';
 import { StopItem } from '@/types';
+import fetcher from '@/lib/fetcher';
 import { Icon } from '@/components/Icon';
+import { Spinner } from '@/components/Spinner';
 import {
   controlStyles,
   placeholderStyles,
@@ -17,9 +19,7 @@ import {
   multiValueStyles,
   multiValueLabelStyles,
   multiValueRemoveStyles,
-  indicatorsContainerStyles,
   clearIndicatorStyles,
-  indicatorSeparatorStyles,
   dropdownIndicatorStyles,
   menuStyles,
   groupHeadingStyles,
@@ -30,8 +30,11 @@ import {
 import { loadOptions } from './loadOptions';
 
 const StopSearch = () => {
-  const hasMounted = useHasMounted();
   const [searchString, setSearchString] = useSearch();
+  const { isLoading, isValidating } = useSWR(
+    '/api/pid?name=' + searchString?.value,
+    (url) => fetcher(url)
+  );
 
   const handleChange = (
     newValue: SingleValue<StopItem>,
@@ -42,62 +45,70 @@ const StopSearch = () => {
 
   return (
     <label className="flex flex-row items-center justify-center w-full gap-4 py-3">
-      {hasMounted ? (
-        <AsyncPaginate
-          unstyled
-          loadOptions={loadOptions}
-          isSearchable={true}
-          className="w-full"
-          placeholder="Search"
-          closeMenuOnSelect={true}
-          // menuIsOpen={true}
-          // isLoading
-          styles={{
-            menuList: (provided, state) => ({
-              ...provided,
-              // 100 viewport height minus input height
-              minHeight: 'calc(100vh - 86px)',
-            }),
-            loadingMessage: (provided, state) => ({
-              ...provided,
-              textAligtn: 'center',
-            }),
-          }}
-          classNames={{
-            control: ({ isFocused }) =>
-              clsx(
-                isFocused ? controlStyles.focus : controlStyles.nonFocus,
-                controlStyles.base,
-                searchString.value
-                  ? 'border-gray-100 dark:border-black'
-                  : 'border-black dark:border-gray-100'
-              ),
-            placeholder: () => placeholderStyles,
-            input: () => selectInputStyles,
-            valueContainer: () => valueContainerStyles,
-            singleValue: () => singleValueStyles,
-            multiValue: () => multiValueStyles,
-            multiValueLabel: () => multiValueLabelStyles,
-            multiValueRemove: () => multiValueRemoveStyles,
-            indicatorsContainer: () => indicatorsContainerStyles,
-            clearIndicator: () => clearIndicatorStyles,
-            indicatorSeparator: () => indicatorSeparatorStyles,
-            dropdownIndicator: () => dropdownIndicatorStyles,
-            menu: () => menuStyles,
-            groupHeading: () => groupHeadingStyles,
-            option: ({ isFocused }) =>
-              clsx(optionStyles.base, isFocused && optionStyles.focus),
-            noOptionsMessage: () => messageStyles,
-            loadingMessage: () => messageStyles,
-          }}
-          defaultValue={searchString.value ? searchString : undefined}
-          value={searchString.value ? searchString : undefined}
-          onChange={handleChange}
-        />
-      ) : null}
-      <Icon icon={mdiMagnify} className="absolute right-6 w-8 h-8 z-0" />
+      <AsyncPaginate
+        unstyled
+        loadOptions={loadOptions}
+        isSearchable={true}
+        className="w-full"
+        placeholder="Search"
+        closeMenuOnSelect={true}
+        // menuIsOpen={true}
+        // isLoading
+        styles={{
+          menuList: (provided, state) => ({
+            ...provided,
+            // 100 viewport height minus input height
+            minHeight: 'calc(100vh - 82px)',
+          }),
+          loadingMessage: (provided, state) => ({
+            ...provided,
+            textAligtn: 'center',
+          }),
+        }}
+        classNames={{
+          control: ({ isFocused }) =>
+            clsx(
+              isFocused ? controlStyles.focus : controlStyles.nonFocus,
+              controlStyles.base,
+              searchString.value
+                ? 'border-gray-100 dark:border-black'
+                : 'border-black dark:border-gray-100'
+            ),
+          placeholder: () => placeholderStyles,
+          input: () => selectInputStyles,
+          valueContainer: () => valueContainerStyles,
+          singleValue: () => singleValueStyles,
+          multiValue: () => multiValueStyles,
+          multiValueLabel: () => multiValueLabelStyles,
+          multiValueRemove: () => multiValueRemoveStyles,
+          clearIndicator: () => clearIndicatorStyles,
+          dropdownIndicator: () => dropdownIndicatorStyles,
+          menu: () => menuStyles,
+          groupHeading: () => groupHeadingStyles,
+          option: ({ isFocused }) =>
+            clsx(optionStyles.base, isFocused && optionStyles.focus),
+          noOptionsMessage: () => messageStyles,
+          loadingMessage: () => messageStyles,
+        }}
+        defaultValue={searchString.value ? searchString : undefined}
+        value={searchString.value ? searchString : undefined}
+        onChange={handleChange}
+        components={{
+          LoadingIndicator: () => <></>,
+          IndicatorSeparator: () => <></>,
+          DropdownIndicator: () => (
+            <>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
+              )}
+            </>
+          ),
+        }}
+      />
     </label>
   );
 };
 
-export default StopSearch;
+export default dynamic(() => Promise.resolve(StopSearch), { ssr: false });

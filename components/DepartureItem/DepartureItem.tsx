@@ -27,7 +27,6 @@ const DepartureItem = ({ departure, time }: DepartureItemProps) => {
         'grid grid-flow-col gap-2 auto-cols-[_2.8rem_2fr_auto] w-full text-2xl',
         diff < walkingTimeInMilisecs ? 'opacity-50' : ''
       )}
-      // style={{ gridTemplateColumns: '1fr 4fr 1fr' }}
     >
       <span className="font-semibold">{departure.route.short_name}</span>
       <span className="w-full font-normal truncate overflow-hidden">
