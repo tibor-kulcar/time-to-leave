@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 
 import { useGroupDepartures } from '@/hooks/useGroupDepartures';
 import { useSearch } from '@/hooks/useSearch';
@@ -34,10 +35,8 @@ const DepartureBoard = () => {
         overflow-y-auto
       "
     >
-      {isLoading && searchString.value ? (
-        <>
-          <DeparturesListSkeleton />
-        </>
+      {isLoading && searchString?.value ? (
+        <DeparturesListSkeleton />
       ) : (
         <DeparturesList departures={groupedData} />
       )}
@@ -45,4 +44,4 @@ const DepartureBoard = () => {
   );
 };
 
-export default DepartureBoard;
+export default dynamic(() => Promise.resolve(DepartureBoard), { ssr: false });
