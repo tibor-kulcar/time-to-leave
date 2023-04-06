@@ -4,7 +4,7 @@ import { GroupedDepartureProps } from '@/types';
 import { DepartureItem } from '@/components/DepartureItem';
 import { PlatformCode } from '@/components/PlatformCode';
 import { useClock } from '@/hooks/useClock';
-import happyTramImage from '@/public/icons/icon.svg';
+import happyTramImage from '@/public/icons/icon-512x512.png';
 
 type DeparturesListProps = {
   departures: GroupedDepartureProps[];
@@ -38,14 +38,20 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 p-12 text-center">
-          <Image
-            src={happyTramImage}
-            alt="Search your stop"
-            className="max-w-[200px] md:max-w-xs"
-          />
-          <span className="text-xl italic">
-            Find your stop, catch your ride, and never be left behind!
+        <div className="flex flex-col items-center gap-10 p-12 text-center">
+          <div className="rounded-[2rem] overflow-hidden">
+            <Image
+              src={happyTramImage}
+              alt="Search your stop"
+              className="round-xl max-w-[9rem] md:max-w-xs"
+            />
+          </div>
+          <span className="text-xl italic opacity-50">
+            Find your stop,
+            <br />
+            catch your ride,
+            <br />
+            never stay behind!
           </span>
         </div>
       )}

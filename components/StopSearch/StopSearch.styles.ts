@@ -17,7 +17,7 @@ export const clearIndicatorStyles =
 export const dropdownIndicatorStyles =
   'p-1 hover:bg-gray-100 text-gray-500 rounded-md hover:text-black';
 export const menuStyles =
-  'z-50 pl-6 py-1 text-3xl font-normal bg-gray-100/75 dark:bg-black/75 backdrop-blur-sm';
+  'z-50 pl-6 py-1 text-3xl font-normal bg-bone/75 dark:bg-black/75 backdrop-blur-sm';
 export const groupHeadingStyles = 'ml-3 mt-2 mb-1 text-gray-500 text-3xl';
 export const optionStyles = {
   base: 'py-2 text-3xl text-black dark:text-white leading-relaxed hover:cursor-pointer opacity-50',

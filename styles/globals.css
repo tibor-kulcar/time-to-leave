@@ -7,7 +7,7 @@
   body {
     @apply h-full
       text-black dark:text-white
-      bg-gray-100 dark:bg-black;
+      bg-bone dark:bg-black;
   }
 }
 
