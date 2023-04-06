@@ -1,7 +1,10 @@
+import Image from 'next/image';
+
 import { GroupedDepartureProps } from '@/types';
 import { DepartureItem } from '@/components/DepartureItem';
 import { PlatformCode } from '@/components/PlatformCode';
 import { useClock } from '@/hooks/useClock';
+import happyTramImage from '@/public/icons/icon.svg';
 
 type DeparturesListProps = {
   departures: GroupedDepartureProps[];
@@ -36,8 +39,8 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-6 p-12 text-center">
-          <img
-            src="/icons/icon.svg"
+          <Image
+            src={happyTramImage}
             alt="Search your stop"
             className="max-w-[200px] md:max-w-xs"
           />
