@@ -25,6 +25,7 @@ module.exports = {
         bone: { 200: '#FDF9ED', 400: '#FBF1D6' },
         gray: {
           100: '#E9E9E9',
+          300: '#DDDDDD',
           500: '#CCCCCC',
           700: '#545454',
         },

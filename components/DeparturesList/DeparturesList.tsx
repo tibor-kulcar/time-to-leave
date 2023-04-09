@@ -46,7 +46,7 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
               className="round-xl max-w-[9rem] md:max-w-xs"
             />
           </div>
-          <span className="text-xl italic opacity-50">
+          <span className="text-xl italic opacity-75">
             Find your stop,
             <br />
             catch your ride,

@@ -71,8 +71,8 @@ const StopSearch = () => {
               isFocused ? controlStyles.focus : controlStyles.nonFocus,
               controlStyles.base,
               searchString.value
-                ? 'border-gray-100 dark:border-black'
-                : 'border-black dark:border-gray-100'
+                ? 'border-bone-200 dark:border-black'
+                : 'border-black dark:border-bone-200'
             ),
           placeholder: () => placeholderStyles,
           input: () => selectInputStyles,
@@ -101,7 +101,7 @@ const StopSearch = () => {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Icon icon={mdiMagnify} className="w-8 h-8 z-0 text-white" />
+                <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
               )}
             </>
           ),
