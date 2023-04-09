@@ -71,8 +71,8 @@ const StopSearch = () => {
               isFocused ? controlStyles.focus : controlStyles.nonFocus,
               controlStyles.base,
               searchString.value
-                ? 'border-gray-100 dark:border-black'
-                : 'border-black dark:border-gray-100'
+                ? 'border-bone-200 dark:border-black'
+                : 'border-black dark:border-white'
             ),
           placeholder: () => placeholderStyles,
           input: () => selectInputStyles,

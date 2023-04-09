@@ -6,8 +6,8 @@
   html,
   body {
     @apply h-full
-      text-black dark:text-white
-      bg-bone dark:bg-black;
+      text-black dark:text-bone-400
+      bg-bone-200 dark:bg-black;
   }
 }
 
