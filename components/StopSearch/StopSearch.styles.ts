@@ -1,9 +1,9 @@
 export const controlStyles = {
-  base: 'p-3 z-10 gap-2 hover:cursor-pointer mx-3 border rounded-xl',
+  base: 'p-3 mx-3 z-10 gap-2 hover:cursor-pointer text-black dark:text-white border-2 rounded-xl',
   focus: '',
   nonFocus: '',
 };
-export const placeholderStyles = 'text-gray-700 dark:text-bone-400 text-3xl';
+export const placeholderStyles = 'text-gray-700 dark:text-white text-3xl';
 export const selectInputStyles = 'text-3xl';
 export const valueContainerStyles = 'text-3xl gap-1 ';
 export const singleValueStyles = 'text-3xl';

@@ -72,7 +72,7 @@ const StopSearch = () => {
               controlStyles.base,
               searchString.value
                 ? 'border-bone-200 dark:border-black'
-                : 'border-black dark:border-bone-200'
+                : 'border-black dark:border-white'
             ),
           placeholder: () => placeholderStyles,
           input: () => selectInputStyles,

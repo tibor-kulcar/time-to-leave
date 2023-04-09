@@ -5,13 +5,13 @@ type PlatformCodeProps = {
 const PlatformCode = ({ code }: PlatformCodeProps) => {
   // console.log('PlatformCode');
   return (
-    <div className="text-left">
+    <div className="pb-2 text-left">
       {code ? (
         <span
           className="
           px-2 py-0.5
-          rounded-md border border-gray-700
-          text-gray-700 dark:text-gray-500 font-semibold text-xs
+          rounded-lg border-2 border-bone-600 dark:border-bone-800
+          text-bone-800 dark:text-bone-400 font-bold text-xs leading-none
         "
         >
           {`${code} `}

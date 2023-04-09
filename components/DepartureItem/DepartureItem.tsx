@@ -24,8 +24,8 @@ const DepartureItem = ({ departure, time }: DepartureItemProps) => {
   return (
     <div
       className={clsx(
-        'grid grid-flow-col gap-2 auto-cols-[_2.8rem_2fr_auto] w-full text-2xl',
-        diff < walkingTimeInMilisecs ? 'opacity-50' : ''
+        'grid grid-flow-col gap-2 auto-cols-[_2.8rem_2fr_auto] w-full text-2xl leading-tight',
+        diff < walkingTimeInMilisecs ? 'text-bone-600 dark:text-bone-800' : ''
       )}
     >
       <span className="font-semibold">{departure.route.short_name}</span>

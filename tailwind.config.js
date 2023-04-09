@@ -22,7 +22,12 @@ module.exports = {
     extend: {
       borderRadius: { xl: '1.21rem' },
       colors: {
-        bone: { 200: '#FDF9ED', 400: '#FBF1D6' },
+        bone: {
+          200: '#FDF9ED',
+          400: '#FBF1D6',
+          600: '#AAA69C',
+          800: '#58554B',
+        },
         gray: {
           100: '#E9E9E9',
           300: '#DDDDDD',
