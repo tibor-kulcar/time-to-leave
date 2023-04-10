@@ -20,7 +20,7 @@ import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { isDarkMode } = useDarkMode();
-  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#E9E9E9';
+  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#FDF9ED';
 
   // useEffect(() => {
   //   const manifestElement = document?.getElementById('manifest');
