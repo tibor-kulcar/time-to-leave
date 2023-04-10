@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import dynamic from 'next/dynamic';
 
 import { useGroupDepartures } from '@/hooks/useGroupDepartures';
@@ -13,18 +13,18 @@ import {
 const DepartureBoard = () => {
   // console.count('DepartureBoard');
   const [searchString] = useSearch();
-  const { data, mutate, error, isLoading, isValidating } = useSWR(
+  const { data, isLoading } = useSWR(
     '/api/pid?name=' + searchString?.value,
     (url) => fetcher(url),
     { refreshInterval: 10000 }
   );
-
+  const { mutate } = useSWRConfig();
   const { departures } = data || [];
   const groupedData = useGroupDepartures(departures);
 
   useEffect(() => {
-    mutate();
-  }, [searchString.value]);
+    mutate('/api/pid?name=' + searchString?.value);
+  }, [searchString.value, mutate]);
 
   return (
     <div

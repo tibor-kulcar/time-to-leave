@@ -31,9 +31,8 @@ import { loadOptions } from './loadOptions';
 
 const StopSearch = () => {
   const [searchString, setSearchString] = useSearch();
-  const { isLoading, isValidating } = useSWR(
-    '/api/pid?name=' + searchString?.value,
-    (url) => fetcher(url)
+  const { isLoading } = useSWR('/api/pid?name=' + searchString?.value, (url) =>
+    fetcher(url)
   );
 
   const handleChange = (

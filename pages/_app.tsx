@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { useDarkMode } from 'usehooks-ts';
 
-import manifest from '@/public/manifest.json';
+// import manifest from '@/public/manifest.json';
 import '@/styles/globals.css';
 
 //  Google fonts setup
