@@ -6,7 +6,10 @@ const options: StopItem[] = dataset;
 
 const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
-  return lwrcs.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+  return lwrcs
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^a-z0-9]/g, '');
 };
 
 const sleep = (ms: number) =>
