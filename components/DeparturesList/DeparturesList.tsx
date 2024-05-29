@@ -13,6 +13,7 @@ type DeparturesListProps = {
 const DeparturesList = ({ departures }: DeparturesListProps) => {
   const departuresLength = departures?.length;
   const now = useClock().getTime();
+
   return (
     <>
       {departuresLength ? (
