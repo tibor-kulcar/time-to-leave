@@ -1,39 +1,61 @@
+'use client';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { useDarkMode } from 'usehooks-ts';
-
-// import manifest from '@/public/manifest.json';
 import '@/styles/globals.css';
-
-//  Google fonts setup
-// import { Space_Grotesk, Space_Mono } from 'next/font/google';
-
-// const spaceGrotesk = Space_Grotesk({
-//   variable: '--font-space-grotesk',
-// });
-// const spaceMono = Space_Mono({
-//   weight: ['400'],
-//   variable: '--font-space-mono',
-// });
-//  END Google fonts setup
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
+import PushNotificationManager from '@/components/PushNotificationManager/PushNotificationManager';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { isDarkMode } = useDarkMode();
   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#FDF9ED';
+  const { handleSendNotification } = usePushNotifications();
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('Registration successful');
+        })
+        .catch((error) => {
+          console.log('Service worker registration failed');
+        });
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   const manifestElement = document?.getElementById('manifest');
-  //   const manifestString = JSON.stringify({
-  //     ...manifest,
-  //     theme_color: bgColorBasedOnColorMode,
-  //     background_color: bgColorBasedOnColorMode,
-  //   });
-  //   manifestElement?.setAttribute(
-  //     'href',
-  //     'data:application/json;charset=utf-8,' +
-  //       encodeURIComponent(manifestString)
-  //   );
-  // }, [isDarkMode]);
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log(
+            'Service Worker registered with scope:',
+            registration.scope
+          );
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    const manifestElement = document?.getElementById('manifest');
+    if (manifestElement) {
+      const updatedManifest = {
+        theme_color: bgColorBasedOnColorMode,
+        background_color: bgColorBasedOnColorMode,
+      };
+      const manifestString = JSON.stringify(updatedManifest);
+      manifestElement.setAttribute(
+        'href',
+        'data:application/json;charset=utf-8,' +
+          encodeURIComponent(manifestString)
+      );
+    }
+  }, [bgColorBasedOnColorMode]);
 
   return (
     <>
@@ -61,77 +83,20 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           sizes="32x32"
         />
         <meta name="theme-color" content={bgColorBasedOnColorMode} />
-
-        {/* Apple icons setup */}
-        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
         <link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
-        {/* END Apple icons setup */}
-
         <link
           rel="apple-touch-startup-image"
           href="/splashscreens/ios-startup.png"
         />
-        <link
-          href="/splashscreens/iphone5_splash.png"
-          media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/iphone6_splash.png"
-          media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/iphoneplus_splash.png"
-          media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/iphonex_splash.png"
-          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/iphonexr_splash.png"
-          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/iphonexsmax_splash.png"
-          media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/ipad_splash.png"
-          media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/ipadpro1_splash.png"
-          media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/ipadpro3_splash.png"
-          media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
-        <link
-          href="/splashscreens/ipadpro2_splash.png"
-          media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
-          rel="apple-touch-startup-image"
-        />
+        {/* Additional splashscreens here */}
       </Head>
-      {/* //  Google fonts setup
-      <main
-      // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
-      //  END Google fonts setup
-      >
+      <main>
         <Component {...pageProps} />
+        <PushNotificationManager />
+        <button onClick={handleSendNotification}>Send Notification</button>
       </main>
-      //  Google fonts setup */}
-      <Component {...pageProps} />
     </>
   );
 }
