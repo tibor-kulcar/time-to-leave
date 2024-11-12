@@ -12,7 +12,7 @@ const ibmPlexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'BLABLA',
+  title: 'T2L',
   description:
     'A sample project for push notifications with Next.js. The app used web push notifications to send messages to users.',
   icons: {
