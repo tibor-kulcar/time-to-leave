@@ -43,7 +43,7 @@ const StopSearch = () => {
   };
 
   return (
-    <label className="flex flex-row items-center justify-center w-full gap-4 py-3">
+    <label className="flex flex-row justify-center items-center gap-4 py-3 w-full">
       <AsyncPaginate
         unstyled
         loadOptions={loadOptions}
@@ -100,7 +100,7 @@ const StopSearch = () => {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
+                <Icon icon={mdiMagnify} className="z-0 w-8 h-8" />
               )}
             </>
           ),

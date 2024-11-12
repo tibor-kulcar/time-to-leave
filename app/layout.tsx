@@ -1,43 +1,37 @@
-import Head from 'next/head';
-import { AppProps } from 'next/app';
+import type { Metadata } from 'next';
+import { Inter, IBM_Plex_Serif } from 'next/font/google';
+import '@/styles/globals.css';
+import { NotificationProvider } from '@/notifications/useNotification';
 import { useDarkMode } from 'usehooks-ts';
 
-// import manifest from '@/public/manifest.json';
-import '@/styles/globals.css';
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const ibmPlexSerif = IBM_Plex_Serif({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-ibm-plex-serif',
+});
 
-//  Google fonts setup
-// import { Space_Grotesk, Space_Mono } from 'next/font/google';
+export const metadata: Metadata = {
+  title: 'BLABLA',
+  description:
+    'A sample project for push notifications with Next.js. The app used web push notifications to send messages to users.',
+  icons: {
+    icon: '/logo.svg',
+  },
+};
 
-// const spaceGrotesk = Space_Grotesk({
-//   variable: '--font-space-grotesk',
-// });
-// const spaceMono = Space_Mono({
-//   weight: ['400'],
-//   variable: '--font-space-mono',
-// });
-//  END Google fonts setup
-
-export default function MyApp({ Component, pageProps }: AppProps) {
-  const { isDarkMode } = useDarkMode();
-  const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#FDF9ED';
-
-  // useEffect(() => {
-  //   const manifestElement = document?.getElementById('manifest');
-  //   const manifestString = JSON.stringify({
-  //     ...manifest,
-  //     theme_color: bgColorBasedOnColorMode,
-  //     background_color: bgColorBasedOnColorMode,
-  //   });
-  //   manifestElement?.setAttribute(
-  //     'href',
-  //     'data:application/json;charset=utf-8,' +
-  //       encodeURIComponent(manifestString)
-  //   );
-  // }, [isDarkMode]);
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  //   const { isDarkMode } = useDarkMode();
+  //   const bgColorBasedOnColorMode = isDarkMode ? '#000' : '#FDF9ED';
 
   return (
-    <>
-      <Head>
+    <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -60,7 +54,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           type="image/png"
           sizes="32x32"
         />
-        <meta name="theme-color" content={bgColorBasedOnColorMode} />
+        {/* <meta name="theme-color" content={bgColorBasedOnColorMode} /> */}
 
         {/* Apple icons setup */}
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
@@ -122,16 +116,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
           rel="apple-touch-startup-image"
         />
-      </Head>
-      {/* //  Google fonts setup
-      <main
-      // className={`${spaceGrotesk.variable} font-sans ${spaceMono.variable} font-mono`}
-      //  END Google fonts setup
-      >
-        <Component {...pageProps} />
-      </main>
-      //  Google fonts setup */}
-      <Component {...pageProps} />
-    </>
+      </head>
+      <body className={`${inter.variable} ${ibmPlexSerif.variable}`}>
+        <NotificationProvider>{children}</NotificationProvider>
+      </body>
+    </html>
   );
 }
