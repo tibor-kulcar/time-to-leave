@@ -1,10 +1,9 @@
 'use client';
 import clsx from 'clsx';
-
+import { useEffect, useState } from 'react';
 import { DepartureProps } from '@/types';
 import { EstimatedTimeArrival } from '@/components/EstimatedTimeArrival';
 import { useNotification } from '@/notifications/useNotification';
-import { use, useEffect, useState } from 'react';
 
 const walkingTimeInMilisecs = 3 * 60 * 1000;
 
@@ -14,36 +13,48 @@ type DepartureItemProps = {
 };
 
 const DepartureItem = ({ departure, time }: DepartureItemProps) => {
-  // console.count('DepartureItem');
   const { isSupported, isSubscribed, handleSubscribe, subscription } =
     useNotification();
   const [isActive, setIsActive] = useState(false);
-  const sendNotification = async (title: string, message: string) => {
-    await fetch('/api/web-push/send', {
-      method: 'POST',
-      body: JSON.stringify({ title, message, subscription }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  };
+
   const prediction = new Date(
     departure.departure_timestamp.predicted ||
       departure.departure_timestamp.scheduled
   ).getTime();
   const diff = prediction - time;
 
-  if (diff < 0) return <></>;
-
+  // Move the useEffect before any conditional returns
   useEffect(() => {
-    if (isActive && diff < walkingTimeInMilisecs) {
+    // If departure time has passed, don't set up notifications
+    if (diff < 0) return;
+
+    const sendNotification = async (title: string, message: string) => {
+      if (!subscription) return;
+
+      await fetch('/api/web-push/send', {
+        method: 'POST',
+        body: JSON.stringify({ title, message, subscription }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    };
+
+    const shouldNotify = isActive && diff < walkingTimeInMilisecs;
+
+    if (shouldNotify) {
       sendNotification(
         `Your tram ${departure.route.short_name} is arriving`,
         `In ${Math.floor(walkingTimeInMilisecs / 60000)} minutes`
       );
       setIsActive(false);
     }
-  }, [isActive, diff]);
+  }, [isActive, diff, departure.route.short_name, subscription]);
+
+  // After all Hooks, we can do the conditional return
+  if (diff < 0) {
+    return null;
+  }
 
   return (
     <>
@@ -61,7 +72,6 @@ const DepartureItem = ({ departure, time }: DepartureItemProps) => {
         }}
         className={clsx(
           'gap-2 grid grid-flow-col auto-cols-[_2.8rem_2fr_auto] w-full text-2xl leading-tight'
-          // diff < walkingTimeInMilisecs ? 'text-bone-600 dark:text-bone-800' : ''
         )}
       >
         <span className="font-semibold">{departure.route.short_name}</span>
