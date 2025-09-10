@@ -12,9 +12,10 @@ import {
 
 const DepartureBoard = () => {
   // console.count('DepartureBoard');
-  const [searchString] = useSearch();
+  const [lastSearch] = useSearch();
+  console.log('lastSearch', lastSearch[0]?.value);
   const { data, isLoading } = useSWR(
-    '/api/pid?name=' + searchString?.value,
+    '/api/pid?name=' + lastSearch[0]?.value,
     (url) => fetcher(url),
     { refreshInterval: 10000 }
   );
@@ -23,19 +24,12 @@ const DepartureBoard = () => {
   const groupedData = useGroupDepartures(departures);
 
   useEffect(() => {
-    mutate('/api/pid?name=' + searchString?.value);
-  }, [searchString.value, mutate]);
+    mutate('/api/pid?name=' + lastSearch[0]?.value);
+  }, [lastSearch[0]?.value, mutate]);
 
   return (
-    <div
-      className="
-        flex flex-col gap-4
-        w-full
-        p-3
-        overflow-y-auto
-      "
-    >
-      {isLoading && searchString?.value ? (
+    <div className="flex flex-col gap-4 p-3 w-full overflow-y-auto">
+      {isLoading && lastSearch[0]?.value ? (
         <DeparturesListSkeleton />
       ) : (
         <DeparturesList departures={groupedData} />

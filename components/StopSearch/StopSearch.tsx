@@ -30,8 +30,8 @@ import {
 import { loadOptions } from './loadOptions';
 
 const StopSearch = () => {
-  const [searchString, setSearchString] = useSearch();
-  const { isLoading } = useSWR('/api/pid?name=' + searchString?.value, (url) =>
+  const [lastSearch, setLastSearch] = useSearch();
+  const { isLoading } = useSWR('/api/pid?name=' + lastSearch[0]?.value, (url) =>
     fetcher(url)
   );
 
@@ -39,14 +39,27 @@ const StopSearch = () => {
     newValue: SingleValue<StopItem>,
     actionMeta: ActionMeta<StopItem>
   ) => {
-    setSearchString(newValue as StopItem);
+    const updatedSearch = Array.isArray(lastSearch) ? lastSearch : [];
+    const existingIndex = updatedSearch.findIndex(
+      (searchItem) => searchItem.value === newValue?.value
+    );
+
+    if (existingIndex > -1) {
+      updatedSearch.splice(existingIndex, 1);
+    }
+
+    updatedSearch.unshift(newValue as StopItem);
+    setLastSearch(updatedSearch);
   };
 
   return (
-    <label className="flex flex-row items-center justify-center w-full gap-4 py-3">
+    <label className="flex flex-row justify-center items-center gap-4 py-3 w-full">
       <AsyncPaginate
+        key={lastSearch.length}
         unstyled
-        loadOptions={loadOptions}
+        loadOptions={(value, prevValue) =>
+          loadOptions(value, prevValue, lastSearch)
+        }
         isSearchable={true}
         className="w-full"
         placeholder="Search"
@@ -69,7 +82,7 @@ const StopSearch = () => {
             clsx(
               isFocused ? controlStyles.focus : controlStyles.nonFocus,
               controlStyles.base,
-              searchString.value
+              lastSearch[0]?.value
                 ? 'border-bone-200 dark:border-black'
                 : 'border-black dark:border-white'
             ),
@@ -89,8 +102,8 @@ const StopSearch = () => {
           noOptionsMessage: () => messageStyles,
           loadingMessage: () => messageStyles,
         }}
-        defaultValue={searchString.value ? searchString : undefined}
-        value={searchString.value ? searchString : undefined}
+        defaultValue={lastSearch[0]?.value ? lastSearch : undefined}
+        value={lastSearch[0]?.value ? lastSearch : undefined}
         onChange={handleChange}
         components={{
           LoadingIndicator: () => <></>,
@@ -100,7 +113,7 @@ const StopSearch = () => {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Icon icon={mdiMagnify} className="w-8 h-8 z-0" />
+                <Icon icon={mdiMagnify} className="z-0 w-8 h-8" />
               )}
             </>
           ),
