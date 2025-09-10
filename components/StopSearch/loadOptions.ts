@@ -8,7 +8,7 @@ const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
   return lwrcs
     .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]/g, '');
 };
 
