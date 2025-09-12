@@ -3,8 +3,5 @@ import { useLocalStorage } from 'usehooks-ts';
 import { StopItem } from '@/types';
 
 export function useSearch() {
-  return useLocalStorage<StopItem>('search', {
-    label: '',
-    value: '',
-  });
+  return useLocalStorage<StopItem[]>('search', []);
 }

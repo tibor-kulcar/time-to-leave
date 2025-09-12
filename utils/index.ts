@@ -1,6 +1,6 @@
 export const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
-  return lwrcs.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+  return lwrcs.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 };
 
 export const getQueryString = (queries: { [key: string]: any }): string => {

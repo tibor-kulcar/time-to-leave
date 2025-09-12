@@ -8,7 +8,7 @@ const normalize = (str: string) => {
   const lwrcs = str ? str.toLowerCase() : '';
   return lwrcs
     .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]/g, '');
 };
 
@@ -21,13 +21,14 @@ const sleep = (ms: number) =>
 
 export const loadOptions = async (
   search: string,
-  prevOptions: OptionsOrGroups<StopItem, GroupBase<StopItem>>
+  prevOptions: OptionsOrGroups<StopItem, GroupBase<StopItem>>,
+  lastSearch?: StopItem[]
 ) => {
   await sleep(500);
-
   let filteredOptions: StopItem[];
   if (!search) {
-    filteredOptions = options;
+    filteredOptions =
+      lastSearch && lastSearch.length > 0 ? lastSearch : options;
   } else {
     const searchLower = normalize(search);
 
@@ -35,8 +36,8 @@ export const loadOptions = async (
       normalize(label).includes(searchLower)
     );
   }
-
   const hasMore = filteredOptions.length > prevOptions.length + 10;
+
   const slicedOptions = filteredOptions.slice(
     prevOptions.length,
     prevOptions.length + 10
