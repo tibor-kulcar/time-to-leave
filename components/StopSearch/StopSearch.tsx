@@ -57,7 +57,7 @@ const StopSearch = () => {
       <AsyncPaginate
         key={lastSearch.length}
         unstyled
-        loadOptions={(value, prevValue) =>
+        loadOptions={(value: string, prevValue: any) =>
           loadOptions(value, prevValue, lastSearch)
         }
         isSearchable={true}
@@ -67,18 +67,18 @@ const StopSearch = () => {
         // menuIsOpen={true}
         // isLoading
         styles={{
-          menuList: (provided, state) => ({
+          menuList: (provided: any, state: any) => ({
             ...provided,
             // 100 viewport height minus input height
             minHeight: 'calc(100vh - 82px)',
           }),
-          loadingMessage: (provided, state) => ({
+          loadingMessage: (provided: any, state: any) => ({
             ...provided,
             textAligtn: 'center',
           }),
         }}
         classNames={{
-          control: ({ isFocused }) =>
+          control: ({ isFocused }: { isFocused: boolean }) =>
             clsx(
               isFocused ? controlStyles.focus : controlStyles.nonFocus,
               controlStyles.base,
@@ -97,7 +97,7 @@ const StopSearch = () => {
           dropdownIndicator: () => dropdownIndicatorStyles,
           menu: () => menuStyles,
           groupHeading: () => groupHeadingStyles,
-          option: ({ isFocused }) =>
+          option: ({ isFocused }: { isFocused: boolean }) =>
             clsx(optionStyles.base, isFocused && optionStyles.focus),
           noOptionsMessage: () => messageStyles,
           loadingMessage: () => messageStyles,
