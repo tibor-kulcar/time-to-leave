@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 import { GroupedDepartureProps } from '@/types';
@@ -10,7 +12,7 @@ type DeparturesListProps = {
   departures: GroupedDepartureProps[];
 };
 
-const DeparturesList = ({ departures }: DeparturesListProps) => {
+export function DeparturesList({ departures }: DeparturesListProps) {
   const departuresLength = departures?.length;
   const now = useClock().getTime();
   return (
@@ -39,11 +41,11 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-10 p-12 text-center">
-          <div className="rounded-[2rem] overflow-hidden">
+          <div className="rounded-4xl overflow-hidden">
             <Image
               src={happyTramImage}
               alt="Search your stop"
-              className="round-xl max-w-[9rem] md:max-w-xs"
+              className="round-xl max-w-36 md:max-w-xs"
             />
           </div>
           <span className="text-xl italic opacity-75">
@@ -57,6 +59,4 @@ const DeparturesList = ({ departures }: DeparturesListProps) => {
       )}
     </>
   );
-};
-
-export default DeparturesList;
+}

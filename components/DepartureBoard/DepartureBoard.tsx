@@ -1,6 +1,7 @@
+'use client';
+
 import { useEffect } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
-import dynamic from 'next/dynamic';
 
 import { useGroupDepartures } from '@/hooks/useGroupDepartures';
 import { useSearch } from '@/hooks/useSearch';
@@ -10,22 +11,19 @@ import {
   DeparturesListSkeleton,
 } from '@/components/DeparturesList';
 
-const DepartureBoard = () => {
-  // console.count('DepartureBoard');
-  const [lastSearch] = useSearch();
-  console.log('lastSearch', lastSearch[0]?.value);
+export function DepartureBoard() {
+  const { lastSearch } = useSearch();
+  const stopName = lastSearch[0]?.value;
+  const swrKey = stopName ? `/api/pid?name=${stopName}` : null;
+
   const { data, isLoading } = useSWR(
-    '/api/pid?name=' + lastSearch[0]?.value,
-    (url) => fetcher(url),
+    swrKey,
+    fetcher,
     { refreshInterval: 10000 }
   );
-  const { mutate } = useSWRConfig();
+
   const { departures } = data || [];
   const groupedData = useGroupDepartures(departures);
-
-  useEffect(() => {
-    mutate('/api/pid?name=' + lastSearch[0]?.value);
-  }, [lastSearch[0]?.value, mutate]);
 
   return (
     <div className="flex flex-col gap-4 p-3 w-full overflow-y-auto">
@@ -36,6 +34,4 @@ const DepartureBoard = () => {
       )}
     </div>
   );
-};
-
-export default dynamic(() => Promise.resolve(DepartureBoard), { ssr: false });
+}

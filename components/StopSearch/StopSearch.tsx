@@ -1,126 +1,46 @@
-import dynamic from 'next/dynamic';
-import clsx from 'clsx';
-import { ActionMeta, SingleValue } from 'react-select';
-import { AsyncPaginate } from 'react-select-async-paginate';
-import { mdiMagnify } from '@mdi/js';
-import useSWR from 'swr';
+'use client';
 
+import useSWR from 'swr';
+import { useCallback } from 'react';
 import { useSearch } from '@/hooks/useSearch';
 import { StopItem } from '@/types';
 import fetcher from '@/lib/fetcher';
-import { Icon } from '@/components/Icon';
-import { Spinner } from '@/components/Spinner';
-import {
-  controlStyles,
-  placeholderStyles,
-  selectInputStyles,
-  valueContainerStyles,
-  singleValueStyles,
-  multiValueStyles,
-  multiValueLabelStyles,
-  multiValueRemoveStyles,
-  clearIndicatorStyles,
-  dropdownIndicatorStyles,
-  menuStyles,
-  groupHeadingStyles,
-  optionStyles,
-  messageStyles,
-} from './StopSearch.styles';
+import { StopCombobox } from './StopCombobox';
 
-import { loadOptions } from './loadOptions';
+const MAX_SEARCH_HISTORY = 10;
 
-const StopSearch = () => {
-  const [lastSearch, setLastSearch] = useSearch();
-  const { isLoading } = useSWR('/api/pid?name=' + lastSearch[0]?.value, (url) =>
-    fetcher(url)
+export function StopSearch() {
+  const { lastSearch, setLastSearch, removeItem } = useSearch();
+
+  // Only fetch loading state, actual data fetching happens in DepartureBoard
+  const { isLoading } = useSWR(
+    lastSearch[0]?.value ? `/api/pid?name=${lastSearch[0].value}` : null,
+    fetcher,
+    { revalidateOnFocus: false }
   );
 
-  const handleChange = (
-    newValue: SingleValue<StopItem>,
-    actionMeta: ActionMeta<StopItem>
-  ) => {
-    const updatedSearch = Array.isArray(lastSearch) ? lastSearch : [];
-    const existingIndex = updatedSearch.findIndex(
-      (searchItem) => searchItem.value === newValue?.value
-    );
+  const handleChange = useCallback(
+    (newValue: StopItem | null) => {
+      if (!newValue) return;
 
-    if (existingIndex > -1) {
-      updatedSearch.splice(existingIndex, 1);
-    }
-
-    updatedSearch.unshift(newValue as StopItem);
-    setLastSearch(updatedSearch);
-  };
+      setLastSearch((prev) => {
+        // Remove duplicates and add new value at the beginning
+        const filtered = prev.filter((item) => item.value !== newValue.value);
+        return [newValue, ...filtered].slice(0, MAX_SEARCH_HISTORY);
+      });
+    },
+    [setLastSearch]
+  );
 
   return (
-    <label className="flex flex-row justify-center items-center gap-4 py-3 w-full">
-      <AsyncPaginate
-        key={lastSearch.length}
-        unstyled
-        loadOptions={(value: string, prevValue: any) =>
-          loadOptions(value, prevValue, lastSearch)
-        }
-        isSearchable={true}
-        className="w-full"
-        placeholder="Search"
-        closeMenuOnSelect={true}
-        // menuIsOpen={true}
-        // isLoading
-        styles={{
-          menuList: (provided: any, state: any) => ({
-            ...provided,
-            // 100 viewport height minus input height
-            minHeight: 'calc(100vh - 82px)',
-          }),
-          loadingMessage: (provided: any, state: any) => ({
-            ...provided,
-            textAligtn: 'center',
-          }),
-        }}
-        classNames={{
-          control: ({ isFocused }: { isFocused: boolean }) =>
-            clsx(
-              isFocused ? controlStyles.focus : controlStyles.nonFocus,
-              controlStyles.base,
-              lastSearch[0]?.value
-                ? 'border-bone-200 dark:border-black'
-                : 'border-black dark:border-white'
-            ),
-          placeholder: () => placeholderStyles,
-          input: () => selectInputStyles,
-          valueContainer: () => valueContainerStyles,
-          singleValue: () => singleValueStyles,
-          multiValue: () => multiValueStyles,
-          multiValueLabel: () => multiValueLabelStyles,
-          multiValueRemove: () => multiValueRemoveStyles,
-          clearIndicator: () => clearIndicatorStyles,
-          dropdownIndicator: () => dropdownIndicatorStyles,
-          menu: () => menuStyles,
-          groupHeading: () => groupHeadingStyles,
-          option: ({ isFocused }: { isFocused: boolean }) =>
-            clsx(optionStyles.base, isFocused && optionStyles.focus),
-          noOptionsMessage: () => messageStyles,
-          loadingMessage: () => messageStyles,
-        }}
-        defaultValue={lastSearch[0]?.value ? lastSearch : undefined}
-        value={lastSearch[0]?.value ? lastSearch : undefined}
+    <div className="flex flex-row justify-center items-center gap-4 py-3 w-full">
+      <StopCombobox
+        value={lastSearch[0]}
+        lastSearch={lastSearch}
+        isLoading={isLoading}
         onChange={handleChange}
-        components={{
-          LoadingIndicator: () => <></>,
-          IndicatorSeparator: () => <></>,
-          DropdownIndicator: () => (
-            <>
-              {isLoading ? (
-                <Spinner />
-              ) : (
-                <Icon icon={mdiMagnify} className="z-0 w-8 h-8" />
-              )}
-            </>
-          ),
-        }}
+        onRemove={removeItem}
       />
-    </label>
+    </div>
   );
-};
-
-export default dynamic(() => Promise.resolve(StopSearch), { ssr: false });
+}
