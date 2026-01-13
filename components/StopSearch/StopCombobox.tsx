@@ -62,7 +62,11 @@ export function StopCombobox({
 
     // Early exit: stop once we have enough results
     // Use pre-normalized labels for faster comparison
-    for (let i = 0; i < normalizedStops.length && results.length < MAX_RESULTS; i++) {
+    for (
+      let i = 0;
+      i < normalizedStops.length && results.length < MAX_RESULTS;
+      i++
+    ) {
       if (normalizedStops[i].normalizedLabel.startsWith(normalizedSearch)) {
         results.push(allStops[i]);
       }
@@ -186,6 +190,13 @@ export function StopCombobox({
     justFocusedRef.current = false;
   }, []);
 
+  useEffect(() => {
+    // Lock scroll when opened
+    document.getElementsByTagName('body')[0].style.overflow = isOpen
+      ? 'hidden'
+      : 'auto';
+  }, [isOpen]);
+
   return (
     <div className="relative w-full">
       <div className="relative flex items-center mx-2 bg-white dark:bg-black transition-colors">
@@ -194,6 +205,7 @@ export function StopCombobox({
           type="text"
           value={searchTerm}
           name="search_query"
+          id="search_query"
           onChange={handleChange}
           onFocus={handleFocus}
           onClick={handleClick}
@@ -208,13 +220,24 @@ export function StopCombobox({
             selectedIndex >= 0 ? `stop-${selectedIndex}` : undefined
           }
         />
-        <div className="pr-3" aria-hidden="true">
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <Icon icon={mdiMagnify} className="w-8 h-8" />
-          )}
-        </div>
+
+        {isOpen ? (
+          <div className="pr-3" aria-hidden="true">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Icon icon={mdiClose} className="w-8 h-8" />
+            )}
+          </div>
+        ) : (
+          <label className="pr-3" aria-hidden="true" htmlFor="search_query">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Icon icon={mdiMagnify} className="w-8 h-8" />
+            )}
+          </label>
+        )}
       </div>
 
       {isOpen && (
