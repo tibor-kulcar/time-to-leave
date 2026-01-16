@@ -1,1 +1,1 @@
-export { default as StopSearch } from './StopSearch';
+export { StopSearch } from './StopSearch';

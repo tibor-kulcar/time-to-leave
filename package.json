@@ -8,27 +8,26 @@
   },
   "dependencies": {
     "@mdi/js": "^7.2.96",
+    "@tailwindcss/postcss": "^4.1.18",
     "next": "16.0.10",
     "next-pwa": "^5.6.0",
+    "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-select": "^5.7.2",
-    "react-select-async-paginate": "^0.7.2",
     "swr": "^2.1.1",
-    "usehooks-ts": "^2.9.1"
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@types/next-pwa": "^5.6.2",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "autoprefixer": "^10.4.14",
     "clsx": "^1.2.1",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.0.8",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7",
+    "postcss": "^8.5.6",
     "typescript": "^5.7.0"
   },
-  "version": "1.0.3"
+  "version": "1.0.3",
+  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }
